@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "name": "Dashboard - Pleno Global",
+            "preLaunchTask": "Python Virtual Environment",
+            "request": "launch",
+            "type": "debugpy",
+            "program": "./app.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}
