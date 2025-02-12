@@ -27,7 +27,7 @@
       "editor.codeActionsOnSave": {
         "source.organizeImports": "never"
       },
-      "editor.defaultFormatter": "ms-python.autopep8"
+      "editor.defaultFormatter": "ms-python.black-formatter"
     },
     "python.testing.pytestArgs": ["src"],
     "python.testing.pytestEnabled": false,

@@ -1,16 +1,20 @@
 # -*- coding: UTF-8 -*-
 """Import modules"""
 
-from os import path, makedirs
+from os import path, makedirs, system
 import pandas as pd
 import pandas_datareader.data as pdr
-from datetime import datetime
+from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import requests
-# from selenium import webdriver
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.chrome.options import Options
+import yfinance as yf
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 import warnings
+from fredapi import Fred
 
 class Extract:
     """Extract Interface"""
@@ -25,6 +29,8 @@ class Extract:
         self.data_dir = self.config.vars.data_dir
         self.start = datetime(2000, 1, 1)
         self.end = datetime.today()
+
+        self.fred = Fred(api_key=self.config.vars.FRED_API_KEY)
 
         warnings.filterwarnings('ignore')
 
@@ -66,34 +72,6 @@ class Extract:
             except Exception as error:
                 raise OSError(error) from error
 
-        return "Extraction Done"
-    
-
-    def get_assets_returns(self) -> str:
-        """Downloads the asset
-         classes proxys dfs"""
-        
-        assets_returns_list = {
-            self.config.vars.equity: "famafrench",
-            self.config.vars.credits: "fred",
-            self.config.vars.high_yields: "fred"
-        }
-
-        makedirs(path.join(self.data_dir,
-                           "asset_classes"), exist_ok=True)
-
-        for asset_class, source in assets_returns_list.items():
-            
-            try:
-                asset_series = pdr.DataReader(asset_class, source, self.start, self.end)
-                if len(asset_series) == 3:
-                    asset_series = asset_series[0]
-                asset_series.to_csv(path.join(self.data_dir, 
-                                            "asset_classes",
-                                            f"{asset_class}.csv.gz"), compression="gzip")
-            except Exception as error:
-                raise OSError(error) from error
-            
         return "Extraction Done"
     
 
@@ -205,7 +183,8 @@ class Extract:
 
         indicators_list = [
             self.config.vars.liquidity_spread, 
-            self.config.vars.ice_bofa_spread,
+            self.config.vars.ice_bofa_hy_spread,
+            self.config.vars.ice_bofa_cred_spread,
             self.config.vars.chicago_fci,
             self.config.vars.leverage_subindex,
             self.config.vars.risk_subindex,
@@ -216,17 +195,168 @@ class Extract:
                            "market_indicators"), exist_ok=True)
         
         for indicator in indicators_list:
-            
             try:
-                yield_series = pdr.DataReader(indicator, "fred", self.start, self.end)
-                yield_series.to_csv(path.join(self.data_dir, 
-                                            "economic_indicators",
+                indicator_series = self.fred.get_series(indicator,
+                                                        observation_start=self.start, 
+                                                        observation_end=self.end)
+                indicator_series.to_csv(path.join(self.data_dir, 
+                                            "market_indicators",
                                             f"{indicator}.csv.gz"), compression="gzip")
             except Exception as error:
+                raise OSError(error) from error
+            
+        try:
+            dxy = yf.download(self.config.vars.dxy, start=self.start, end=self.end)["Close"]
+            dxy.to_csv(path.join(self.data_dir, 
+                                            "market_indicators",
+                                            f"{self.config.vars.dxy}.csv.gz"), compression="gzip")
+            
+        except Exception as error:
+                raise OSError(error) from error
+            
+        try:
+            asset_series = pdr.DataReader(self.config.vars.equity_rf, "famafrench", self.start, self.end)[0]
+            asset_series.to_csv(path.join(self.data_dir, 
+                                            "market_indicators",
+                                            f"{self.config.vars.equity_rf}.csv.gz"), compression="gzip")
+        except Exception as error:
                 raise OSError(error) from error
 
         return "Extraction Done"
     
+
+    def get_commodities(self) -> str:
+        """Download Commodities"""
+
+        commodities_list = [
+            self.config.vars.gsci,
+            self.config.vars.oil_gas,
+            self.config.vars.agriculture_index
+        ]
+
+        makedirs(path.join(
+            self.data_dir,"commodities"),
+            exist_ok=True)
+
+        for comm in commodities_list:
+            try:
+                comm_series = yf.download(comm, start=self.start, end=self.end)["Adj Close"]
+                comm_series.to_csv(path.join(self.data_dir, 
+                                            "commodities",
+                                            f"{comm}.csv.gz"), compression="gzip")
+            except Exception as error:
+                raise OSError(error) from error
+            
+        return "Extraction Done"
+            
+        
+    def get_emerging_data(self) -> str:
+        """Download Emerging
+        Markets Data"""
+
+        emerging_indicators = [
+            self.config.vars.ice_bofa_hy_em_spread,
+            self.config.vars.ice_bofa_cred_em_spread,
+            self.config.vars.em_etfs_vol,
+            self.config.vars.em_non_fin_ice_bofa,
+            self.config.vars.asia_em_bofa,
+            self.config.vars.latin_em_bofa,
+            self.config.vars.euro_em_bofa
+        ]
+
+        makedirs(path.join(self.data_dir,
+                           "em_indicators"), exist_ok=True)
+        
+        for em_ind in emerging_indicators:
+            try:
+                indicator_series = self.fred.get_series(em_ind,
+                                                        observation_start=self.start, 
+                                                        observation_end=self.end)
+                indicator_series.to_csv(path.join(self.data_dir, 
+                                            "em_indicators",
+                                            f"{em_ind}.csv.gz"), compression="gzip")
+            except Exception as error:
+                raise OSError(error) from error
+            
+        try:
+            dxy = yf.download(self.config.vars.emb, start=self.start, end=self.end)["Close"]
+            dxy.to_csv(path.join(self.data_dir, 
+                                            "em_indicators",
+                                            f"{self.config.vars.dxy}.csv.gz"), compression="gzip")
+        except Exception as error:
+                raise OSError(error) from error
+
+        return "Extraction Done"
+    
+
+    def get_global_exus_data(self) -> str:
+        """Download Global 
+        ex US data"""
+
+        makedirs(path.join(self.data_dir, 
+                           "global_ex_us"), exist_ok=True)
+
+        try:
+            spdw = yf.download(self.config.vars.global_ex_us_etf, 
+                        start=self.start, end=self.end)["Adj Close"]
+            spdw.to_csv(path.join(
+                    self.data_dir,
+                    "global_ex_us",
+                    f"{self.config.vars.global_ex_us_etf}.csv.gz"
+            ), compression="gzip")
+
+        except Exception as error:
+            raise OSError(error) from error
+        
+
+        return "Extraction Done"
+    
+
+    def get_br_implied_inflation(self) -> str:
+        """Scrap Implied Inflation
+        data for specific vertices"""
+
+        makedirs(path.join(
+            self.data_dir,
+            "em_indicators"
+        ), exist_ok=True)
+
+        url = self.config.vars.inf_implicita_br
+
+        try:
+            response = requests.get(url)
+            if not response.ok:
+                raise FileNotFoundError(f"Unable to request the AMBIMA web site")
+            soup = BeautifulSoup(response.content, "html.parser")
+
+            lista_elems = [elem.text for elem in soup.find_all("div", id="ETTJs")]
+            lista_elems = [elem.replace("\n", " ").replace("\t", " ") for elem in lista_elems]
+            lista_elems = lista_elems[0].split(" ")
+            lista_elems = [elem for elem in lista_elems if elem not in [" ", ""]]
+            lista_elems = lista_elems[lista_elems.index("Implícita") + 1:lista_elems.index("2.394") + 4]
+
+            lista_vertices = [int(lista_elems[i].replace(".", "")) for i in range(0, len(lista_elems) - 2, 4)]
+            lista_eetj_ntnb = [float(lista_elems[i].replace(",", ".")) for i in range(1, len(lista_elems) - 1, 4)]
+            lista_eetj_pre = [float(lista_elems[i].replace(",", ".")) for i in range(2, len(lista_elems), 4)]
+            lista_inf_implicita = [float(lista_elems[i].replace(",", ".")) for i in range(3, len(lista_elems) + 1, 4)]
+
+        except Exception as error:
+            raise OSError(error) from error
+        
+        df_implicita = pd.DataFrame({"vertice": lista_vertices,
+                                     "ETTJ_PRE": lista_eetj_pre,
+                                     "ETTJ_NTNB": lista_eetj_ntnb,
+                                     "Inflacao_Implicita": lista_inf_implicita})
+        
+        df_implicita.to_csv(path.join(
+            self.data_dir,
+            "em_indicators",
+            "inf_implicita_br.csv.gz"
+        ), compression="gzip")
+
+        return "Extraction Done"
+
+
 e = Extract()
 
-print(e.get_economic_indicators()) 
+print(e.get_commodities()) 
