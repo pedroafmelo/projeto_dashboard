@@ -23,7 +23,7 @@ class Extract:
         """Initializes instance"""
 
         # import local module
-        from iface_config import Config
+        from src.iface_config import Config
 
         self.config = Config()
         self.data_dir = self.config.vars.data_dir
@@ -47,57 +47,29 @@ class Extract:
         return f"Extract Class, staging dir: {str(self.data_dir)}"
     
 
-    def get_bonds_yields(self):
+    def get_bonds_yields(self) -> pd.DataFrame | list:
         """Downloads the US Gov
           Bonds Yields"""
         
-        bonds_list = [
-            self.config.vars.t_2_y, 
-            self.config.vars.t_5_y,
-            self.config.vars.t_10_y,
-            self.config.vars.t_20_y,
-            self.config.vars.t_30_y
-            ]
-        
-        makedirs(path.join(self.data_dir,
-                           "us_gov_bonds"), exist_ok=True)
-        
-        for yield_ in bonds_list:
-            
-            try:
-                yield_series = pdr.DataReader(yield_, "fred", self.start, self.end)
-                yield_series.to_csv(path.join(self.data_dir, 
-                                            "us_gov_bonds",
-                                            f"{yield_}.csv.gz"), compression="gzip")
-            except Exception as error:
-                raise OSError(error) from error
+        try:
+            yield_series = pdr.DataReader( self.config.vars.us_bonds_yields, "fred", self.start, self.end)
+        except Exception as error:
+            raise OSError(error) from error
 
-        return "Extraction Done"
+        return yield_series
     
 
-    def get_sp_multiples(self) -> str:
+    def get_sp_multiples(self) -> pd.DataFrame | tuple:
         """Scraps the S&P500
         multiples"""
 
-        earnings_url = self.config.vars.mult_base_url
-        mults_list =[
-            self.config.vars.sp_earnings_yields,
-            self.config.vars.sp_pe,
-            self.config.vars.sp_pb
-        ]
-        mults_dict = {
-            self.config.vars.sp_earnings_yields: [],
-            self.config.vars.sp_pe: [],
-            self.config.vars.sp_pb: []
-        }
+        multas_base_url = self.config.vars.mult_base_url
+        mults_dict = {mult: [] for mult in self.config.vars.sp_mult}
 
-        makedirs(path.join(self.data_dir,
-                           "sp_multiples"), exist_ok=True)
-
-        for mult in mults_list:
+        for mult in self.config.vars.sp_mult:
 
             try:
-                response = requests.get(f"{earnings_url}/{mult}", verify=False)
+                response = requests.get(f"{multas_base_url}/{mult}", verify=False)
                 if not response.ok:
                     raise FileNotFoundError(f"Unable to request the {mult}")
                 
@@ -111,22 +83,22 @@ class Extract:
         sp_ey = [round(
             float(elem.strip("†\n")[:-1])/100, 4
             ) for elem 
-            in mults_dict[self.config.vars.sp_earnings_yields][::-1] 
-            if "%" in elem][:-1]
+            in mults_dict[self.config.vars.sp_mult[0]][::-1] 
+            if "%" in elem]
 
         sp_pe = [float(elem.strip("†\n")[:-1]) for elem 
-            in mults_dict[self.config.vars.sp_pe][::-1]
-            if "." in elem][:-1]
+            in mults_dict[self.config.vars.sp_mult[1]][::-1]
+            if "." in elem]
         
         sp_pb = [float(elem.strip("†\n")) for elem 
-                 in mults_dict[self.config.vars.sp_pb][::-1] if "." in elem][:-1]
+                 in mults_dict[self.config.vars.sp_mult[2]][::-1] if "." in elem]
         
         index_date_ey_pe = [elem for elem 
-            in mults_dict[self.config.vars.sp_pe][::-1]
-            if "." not in elem][:-1]
+            in mults_dict[self.config.vars.sp_mult[1]][::-1]
+            if "." not in elem]
         
         index_date_pb = [elem for elem 
-                 in mults_dict[self.config.vars.sp_pb][::-1] if "," in elem][:-1]
+                 in mults_dict[self.config.vars.sp_mult[2]][::-1] if "," in elem]
 
         df_ey_pe = pd.DataFrame({
             "Date": index_date_ey_pe, 
@@ -134,192 +106,186 @@ class Extract:
             "price_earnings": sp_pe,
         })
 
+        df_ey_pe["Date"] = pd.to_datetime(df_ey_pe["Date"])
+        df_ey_pe["year"] = df_ey_pe["Date"].dt.year
+        df_ey_pe.set_index("Date", inplace=True)
+
+
         df_pb = pd.DataFrame({
             "Date": index_date_pb, 
-            "earning_yields": sp_pb,
+            "price_to_book": sp_pb,
         })
 
-        df_ey_pe.to_csv(path.join(self.data_dir,
-                                  "sp_multiples",
-                                  "sp_ey_pe.csv.gz"), compression="gzip")
-        
-        df_pb.to_csv(path.join(self.data_dir,
-                                  "sp_multiples",
-                                  "sp_pb.csv.gz"), compression="gzip")
-        
-        return "Extraction done"
+        df_pb["Date"] = pd.to_datetime(df_pb["Date"])
+        df_pb["year"] = df_pb["Date"].dt.year
+        df_pb.set_index("Date", inplace=True)
+
+        return df_ey_pe, df_pb
     
 
-    def get_economic_indicators(self) -> str:
+    def get_economic_indicators(self) -> pd.DataFrame | list:
         """Download USA Economic
           Indicators"""
 
-        indicators_list = [
-            self.config.vars.ind_production, 
-            self.config.vars.cpi_urban,
-            self.config.vars.pce,
-            self.config.vars.implied_inflation,
-            ]
-        
-        makedirs(path.join(self.data_dir,
-                           "economic_indicators"), exist_ok=True)
-        
-        for indicator in indicators_list:
-            
+        ind_list = []
+
+        for ind in self.config.vars.us_eco_ind:
             try:
-                yield_series = pdr.DataReader(indicator, "fred", self.start, self.end)
-                yield_series.to_csv(path.join(self.data_dir, 
-                                            "economic_indicators",
-                                            f"{indicator}.csv.gz"), compression="gzip")
+                ind_series = pdr.DataReader(ind, "fred", self.start, self.end)
+                ind_list.append(ind_series)
+
             except Exception as error:
                 raise OSError(error) from error
 
-        return "Extraction Done"
+        return ind_list
     
 
-    def get_market_indicators(self) -> str:
-        """Download USA Market
-          Indicators"""
+    def get_adamodar_data(self):
+        """Scraps the adamodar 
+        Default Spreads and Risks data"""
 
-        indicators_list = [
-            self.config.vars.liquidity_spread, 
-            self.config.vars.ice_bofa_hy_spread,
-            self.config.vars.ice_bofa_cred_spread,
-            self.config.vars.chicago_fci,
-            self.config.vars.leverage_subindex,
-            self.config.vars.risk_subindex,
-            self.config.vars.non_financial_leverage,
-            ]
-        
-        makedirs(path.join(self.data_dir,
-                           "market_indicators"), exist_ok=True)
-        
-        for indicator in indicators_list:
-            try:
-                indicator_series = self.fred.get_series(indicator,
-                                                        observation_start=self.start, 
-                                                        observation_end=self.end)
-                indicator_series.to_csv(path.join(self.data_dir, 
-                                            "market_indicators",
-                                            f"{indicator}.csv.gz"), compression="gzip")
-            except Exception as error:
-                raise OSError(error) from error
-            
-        try:
-            dxy = yf.download(self.config.vars.dxy, start=self.start, end=self.end)["Close"]
-            dxy.to_csv(path.join(self.data_dir, 
-                                            "market_indicators",
-                                            f"{self.config.vars.dxy}.csv.gz"), compression="gzip")
-            
-        except Exception as error:
-                raise OSError(error) from error
-            
-        try:
-            asset_series = pdr.DataReader(self.config.vars.equity_rf, "famafrench", self.start, self.end)[0]
-            asset_series.to_csv(path.join(self.data_dir, 
-                                            "market_indicators",
-                                            f"{self.config.vars.equity_rf}.csv.gz"), compression="gzip")
-        except Exception as error:
-                raise OSError(error) from error
-
-        return "Extraction Done"
-    
-
-    def get_commodities(self) -> str:
-        """Download Commodities"""
-
-        commodities_list = [
-            self.config.vars.gsci,
-            self.config.vars.oil_gas,
-            self.config.vars.agriculture_index
-        ]
-
-        makedirs(path.join(
-            self.data_dir,"commodities"),
-            exist_ok=True)
-
-        for comm in commodities_list:
-            try:
-                comm_series = yf.download(comm, start=self.start, end=self.end)["Adj Close"]
-                comm_series.to_csv(path.join(self.data_dir, 
-                                            "commodities",
-                                            f"{comm}.csv.gz"), compression="gzip")
-            except Exception as error:
-                raise OSError(error) from error
-            
-        return "Extraction Done"
-            
-        
-    def get_emerging_data(self) -> str:
-        """Download Emerging
-        Markets Data"""
-
-        emerging_indicators = [
-            self.config.vars.ice_bofa_hy_em_spread,
-            self.config.vars.ice_bofa_cred_em_spread,
-            self.config.vars.em_etfs_vol,
-            self.config.vars.em_non_fin_ice_bofa,
-            self.config.vars.asia_em_bofa,
-            self.config.vars.latin_em_bofa,
-            self.config.vars.euro_em_bofa
-        ]
-
-        makedirs(path.join(self.data_dir,
-                           "em_indicators"), exist_ok=True)
-        
-        for em_ind in emerging_indicators:
-            try:
-                indicator_series = self.fred.get_series(em_ind,
-                                                        observation_start=self.start, 
-                                                        observation_end=self.end)
-                indicator_series.to_csv(path.join(self.data_dir, 
-                                            "em_indicators",
-                                            f"{em_ind}.csv.gz"), compression="gzip")
-            except Exception as error:
-                raise OSError(error) from error
-            
-        try:
-            dxy = yf.download(self.config.vars.emb, start=self.start, end=self.end)["Close"]
-            dxy.to_csv(path.join(self.data_dir, 
-                                            "em_indicators",
-                                            f"{self.config.vars.dxy}.csv.gz"), compression="gzip")
-        except Exception as error:
-                raise OSError(error) from error
-
-        return "Extraction Done"
-    
-
-    def get_global_exus_data(self) -> str:
-        """Download Global 
-        ex US data"""
-
-        makedirs(path.join(self.data_dir, 
-                           "global_ex_us"), exist_ok=True)
+        def clean_list(lst, begin, step = 6):
+            return [" ".join(lst[i].replace("\n", "").split()) for i in range(begin, len(lst) - (5 - begin), step)][:-1]
 
         try:
-            spdw = yf.download(self.config.vars.global_ex_us_etf, 
-                        start=self.start, end=self.end)["Adj Close"]
-            spdw.to_csv(path.join(
-                    self.data_dir,
-                    "global_ex_us",
-                    f"{self.config.vars.global_ex_us_etf}.csv.gz"
-            ), compression="gzip")
+            response = requests.get(self.config.vars.adamodar_url)
+            if not response.ok:
+                raise FileNotFoundError("Could not requets the Adamodar Data")
+            soup = BeautifulSoup(response.content, "html.parser")
+
+            elems = soup.find_all("td")
+
+            elems = [elem.text.strip() for elem in elems]
+            elems = [elem for elem in elems[elems.index("Country"):]]
 
         except Exception as error:
             raise OSError(error) from error
         
+        countrys = clean_list(elems, 0)
+        adj_default_spread = clean_list(elems, 1)
+        equity_risk = clean_list(elems, 2)
+        country_risk_premium = clean_list(elems, 3)
+        corporate_tax_rate = clean_list(elems, 4)
+        moodys = clean_list(elems, 5)
 
-        return "Extraction Done"
+        df_adamodar = pd.DataFrame([countrys, adj_default_spread, 
+                                    equity_risk, country_risk_premium,
+                                    corporate_tax_rate, moodys]).T
+        
+        df_adamodar.columns = df_adamodar.iloc[0]
+        df_adamodar.drop(0, inplace=True)
+
+        return df_adamodar
+        
+
+    def get_market_indicators(self) -> pd.DataFrame | list:
+        """Downloads USA Market
+          Indicators"""
+        
+        ind_list = []
+
+        for ind in self.config.vars.us_mkt_ind:
+            try:
+                ind_series = self.fred.get_series(ind,
+                                                  observation_start=self.start, 
+                                                  observation_end=self.end)
+                ind_series = ind_series.to_frame(name=ind)
+                ind_series.index.name = "Date"
+                ind_list.append(ind_series)
+            except Exception as error:
+                raise OSError(error) from error
+            
+        return ind_list
+
+
+    def get_dxy_series(self) -> pd.DataFrame:
+        """Downloads dolar 
+        index series"""
+
+        try:
+            dxy = yf.download(self.config.vars.dxy, start=self.start, end=self.end)["Close"]
+
+        except Exception as error:
+            raise OSError(error) from error
+        
+        return dxy
+
+
+    def get_mkt_returns(self) -> pd.DataFrame:
+        """Downloads ff mkt-rf returns"""
+        try:
+            asset_series = pdr.DataReader(self.config.vars.equity_rf, "famafrench", self.start, self.end)[0]["Mkt-RF"]
+            asset_series = asset_series.to_frame()
+            asset_series.index.name = "Date"
+            asset_series.index = asset_series.index.to_timestamp()
+        except Exception as error:
+            raise OSError(error) from error
+
+        return asset_series
+    
+
+    def get_commodities(self) -> pd.DataFrame | list:
+        """Download Commodities"""
+        
+        comm_list = []
+
+        for comm_ind in self.config.vars.comm:
+            try:
+                comm = self.fred.get_series(comm_ind, observation_start=self.start, 
+                                     observation_end=self.end)
+                comm_list.append(comm)
+            except Exception as error:
+                raise OSError(error) from error
+            
+        return comm_list
+            
+        
+    def get_emerging_data(self) -> pd.DataFrame | list:
+        """Download Emerging
+        Markets Data"""
+
+        ind_list = []
+        for ind in self.config.vars.em_mkt:
+            try:
+                indicator_series = self.fred.get_series(ind,
+                                                        observation_start=self.start, 
+                                                        observation_end=self.end)
+                ind_list.append(indicator_series)
+            except Exception as error:
+                raise OSError(error) from error
+            
+        return ind_list
+
+
+    def get_emb_series(self) -> pd.DataFrame:
+        """Downloads EMB etf
+        series"""
+        
+        try:
+            emb = yf.download(self.config.vars.emb, start=self.start, end=self.end)["Close"]
+        except Exception as error:
+                raise OSError(error) from error
+
+        return emb
+    
+
+    def get_global_exus_data(self) -> pd.DataFrame:
+        """Download Global 
+        ex US data"""
+
+        try:
+            spdw = yf.download(self.config.vars.global_ex_us_etf, 
+                        start=self.start, end=self.end)["Adj Close"]
+
+        except Exception as error:
+            raise OSError(error) from error
+        
+        return spdw
     
 
     def get_br_implied_inflation(self) -> str:
         """Scrap Implied Inflation
         data for specific vertices"""
-
-        makedirs(path.join(
-            self.data_dir,
-            "em_indicators"
-        ), exist_ok=True)
 
         url = self.config.vars.inf_implicita_br
 
@@ -347,16 +313,18 @@ class Extract:
                                      "ETTJ_PRE": lista_eetj_pre,
                                      "ETTJ_NTNB": lista_eetj_ntnb,
                                      "Inflacao_Implicita": lista_inf_implicita})
-        
-        df_implicita.to_csv(path.join(
-            self.data_dir,
-            "em_indicators",
-            "inf_implicita_br.csv.gz"
-        ), compression="gzip")
 
-        return "Extraction Done"
+        return df_implicita
+    
 
 
-e = Extract()
-
-print(e.get_commodities()) 
+# print(e.get_bonds_yields())
+# print(e.get_sp_multiples())
+# print(e.get_economic_indicators())
+# print(e.get_market_indicators())
+# print(e.get_dxy_series())
+# print(e.get_mkt_returns())
+# print(e.get_commodities())
+# print(e.get_emerging_data())
+# print(e.get_global_exus_data())
+# print(e.get_br_implied_inflation())
