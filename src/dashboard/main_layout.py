@@ -20,6 +20,10 @@ class MainLayout:
         from src.dashboard.us_eco import UsEco
         from src.dashboard.us_mkt import UsMkt
         from src.dashboard.sp_mult import SPMult
+        from src.dashboard.em_mkt import EmMkt
+        from src.dashboard.comm import Comm
+        from src.dashboard.global_ex_us import GlobalExUS
+        from src.dashboard.implied_inf_di import InfInterest
 
         self.config = Config()
         self.data_dir = self.config.vars.data_dir
@@ -33,6 +37,10 @@ class MainLayout:
         self.us_eco = UsEco()
         self.us_mkt = UsMkt()
         self.sp_mult = SPMult()
+        self.em_mkt = EmMkt()
+        self.comm = Comm()
+        self.global_ex_us = GlobalExUS()
+        self.inf_interest = InfInterest()
 
         st.set_page_config("Financial DashBoard", page_icon="📊", layout="wide", initial_sidebar_state='collapsed')
 
@@ -80,7 +88,6 @@ class MainLayout:
         st.markdown("""<h2 style="color:white; text-align: center">Selecione um tema</h2>""",
                     unsafe_allow_html=True)
 
-        st.write("#")
         st.write("#")
 
         self.show_buttons()
@@ -138,6 +145,9 @@ class MainLayout:
                            self.config.vars.logo_bequest), width=250)
             
             st.write("#")
+
+            if st.button("Home"):
+                self.set_page("cover")
             
             if st.button("Indicadores Econômicos (US)", key="us_eco_sidebar_button"):
                 self.set_page("us_eco_ind")
@@ -181,10 +191,14 @@ class MainLayout:
             self.sp_mult.generate_graphs()
             self.side_bar()
         elif st.session_state["current_page"] == "em_mkt":
-            st.write("🌍 Indicadores de Mercados Emergentes")
+            self.em_mkt.generate_graphs()
+            self.side_bar()
         elif st.session_state["current_page"] == "comm":
-            st.write("🌾 Commodities Global")
+            self.comm.generate_graphs()
+            self.side_bar()
         elif st.session_state["current_page"] == "global_ex_us":
-            st.write("🌏 Global ex US")
+             self.global_ex_us.generate_graphs()
+             self.side_bar()
         elif st.session_state["current_page"] == "inf_imp_juros":
-            st.write("📉 Inflação Implícita e Juros no Brasil")
+            self.inf_interest.generate_graphs()
+            self.side_bar()

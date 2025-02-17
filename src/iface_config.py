@@ -25,9 +25,13 @@ class Variables:
     equity_rf: str
     dxy: str
     emb: str
+    em_etfs_vol: str
     inf_implicita_br: str
     di_future: str
-    anbima_holidays: str
+    ambima_holidays: str
+    gsci: str
+    gold_vol: str
+    soy_price: str
     msci_eur_mult: str
     global_ex_us_etf: str
 
@@ -41,9 +45,13 @@ class Variables:
     us_bonds_yields: list = field(default_factory=list)
 
     us_mkt_ind: list = field(default_factory=list)
-
-    comm: list = field(default_factory=list)
+    
     em_mkt: list = field(default_factory=list)
+
+    grain_prices: list = field(default_factory=list)
+    energy_prices: list = field(default_factory=list)
+    comm_indexes: list = field(default_factory=list)
+
 
 
 class Config:
@@ -97,41 +105,42 @@ class Config:
                     ],
                 equity_rf=data.get("equity-rf"),
                 dxy=data.get("dxy"),
-
-                comm = [
-                    # data.get("gsci"),
-                    data.get("gold_price"),
-                    data.get("future_gol_price"),
-                    data.get("gold_holdings_fed"),
+                gsci = data.get("gsci"),
+                gold_vol=data.get("gold_vol"),
+                grain_prices = [
                     data.get("wheat_price"),
-                    data.get("food_price_index"),
-                    data.get("corn_price"),
-                    data.get("soy_price"),
+                    data.get("corn_global_price")
+                    ],
+
+                soy_price=data.get("soy_global_price"),
+                energy_prices=[ 
                     data.get("brent_oil_price"),
                     data.get("wti_oil_price"),
-                    data.get("us_oil_stock"),
-                    data.get("us_oil_production"),
                     data.get("henry_pub_ng_price")
-
-                   ],
+                    ],
+                comm_indexes=[
+                    data.get("global_price_energy"),
+                    data.get("grains_export_price_index")
+                    ],
                 em_mkt = [
                     data.get("ice_bofa_hy_em_spread"),
                     data.get("ice_bofa_cred_em_spread"),
-                    data.get("em_etfs_vol"),
                     data.get("em_non_fin_ice_bofa"),
                     data.get("asia_em_bofa"),
                     data.get("latin_em_bofa"),
-                    data.get("euro_em_bofa")
+                    data.get("euro_em_bofa"),
                    ],
+                em_etfs_vol=data.get("em_etfs_vol"),
                 emb=data.get("emb"),
                 inf_implicita_br=data.get("inf_implicita_br"),
-                anbima_holidays=data.get("anbima_holidays"),
+                ambima_holidays=data.get("ambima_holidays"),
                 di_future=data.get("di_future"),
                 msci_eur_mult=data.get("msci_eur_mult"),
                 global_ex_us_etf=data.get("global_ex_us_etf"),
 
                 FRED_API_KEY=environ["FRED_API_KEY"]
         )
+        self.base_color = "#fba725"
 
     def __repr__(self) -> str:
         """ Basic class

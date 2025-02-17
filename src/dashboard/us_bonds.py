@@ -10,7 +10,7 @@ import altair as alt
 
 
 class BondsYields:
-    """Extract Interface"""
+    """US Bonds Yields"""
 
     def __init__(self) -> None:
         """Initializes instance"""

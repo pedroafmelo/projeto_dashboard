@@ -10,7 +10,7 @@ import altair as alt
 
 
 class UsMkt:
-    """Extract Interface"""
+    """US Market Indicators"""
 
     def __init__(self) -> None:
         """Initializes instance"""
@@ -103,7 +103,7 @@ class UsMkt:
         )
 
         st.write("#")
-        st.line_chart(us_mkt_data_choose, color="#fba725")
+        st.line_chart(us_mkt_data_choose, color=self.config.base_color)
 
         c1, c2, c3 = st.columns([4, .5, 3])
 

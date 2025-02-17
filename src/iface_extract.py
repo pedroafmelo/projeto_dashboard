@@ -4,15 +4,11 @@
 from os import path, makedirs, system
 import pandas as pd
 import pandas_datareader.data as pdr
-from datetime import datetime, timedelta
+from datetime import datetime
 from bs4 import BeautifulSoup
 import requests
 import yfinance as yf
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
+
 import warnings
 from fredapi import Fred
 
@@ -132,6 +128,8 @@ class Extract:
         for ind in self.config.vars.us_eco_ind:
             try:
                 ind_series = pdr.DataReader(ind, "fred", self.start, self.end)
+                if ind in ["CPIAUCSL", "PCE"]:
+                    ind_series = ind_series.pct_change()
                 ind_list.append(ind_series)
 
             except Exception as error:
@@ -224,20 +222,102 @@ class Extract:
         return asset_series
     
 
-    def get_commodities(self) -> pd.DataFrame | list:
-        """Download Commodities"""
+    def get_grain_prices(self) -> pd.DataFrame | list:
+        """Download Commodities Prices"""
         
         comm_list = []
 
-        for comm_ind in self.config.vars.comm:
+        for comm_ind in self.config.vars.grain_prices:
             try:
                 comm = self.fred.get_series(comm_ind, observation_start=self.start, 
                                      observation_end=self.end)
+                comm = comm.to_frame(name=comm_ind)
                 comm_list.append(comm)
             except Exception as error:
                 raise OSError(error) from error
             
-        return comm_list
+        df_final = pd.concat(comm_list, axis=1)
+        df_final.dropna
+            
+        return df_final
+    
+    def get_energy_prices(self) -> pd.DataFrame | list:
+        """Download Commodities Prices"""
+        
+        comm_list = []
+
+        for comm_ind in self.config.vars.energy_prices:
+            try:
+                comm = self.fred.get_series(comm_ind, observation_start=self.start, 
+                                     observation_end=self.end)
+                comm = comm.to_frame(name=comm_ind)
+                comm_list.append(comm)
+            except Exception as error:
+                raise OSError(error) from error
+            
+        df_final = pd.concat(comm_list, axis=1)
+        df_final.dropna
+            
+        return df_final
+    
+    def get_gsci_series(self) -> pd.DataFrame:
+        """Downloads GSCI etf
+        series"""
+        
+        try:
+            gsci = yf.download(self.config.vars.gsci, start=self.start, end=self.end)["Adj Close"]
+        except Exception as error:
+                raise OSError(error) from error
+
+        return gsci
+    
+    def get_gold_vol_series(self) -> pd.DataFrame:
+        """Downloads gld 
+        etf vol series"""
+        
+        try:
+            gold_vol = self.fred.get_series(self.config.vars.gold_vol, observation_start=self.start, 
+                                     observation_end=self.end)
+            gold_vol = gold_vol.to_frame()
+            gold_vol.index.name = "Date"
+
+        except Exception as error:
+                raise OSError(error) from error
+
+        return gold_vol
+    
+    def get_comm_indexes(self) -> pd.DataFrame | list:
+        """Download Commodities Indexes"""
+        
+        comm_list = []
+
+        for comm_ind in self.config.vars.comm_indexes:
+            try:
+                comm = self.fred.get_series(comm_ind, observation_start=self.start, 
+                                     observation_end=self.end)
+                comm = comm.to_frame(name=comm_ind)
+                comm_list.append(comm)
+            except Exception as error:
+                raise OSError(error) from error
+            
+        df_final = pd.concat(comm_list, axis=1)
+        df_final.dropna
+            
+        return df_final
+    
+    def get_soy_series(self) -> pd.DataFrame:
+        """Downloads soybean series"""
+        
+        try:
+            soy = self.fred.get_series(self.config.vars.soy_price, observation_start=self.start, 
+                                     observation_end=self.end)
+            soy = soy.to_frame(name=self.config.vars.soy_price)
+            soy.index.name = "Date"
+
+        except Exception as error:
+                raise OSError(error) from error
+
+        return soy
             
         
     def get_emerging_data(self) -> pd.DataFrame | list:
@@ -250,11 +330,15 @@ class Extract:
                 indicator_series = self.fred.get_series(ind,
                                                         observation_start=self.start, 
                                                         observation_end=self.end)
+                indicator_series = indicator_series.to_frame(name=ind)
+                indicator_series.index.name = "Date"
                 ind_list.append(indicator_series)
             except Exception as error:
                 raise OSError(error) from error
             
-        return ind_list
+        df_final = pd.concat(ind_list, axis=1)
+            
+        return df_final
 
 
     def get_emb_series(self) -> pd.DataFrame:
@@ -267,6 +351,24 @@ class Extract:
                 raise OSError(error) from error
 
         return emb
+    
+
+    def get_vxeem(self) -> pd.DataFrame:
+        """Downloads VXEEMCLS index
+        series"""
+        
+        try:
+            vxeem = self.fred.get_series(self.config.vars.em_etfs_vol,
+                                        observation_start=self.start, 
+                                        observation_end=self.end)
+            vxeem = vxeem.to_frame()
+            vxeem.dropna(inplace=True)
+            vxeem.index.name="Date"
+
+        except Exception as error:
+                raise OSError(error) from error
+
+        return vxeem
     
 
     def get_global_exus_data(self) -> pd.DataFrame:
@@ -309,22 +411,20 @@ class Extract:
         except Exception as error:
             raise OSError(error) from error
         
-        df_implicita = pd.DataFrame({"vertice": lista_vertices,
-                                     "ETTJ_PRE": lista_eetj_pre,
-                                     "ETTJ_NTNB": lista_eetj_ntnb,
-                                     "Inflacao_Implicita": lista_inf_implicita})
+        df_implicita = pd.DataFrame({"Vértice": lista_vertices,
+                                     "ETTJ PRE": lista_eetj_pre,
+                                     "ETTJ NTNB": lista_eetj_ntnb,
+                                     "Inflação Implicita": lista_inf_implicita})
 
         return df_implicita
     
-
-
-# print(e.get_bonds_yields())
+# e= Extract()
+# print(e.get_comm_indexes())
 # print(e.get_sp_multiples())
 # print(e.get_economic_indicators())
 # print(e.get_market_indicators())
 # print(e.get_dxy_series())
 # print(e.get_mkt_returns())
 # print(e.get_commodities())
-# print(e.get_emerging_data())
 # print(e.get_global_exus_data())
 # print(e.get_br_implied_inflation())

@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import warnings
-from fredapi import Fred
+import holidays
 
 class Interpolate:
     """Interpolate Interface"""
@@ -19,7 +19,7 @@ class Interpolate:
         """Initializes instance"""
 
         # import local module
-        from iface_config import Config
+        from src.iface_config import Config
 
         self.config = Config()
         self.data_dir = self.config.vars.data_dir
@@ -39,13 +39,26 @@ class Interpolate:
         Print Representation"""
 
         return f"Interpolate Class, staging dir: {str(self.data_dir)}"
+    
+    @staticmethod
+    def ajustar_para_dia_util(data_hora, pais='BR'):
+        feriados = holidays.country_holidays(pais)
+        
+        if data_hora.hour < 11:
+            data_hora -= timedelta(days=1)
+        
+        while data_hora.weekday() in [5, 6] or data_hora.date() in feriados:
+            data_hora -= timedelta(days=1)
+    
+        return data_hora.replace(hour=11, minute=0, second=0)
 
 
     def get_di_table(self, mercadoria: str = "DI1") -> pd.DataFrame:
         """Get the CDI table 
         for given date"""
 
-        date = datetime.strftime(datetime.today() - timedelta(days=1), format=r"%d/%m/%Y")
+        date = self.ajustar_para_dia_util(datetime.today())
+        date = datetime.strftime(date, format=r"%d/%m/%Y")
         url = self.config.vars.di_future.replace(r"{data_di}", date).replace(r"{mercadoria}", mercadoria)
         chrome_options = Options()
         chrome_options.add_argument("--headless")  
@@ -56,7 +69,7 @@ class Interpolate:
             service = Service(ChromeDriverManager().install())
             driver = webdriver.Chrome(service=service, options=chrome_options)
             driver.get(url)
-            driver.implicitly_wait(3)
+            driver.implicitly_wait(5)
 
             local_table = "/html/body/div/div[2]/form[1]/table[3]/tbody/tr[3]/td[3]/table"
             local_index = "/html/body/div/div[2]/form[1]/table[3]/tbody/tr[3]/td[1]/table"
@@ -111,17 +124,9 @@ class Interpolate:
         """Gets ANBIMA National
         Holidays"""
 
-        dest_dir = path.join(self.data_dir, 'feriados.xls')
-
         try:
-            
-            data_dict_os_cmd = (
-                        f"wget --limit-rate 10000k "
-                        f"--no-check-certificate -c {self.config.vars.anbima_holidays} -O {dest_dir}"
-                    )
-            system(data_dict_os_cmd)
 
-            data_anbima = pd.read_excel(dest_dir)[:-9]
+            data_anbima = pd.read_excel(self.config.vars.ambima_holidays)[:-9]
             data_anbima["Data"] = pd.to_datetime(data_anbima["Data"], format=r"%Y-%m-%d")
             data_anbima = data_anbima[data_anbima["Data"] >= self.end]["Data"].to_list()
 
@@ -131,11 +136,10 @@ class Interpolate:
         return data_anbima
 
 
-    def interpolate(self, date: str):
+    def interpolate(self, date):
         """Interpolate DI Interest Rate
         Return In date Rate"""
 
-        date = datetime.strptime(date, r"%d/%m/%Y")
 
         holidays = self.get_anbima_holidays()
         di_table = self.get_di_table()
@@ -157,7 +161,6 @@ class Interpolate:
 
         rates = list(di_table.values)
 
-
         try:
             forward_bus_days = len(
                 pd.date_range(
@@ -174,8 +177,4 @@ class Interpolate:
 
         cubic_rates = list(cubic(new_days))
 
-        return cubic_rates
-
-
-int = Interpolate()
-print(int.interpolate("10/01/2028"))
+        return new_days, cubic_rates, bus_days_list, rates

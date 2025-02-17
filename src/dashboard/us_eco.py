@@ -10,7 +10,7 @@ import altair as alt
 
 
 class UsEco:
-    """Extract Interface"""
+    """US Economic Indicators"""
 
     def __init__(self) -> None:
         """Initializes instance"""
@@ -115,7 +115,7 @@ class UsEco:
             """, unsafe_allow_html=True
         )
 
-        st.line_chart(us_econ_data_choose, color="#fba725")
+        st.line_chart(us_econ_data_choose, color=self.config.base_color)
 
         with st.spinner("Carregando dados"):
             df_gdp, cur_fc = self.get_recent_gdp_forecasts()
@@ -139,7 +139,7 @@ class UsEco:
             """, unsafe_allow_html=True
         )
 
-        c3.line_chart(us_econ_data[-1], color="#fba725")
+        c3.line_chart(us_econ_data[-1], color=self.config.base_color)
 
         st.markdown(f"""
                 <div style="padding-top: 0px; padding-bottom: 0px;">

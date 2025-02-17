@@ -10,7 +10,7 @@ import altair as alt
 
 
 class SPMult:
-    """Extract Interface"""
+    """S&P 500 Multiples"""
 
     def __init__(self) -> None:
         """Initializes instance"""
@@ -114,28 +114,28 @@ class SPMult:
         if indicator_filter == "S&P 500 Price-to-Book":
             estimative_pb = self.get_estimatives(sp_pb)
             sp_pb = sp_pb[sp_pb["year"] >= year_filter]
-            c1.line_chart(sp_pb, y = "price_to_book", color="#fba725")
+            c1.line_chart(sp_pb, y = "price_to_book", color=self.config.base_color)
             c3.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
-                <h4 style="margin: 0; color: white">Estimativa - {indicator_filter} - {estimative_pb.name.date}</h4>
+                <h4 style="margin: 0; color: white">Estimativa - {indicator_filter} - \n{estimative_pb.name.strftime(r"%d/%m/%Y")}</h4>
             </div>
             """, unsafe_allow_html=True
         )
-            col1, col2, col3 = c3.columns(3)
+            col1, col2, col3 = c3.columns([1.5, 3, 2])
             col2.write("#")
             col2.metric("Valor", 
                         estimative_pb[self.mult_ind.get(indicator_filter)], 
-                        delta = sp_pb.iloc[-2]["price_to_book"],
+                        delta = round((estimative_pb[self.mult_ind.get(indicator_filter)] - sp_pb.iloc[-2]["price_to_book"]), 3),
                         border=True)
         
         else:
             sp_ey_pe_choose = sp_ey_pe[[self.mult_ind.get(indicator_filter), "year"]]
             sp_ey_pe_choose = sp_ey_pe_choose[sp_ey_pe_choose["year"] >= year_filter][self.mult_ind.get(indicator_filter)]
             estimative_ey_pe = self.get_estimatives(sp_ey_pe)
-            c1.line_chart(sp_ey_pe_choose, color="#fba725")
+            c1.line_chart(sp_ey_pe_choose, color=self.config.base_color)
             c3.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
-                <h4 style="margin: 0; color: white">Estimativa - {indicator_filter} - {estimative_ey_pe.name.date}</h4>
+                <h4 style="margin: 0; color: white">Estimativa - {indicator_filter} - \n{estimative_ey_pe.name.strftime(r"%d/%m/%Y")}</h4>
             </div>
             """, unsafe_allow_html=True
         )
@@ -143,8 +143,5 @@ class SPMult:
             col2.write("#")
             col2.metric("Valor", 
                         estimative_ey_pe[self.mult_ind.get(indicator_filter)], 
-                        delta = sp_ey_pe_choose.iloc[-2],
+                        delta = round((estimative_ey_pe[self.mult_ind.get(indicator_filter)] - sp_ey_pe_choose.iloc[-2]), 3),
                         border=True)
-
-
-       
