@@ -63,12 +63,8 @@ class Interpolate:
         chrome_options.add_argument("--headless")  
         chrome_options.add_argument("--disable-gpu")  
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-
         try:
-            driver_path = ChromeDriverManager().install()
-            service = Service(driver_path)
-            driver = webdriver.Chrome(service=service, options=chrome_options)
+            driver = webdriver.Chrome(options = chrome_options)
             driver.get(url)
             driver.implicitly_wait(5)
 
