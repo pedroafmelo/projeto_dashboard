@@ -93,7 +93,11 @@ class UsMkt:
             us_mkt_data, dxy, ff_returns = self.get_data()
             us_mkt_data_choose = us_mkt_data[self.mkt_ind.get(indicator_filter)]
             us_mkt_data_choose = us_mkt_data_choose[us_mkt_data_choose.index.year >= year_filter]
-            dxy, ff_returns = dxy[dxy.index.year >= year_filter], ff_returns[ff_returns.index.year >= year_filter]
+            if len(dxy) <=5:
+                c1.error("Erro na API de dados")
+            else:
+                dxy = dxy[dxy.index.year >= year_filter]
+            ff_returns = ff_returns[ff_returns.index.year >= year_filter]
     
         c1.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
