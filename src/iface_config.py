@@ -33,10 +33,12 @@ class Variables:
     gsci: str
     gold_vol: str
     soy_price: str
+    global_price_all_comm: str
     msci_eur_mult: str
     global_ex_us_etf: str
 
     FRED_API_KEY: str
+    AV_API_KEY: str
 
     # default
     sp_mult: list = field(default_factory=list)
@@ -123,6 +125,7 @@ class Config:
                     data.get("global_price_energy"),
                     data.get("grains_export_price_index")
                     ],
+                global_price_all_comm=data.get("global_price_all_comm"),
                 em_mkt = [
                     data.get("ice_bofa_hy_em_spread"),
                     data.get("ice_bofa_cred_em_spread"),
@@ -139,7 +142,8 @@ class Config:
                 msci_eur_mult=data.get("msci_eur_mult"),
                 global_ex_us_etf=data.get("global_ex_us_etf"),
 
-                FRED_API_KEY=secrets["general"]["FRED_API_KEY"]
+                FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
+                AV_API_KEY=secrets["general"]["AV_API_KEY"]
         )
         self.base_color = "#fba725"
 

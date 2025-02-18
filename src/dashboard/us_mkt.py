@@ -113,7 +113,10 @@ class UsMkt:
                 
             """, unsafe_allow_html=True
         )
-        c1.line_chart(dxy, color="#ffae42")
+        if len(dxy) <=5:
+            c1.error("Erro na API de dados")
+        else:
+            c1.line_chart(dxy, color="#ffae42")
 
         c3.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">

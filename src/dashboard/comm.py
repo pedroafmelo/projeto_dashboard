@@ -51,6 +51,7 @@ class Comm:
         self.indexes = dict(zip(indexes,
                                      self.config.vars.comm_indexes))
         self.indexes["Índice S&P GSCI"] = self.config.vars.gsci
+        self.indexes["Índice Global de Preços de Todas as Commodities"] = self.config.vars.global_price_all_comm
         
         warnings.filterwarnings('ignore')
 
@@ -87,7 +88,8 @@ class Comm:
                  _self.extract.get_comm_indexes(),
                  _self.extract.get_gold_vol_series(),
                  _self.extract.get_soy_series(),
-                 _self.extract.get_gsci_series()
+                 _self.extract.get_gsci_series(),
+                 _self.extract.get_all_comm_index()
         )
 
 
@@ -100,7 +102,7 @@ class Comm:
 
         with st.spinner("Carregando os dados..."):
         
-            grain_prices, energy_prices, comm_indexes, gold_vol, soy, gsci = self.get_data()    
+            grain_prices, energy_prices, comm_indexes, gold_vol, soy, gsci, all_comm = self.get_data()    
             
         indicator_filter = c1.selectbox(
             "Selecione Grão", 
@@ -212,12 +214,18 @@ class Comm:
             """, unsafe_allow_html=True
         )
 
-        if indicator_filter_index == "Índice S&P GSCI":
+        if indicator_filter_index == "Índice S&P GSCI": 
+            if len(gsci) <= 5:
+                c1.error("Erro na API de dados")
+            else:
+                gsci_choose = gsci[gsci.index.year >= year_filter]
+                c1.line_chart(gsci_choose, color=self.config.base_color)
+            
+        elif indicator_filter_index == "Índice Global de Preços de Todas as Commodities":
+            all_comm_choose = all_comm[all_comm.index.year >= year_filter]
+            c1.line_chart(all_comm_choose, color=self.config.base_color)
 
-            gsci_choose = gsci[gsci.index.year >= year_filter]
-            c1.line_chart(gsci_choose, color=self.config.base_color)
-            
-            
+
         else:
             comm_indexes_choose = comm_indexes[self.indexes.get(indicator_filter_index)]
             comm_indexes_choose = comm_indexes_choose[comm_indexes_choose.index.year >= year_filter]

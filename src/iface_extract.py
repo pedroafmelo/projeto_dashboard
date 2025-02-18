@@ -8,6 +8,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 import requests
 import yfinance as yf
+from alpha_vantage.timeseries import TimeSeries
 
 import warnings
 from fredapi import Fred
@@ -27,6 +28,8 @@ class Extract:
         self.end = datetime.today()
 
         self.fred = Fred(api_key=self.config.vars.FRED_API_KEY)
+        self.av_tseries = TimeSeries(key=self.config.vars.AV_API_KEY, 
+                             output_format="pandas")
 
         warnings.filterwarnings('ignore')
 
@@ -48,7 +51,7 @@ class Extract:
           Bonds Yields"""
         
         try:
-            yield_series = pdr.DataReader( self.config.vars.us_bonds_yields, "fred", self.start, self.end)
+            yield_series = pdr.DataReader(self.config.vars.us_bonds_yields, "fred", self.start, self.end)
         except Exception as error:
             raise OSError(error) from error
 
@@ -271,6 +274,21 @@ class Extract:
 
         return gsci
     
+    def get_all_comm_index(self) -> pd.DataFrame:
+        """Downloads gld 
+        etf vol series"""
+        
+        try:
+            all_comm = self.fred.get_series(self.config.vars.global_price_all_comm, observation_start=self.start, 
+                                     observation_end=self.end)
+            all_comm = all_comm.to_frame()
+            all_comm.index.name = "Date"
+
+        except Exception as error:
+                raise OSError(error) from error
+        
+        return all_comm
+    
     def get_gold_vol_series(self) -> pd.DataFrame:
         """Downloads gld 
         etf vol series"""
@@ -349,6 +367,11 @@ class Extract:
             emb = yf.download(self.config.vars.emb, start=self.start, end=self.end)["Close"]
         except Exception as error:
                 raise OSError(error) from error
+        
+        if len(emb) == 0:
+            emb = self.av_tseries.get_daily(self.config.vars.emb,
+                                             outputsize="full")["4. close"]
+            emb.sort_index(inplace=True)
 
         return emb
     
@@ -378,12 +401,14 @@ class Extract:
         try:
             spdw = yf.download(self.config.vars.global_ex_us_etf, 
                         start=self.start, end=self.end)["Adj Close"]
-            
-            print(spdw)
 
         except Exception as error:
             raise OSError(error) from error
         
+        if len(spdw) == 0:
+            spdw = self.av_tseries.get_daily("SPDW", outputsize="full")["4. close"]
+            spdw.sort_index(inplace=True)
+
         return spdw
     
 
