@@ -56,15 +56,17 @@ class Interpolate:
         """Get the CDI table 
         for given date"""
 
+        
         date = self.ajustar_para_dia_util(datetime.today())
         date = datetime.strftime(date, format=r"%d/%m/%Y")
         url = self.config.vars.di_future.replace(r"{data_di}", date).replace(r"{mercadoria}", mercadoria)
-        chrome_options = Options()
+        chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--headless")  
         chrome_options.add_argument("--disable-gpu")  
         chrome_options.add_argument("--no-sandbox")
         try:
-            driver = webdriver.Chrome(options = chrome_options)
+            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),
+                                  options=chrome_options)
             driver.get(url)
             driver.implicitly_wait(5)
 
