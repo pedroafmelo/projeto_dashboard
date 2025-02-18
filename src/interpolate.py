@@ -44,8 +44,7 @@ class Interpolate:
     def ajustar_para_dia_util(data_hora, pais='BR'):
         feriados = holidays.country_holidays(pais)
         
-        if data_hora.hour < 11:
-            data_hora -= timedelta(days=1)
+        data_hora -= timedelta(days=1)
         
         while data_hora.weekday() in [5, 6] or data_hora.date() in feriados:
             data_hora -= timedelta(days=1)

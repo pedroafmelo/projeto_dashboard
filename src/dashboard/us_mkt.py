@@ -102,7 +102,6 @@ class UsMkt:
             """, unsafe_allow_html=True
         )
 
-        st.write("#")
         st.line_chart(us_mkt_data_choose, color=self.config.base_color)
 
         c1, c2, c3 = st.columns([4, .5, 3])
@@ -114,7 +113,6 @@ class UsMkt:
                 
             """, unsafe_allow_html=True
         )
-        c1.write("#")
         c1.line_chart(dxy, color="#ffae42")
 
         c3.markdown(f"""
@@ -125,5 +123,4 @@ class UsMkt:
             """, unsafe_allow_html=True
         )
         
-        c3.write("#")
         c3.line_chart(ff_returns, color="#ffae42")

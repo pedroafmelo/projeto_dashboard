@@ -175,12 +175,20 @@ class Comm:
         energy_prices_choose = energy_prices[self.energy_prices.get(indicator_filter_energy)]
         energy_prices_choose = energy_prices_choose[energy_prices_choose.index.year >= year_filter]
         c3.line_chart(energy_prices_choose, color=self.config.base_color)
-        c1.markdown(f"""
-            <div style="padding-top: 0px; padding-bottom: 0px;">
-                <h4 style="margin: 0; color: white">{indicator_filter_energy} - \n Último Preço (U$/Barril)</h4>
-            </div>
-            """, unsafe_allow_html=True
-        )
+        if indicator_filter_energy == "Preços de Fontes de Energia - Gás Natural":
+            c1.markdown(f"""
+                <div style="padding-top: 0px; padding-bottom: 0px;">
+                    <h4 style="margin: 0; color: white">{indicator_filter_energy} - \n Último Preço (U$/Milhão de BTU)</h4>
+                </div>
+                """, unsafe_allow_html=True
+            )
+        else:
+            c1.markdown(f"""
+                <div style="padding-top: 0px; padding-bottom: 0px;">
+                    <h4 style="margin: 0; color: white">{indicator_filter_energy} - \n Último Preço (U$/Barril)</h4>
+                </div>
+                """, unsafe_allow_html=True
+            )
         col1, col2, col3 = c1.columns([1.5, 3, 2])
         col2.write("#")
         col2.metric("Valor", 

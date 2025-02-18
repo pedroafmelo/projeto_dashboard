@@ -117,7 +117,7 @@ class EmMkt:
 
         c3.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
-                <h4 style="margin: 0; color: white">Série Histórica - ETF EMB</h4>
+                <h4 style="margin: 0; color: white">Série Histórica de Preços - ETF EMB (U$)</h4>
             </div>
                 
             """, unsafe_allow_html=True

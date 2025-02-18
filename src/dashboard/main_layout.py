@@ -7,6 +7,7 @@ import pandas_datareader.data as pdr
 import streamlit as st
 from datetime import datetime
 import warnings
+import streamlit_authenticator as stauth
 
 class MainLayout:
     """MainLayout Interface"""
@@ -42,11 +43,6 @@ class MainLayout:
         self.global_ex_us = GlobalExUS()
         self.inf_interest = InfInterest()
 
-        st.set_page_config("Financial DashBoard", page_icon="📊", layout="wide", initial_sidebar_state='collapsed')
-
-        if "current_page" not in st.session_state:
-            st.session_state["current_page"] = "cover"
-
     def __repr__(self) -> str:
         """MainLayout Class Basic
         Representation"""
@@ -69,6 +65,7 @@ class MainLayout:
 
     def show_cover(self):
         """App cover"""
+
         if st.session_state["current_page"] != "cover":
             return
 
@@ -135,11 +132,15 @@ class MainLayout:
         if c7.button("Inflação Implícita e Juros (BR)"):
             self.set_page("inf_imp_juros")
 
-    
+
     def side_bar(self):
         """Make a sidebar menu"""
 
         with st.sidebar:
+
+            if st.session_state["current_page"] == "cover":
+                st.success(f"Bem-vindo, *{st.session_state["name"]}*")
+                st.write("#")
 
             st.image(path.join(self.config.vars.img_dir, 
                            self.config.vars.logo_bequest), width=250)

@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from dotenv import load_dotenv
 from yaml import load
 from yaml.loader import SafeLoader
+from streamlit import secrets
 
 
 @dataclass
@@ -138,9 +139,17 @@ class Config:
                 msci_eur_mult=data.get("msci_eur_mult"),
                 global_ex_us_etf=data.get("global_ex_us_etf"),
 
+                # FRED_API_KEY=secrets["general"]["FRED_API_KEY"]
                 FRED_API_KEY=environ["FRED_API_KEY"]
         )
         self.base_color = "#fba725"
+
+        self.app_names = ["Leonardo Quaranta", "Matheus Marinho", 
+                          "Gabriel Basso", "Eliseu Batista", "Augusto Alves"]
+        
+        self.app_usernames = ["leoquaranta", "mmarinho", 
+                              "gbasso", "eliseubat", "augalves"]
+    
 
     def __repr__(self) -> str:
         """ Basic class

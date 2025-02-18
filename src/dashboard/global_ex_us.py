@@ -59,7 +59,7 @@ class GlobalExUS:
     @st.cache_data(show_spinner=False)
     def get_data(_self):
 
-        return _self.extract.get_global_exus_data()
+        return _self.extract.get_global_exus_data(), _self.extract.get_adamodar_data()
 
 
     def generate_graphs(self):
@@ -72,16 +72,26 @@ class GlobalExUS:
         with st.spinner("Carregando os dados..."):
 
             year_filter = c1.slider("Selecione uma data inicial", 
-                                min_value=2000,
+                                min_value=2008,
                                 max_value=datetime.today().year)
             
-            global_data = self.get_data()
+            global_data, adamodar_data = self.get_data()
             global_data_choose = global_data[global_data.index.year >= year_filter]
 
         st.markdown("""
             <div style="padding-top: 0px; padding-bottom: 0px;">
-                    <h4 style="margin: 0; color: white"> Série Histórica - ETF SPDW</h4>
+                    <h4 style="margin: 0; color: white"> Série Histórica de Preços- ETF SPDW (U$)</h4>
             </div>
             """, unsafe_allow_html=True)
 
-        st.line_chart(global_data, color=self.config.base_color)
+        st.line_chart(global_data_choose, color=self.config.base_color)
+
+
+        st.markdown(f"""
+                <div style="padding-top: 0px; padding-bottom: 0px;">
+                    <h4 style="margin: 0; color: white">Country Default Spreads and Risk Premiums </h4>
+                </div>
+                    
+                """, unsafe_allow_html=True
+            )
+        st.dataframe(adamodar_data, hide_index=True)

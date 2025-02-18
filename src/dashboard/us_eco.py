@@ -81,7 +81,7 @@ class UsEco:
     @st.cache_data(show_spinner=False)
     def get_data(_self):
 
-        return _self.extract.get_economic_indicators(), _self.extract.get_adamodar_data()
+        return _self.extract.get_economic_indicators()
     
 
     def generate_graphs(self) -> None:
@@ -103,7 +103,7 @@ class UsEco:
                                 min_value=2000,
                                 max_value=datetime.today().year)
             
-            us_econ_data, adamodar_data = self.get_data()
+            us_econ_data = self.get_data()
             us_econ_data_choose = us_econ_data[self.eco_ind.get(indicator_filter)]
             us_econ_data_choose = us_econ_data_choose[us_econ_data_choose.index.year >= year_filter]
 
@@ -120,7 +120,7 @@ class UsEco:
         with st.spinner("Carregando dados"):
             df_gdp, cur_fc = self.get_recent_gdp_forecasts()
 
-        c1, c2, c3 = st.columns([4, .5, 3])
+        c1, c2, c3 = st.columns([3, .5, 5])
 
         c1.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
@@ -140,12 +140,3 @@ class UsEco:
         )
 
         c3.line_chart(us_econ_data[-1], color=self.config.base_color)
-
-        st.markdown(f"""
-                <div style="padding-top: 0px; padding-bottom: 0px;">
-                    <h4 style="margin: 0; color: white">Country Default Spreads and Risk Premiums </h4>
-                </div>
-                    
-                """, unsafe_allow_html=True
-            )
-        st.dataframe(adamodar_data, hide_index=True)

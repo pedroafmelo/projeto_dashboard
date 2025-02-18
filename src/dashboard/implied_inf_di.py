@@ -75,13 +75,13 @@ class InfInterest:
 
         self.inf_interest_cover()
 
-        c1, c2, c3 = st.columns([5, 6, 3])
+        c1, c2, c3 = st.columns([4, 6, 3])
 
         col1, col2, col3 = c1.columns([1, 6, .5])
-        coluna1, coluna2, coluna3 = c2.columns([4, 2, 1])
+        coluna1, coluna2= c2.columns([.5, 7])
 
 
-        input_date = coluna1.date_input("Digite uma data para saber o juros esperado", 
+        input_date = c3.date_input("Digite uma data para saber o juros esperado", 
                                    value = datetime.today() + timedelta(days=30), format="DD/MM/YYYY")
 
         with st.spinner("Carregando os dados..."):
@@ -95,25 +95,27 @@ class InfInterest:
             
             new_interest_dates = pd.DataFrame({"Dias Úteis": new_days, 
                                                  "Juros Futuro (DI)": target_rates,
-                                                 "Categoria": "Alvo Interpolado"})
+                                                 "Categoria": f"156, 252 e {new_days[0]} vértices"})
             
             df_final = pd.concat([df_fut_interest_rate, new_interest_dates])
 
 
-        col2.markdown("""
+        c1.markdown("""
             <div style="padding-top: 0px; padding-bottom: 0px;">
                     <h4 style="margin: 0; color: white">Inflação Implícita</h4>
             </div>
             """, unsafe_allow_html=True)
         
-        col2.dataframe(implied_inflation, hide_index=True)
+        c1.dataframe(implied_inflation, hide_index=True, use_container_width=True)
 
-        c2.markdown(f"""
+
+        coluna2.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
-                    <h4 style="margin: 0; color: white">Curva de Juros - {datetime.today().strftime("%d/%m/%Y")}</h4>
+                    <h4 style="margin: 0; color: white">Curva de Juros mais Recente</h4>
             </div>
             """, unsafe_allow_html=True)
-        c2.scatter_chart(data=df_final, x="Dias Úteis", y="Juros Futuro (DI)", color="Categoria", 
+        coluna2.write("#")
+        coluna2.scatter_chart(data=df_final, x="Dias Úteis", y="Juros Futuro (DI)", color="Categoria", 
                          width=500,use_container_width=False)
         
         c3.markdown(f"""
@@ -121,7 +123,5 @@ class InfInterest:
                     <h4 style="margin: 0; color: white">Juros na data escolhida</h4>
             </div>
             """, unsafe_allow_html=True)
-        
-        c3.write("#")
 
-        c3.metric("Valor", f"{interest_rates[0]}%", border=True)
+        c3.metric("Valor", f"{target_rates[0]:.2f}%", border=True)
