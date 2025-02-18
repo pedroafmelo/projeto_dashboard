@@ -66,9 +66,12 @@ class Authentication:
             ml = MainLayout()
             ml.render_page()
 
+
             with st.sidebar:
+                
                 st.write("#")
-                authenticator.logout("Logout")
+                if st.button("Logout"):
+                    authenticator.logout("Logout")
                 
                 try:
                     if authenticator.reset_password(st.session_state["username"], 
@@ -114,7 +117,7 @@ class Authentication:
             """,
                 unsafe_allow_html=True,
             )
-            col2.warning('Please enter your username and password') 
+            col2.warning('Por favor, entre com login e senha') 
 
         with yaml_file.open("w") as file:
             yaml.dump(config, file, default_flow_style=False)

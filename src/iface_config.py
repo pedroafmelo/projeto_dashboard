@@ -139,7 +139,8 @@ class Config:
                 msci_eur_mult=data.get("msci_eur_mult"),
                 global_ex_us_etf=data.get("global_ex_us_etf"),
 
-                FRED_API_KEY=secrets["general"]["FRED_API_KEY"]
+                # FRED_API_KEY=secrets["general"]["FRED_API_KEY"]
+                FRED_API_KEY="XXX"
         )
         self.base_color = "#fba725"
 
