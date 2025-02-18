@@ -1,7 +1,7 @@
+.ipynb
 .venv
 __pycache__
 .DS_Store
 venv
 .env.secrets
 .env
-.ipynb
