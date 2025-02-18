@@ -66,7 +66,7 @@ class Interpolate:
         chrome_options.add_argument("--disable-dev-shm-usage")
 
         try:
-            driver_path = ChromeDriverManager(driver_version="133.0.6943.98").install()
+            driver_path = ChromeDriverManager().install()
             service = Service(driver_path)
             driver = webdriver.Chrome(service=service, options=chrome_options)
             driver.get(url)
