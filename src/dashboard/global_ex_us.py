@@ -76,6 +76,7 @@ class GlobalExUS:
                                 max_value=datetime.today().year)
             
             global_data, adamodar_data = self.get_data()
+            
             global_data_choose = global_data[global_data.index.year >= year_filter]
 
         st.markdown("""

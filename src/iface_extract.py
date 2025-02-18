@@ -378,6 +378,8 @@ class Extract:
         try:
             spdw = yf.download(self.config.vars.global_ex_us_etf, 
                         start=self.start, end=self.end)["Adj Close"]
+            
+            print(spdw)
 
         except Exception as error:
             raise OSError(error) from error
