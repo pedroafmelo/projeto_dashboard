@@ -93,10 +93,6 @@ class UsMkt:
             us_mkt_data, dxy, ff_returns = self.get_data()
             us_mkt_data_choose = us_mkt_data[self.mkt_ind.get(indicator_filter)]
             us_mkt_data_choose = us_mkt_data_choose[us_mkt_data_choose.index.year >= year_filter]
-            if len(dxy) <=5:
-                c1.error("Erro na API de dados")
-            else:
-                dxy = dxy[dxy.index.year >= year_filter]
             ff_returns = ff_returns[ff_returns.index.year >= year_filter]
     
         c1.markdown(f"""
@@ -109,6 +105,11 @@ class UsMkt:
         st.line_chart(us_mkt_data_choose, color=self.config.base_color)
 
         c1, c2, c3 = st.columns([4, .5, 3])
+
+        if len(dxy) <=5:
+            c1.error("Erro na API de dados")
+        else:
+            dxy = dxy[dxy.index.year >= year_filter]
 
         c1.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
