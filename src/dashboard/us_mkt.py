@@ -106,10 +106,6 @@ class UsMkt:
 
         c1, c2, c3 = st.columns([4, .5, 3])
 
-        if len(dxy) <=5:
-            c1.error("Erro na API de dados")
-        else:
-            dxy = dxy[dxy.index.year >= year_filter]
 
         c1.markdown(f"""
             <div style="padding-top: 0px; padding-bottom: 0px;">
@@ -118,9 +114,11 @@ class UsMkt:
                 
             """, unsafe_allow_html=True
         )
+
         if len(dxy) <=5:
             c1.error("Erro na API de dados")
         else:
+            dxy = dxy[dxy.index.year >= year_filter]
             c1.line_chart(dxy, color="#ffae42")
 
         c3.markdown(f"""
