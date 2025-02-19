@@ -38,12 +38,7 @@ class Authentication:
             initial_sidebar_state=sidebar_state,
         )
 
-        authenticator = stauth.Authenticate(
-            config["credentials"],
-            config["cookie"]["name"],
-            config["cookie"]["key"],
-            config["cookie"]["expiry_days"]
-            )
+        authenticator = self.get_authenticator(yaml_file)
         
         if "authentication_status" not in st.session_state:
             st.session_state["authentication_status"] = None
@@ -121,3 +116,18 @@ class Authentication:
 
         with yaml_file.open("w") as file:
             yaml.dump(config, file, default_flow_style=False)
+
+    @st.cache_data
+    def get_authenticator(yaml_file):
+        
+        with yaml_file.open("r") as file:
+            config = yaml.load(file, SafeLoader)
+
+        authenticator = stauth.Authenticate(
+            config["credentials"],
+            config["cookie"]["name"],
+            config["cookie"]["key"],
+            config["cookie"]["expiry_days"]
+        )
+
+        return authenticator
