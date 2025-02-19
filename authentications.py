@@ -38,7 +38,14 @@ class Authentication:
             initial_sidebar_state=sidebar_state,
         )
 
-        authenticator = self.get_authenticator(yaml_file)
+        credentials, cookie_config = self.get_credentials(yaml_file)
+
+        authenticator = stauth.Authenticate(
+            credentials,
+            cookie_config["name"],
+            cookie_config["key"],
+            cookie_config["expiry_days"]
+        )
         
         if "authentication_status" not in st.session_state:
             st.session_state["authentication_status"] = None
@@ -65,8 +72,7 @@ class Authentication:
             with st.sidebar:
                 
                 st.write("#")
-                if st.button("Logout"):
-                    authenticator.logout("Logout")
+                authenticator.logout("Logout")
                 
                 try:
                     if authenticator.reset_password(st.session_state["username"], 
@@ -118,16 +124,9 @@ class Authentication:
             yaml.dump(config, file, default_flow_style=False)
 
     @st.cache_data
-    def get_authenticator(yaml_file):
-        
-        with yaml_file.open("r") as file:
+    def get_credentials(_self, _yaml_file):
+
+        with _yaml_file.open("r") as file:
             config = yaml.load(file, SafeLoader)
 
-        authenticator = stauth.Authenticate(
-            config["credentials"],
-            config["cookie"]["name"],
-            config["cookie"]["key"],
-            config["cookie"]["expiry_days"]
-        )
-
-        return authenticator
+        return config["credentials"], config["cookie"]
