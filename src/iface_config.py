@@ -19,6 +19,7 @@ class Variables:
     img_dir: str
     icons_dir: str
     logo_bequest: str
+    icone_bequest: str
     geopolitical_risk: str
     gdp_atlanta: str
     adamodar_url: str
@@ -72,6 +73,7 @@ class Config:
                 data_dir=data.get("data_dir"),
                 img_dir=data.get("img_dir"),
                 logo_bequest=data.get("logo_bequest"),
+                icone_bequest=data.get("icone_bequest"),
                 icons_dir=data.get("icons_dir"),
                 sp_mult=[
                     data.get("sp_earnings_yields"), 
@@ -142,8 +144,10 @@ class Config:
                 msci_eur_mult=data.get("msci_eur_mult"),
                 global_ex_us_etf=data.get("global_ex_us_etf"),
 
-                FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
-                AV_API_KEY=secrets["general"]["AV_API_KEY"]
+                # FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
+                FRED_API_KEY="97d32927fcbb695624a531ded0e8bf4b",
+                AV_API_KEY="YYY"
+                # AV_API_KEY=secrets["general"]["AV_API_KEY"]
         )
         self.base_color = "#fba725"
 

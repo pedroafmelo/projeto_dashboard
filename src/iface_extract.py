@@ -268,7 +268,7 @@ class Extract:
         series"""
         
         try:
-            gsci = yf.download(self.config.vars.gsci, start=self.start, end=self.end)["Adj Close"]
+            gsci = yf.download(self.config.vars.gsci, start=self.start, end=self.end)["Close"]
         except Exception as error:
                 raise OSError(error) from error
 
@@ -362,16 +362,21 @@ class Extract:
     def get_emb_series(self) -> pd.DataFrame:
         """Downloads EMB etf
         series"""
+
+        emb = None
         
         try:
             emb = yf.download(self.config.vars.emb, start=self.start, end=self.end)["Close"]
         except Exception as error:
-                raise OSError(error) from error
+            raise OSError(error) from error
         
-        if len(emb) == 0:
-            emb = self.av_tseries.get_daily(self.config.vars.emb,
-                                             outputsize="full")["4. close"]
+        print(emb)
+        
+        if emb is None or emb.empty:
+            emb, metadata = self.av_tseries.get_daily(self.config.vars.emb,
+                                             outputsize="full")
             emb.sort_index(inplace=True)
+            emb = emb["4. close"]
 
         return emb
     
@@ -400,14 +405,15 @@ class Extract:
 
         try:
             spdw = yf.download(self.config.vars.global_ex_us_etf, 
-                        start=self.start, end=self.end)["Adj Close"]
+                        start=self.start, end=self.end)["Close"]
 
         except Exception as error:
             raise OSError(error) from error
         
         if len(spdw) == 0:
-            spdw = self.av_tseries.get_daily("SPDW", outputsize="full")["4. close"]
+            spdw, metadata = self.av_tseries.get_daily("SPDW", outputsize="full")
             spdw.sort_index(inplace=True)
+            spdw = spdw["4. close"]
 
         return spdw
     

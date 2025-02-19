@@ -123,4 +123,7 @@ class EmMkt:
             """, unsafe_allow_html=True
         )
 
+        if len(emb) == 0:
+            c3.error("Erro na API de dados")
+
         c3.line_chart(emb, color=self.config.base_color)

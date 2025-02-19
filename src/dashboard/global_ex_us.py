@@ -76,14 +76,16 @@ class GlobalExUS:
                                 max_value=datetime.today().year)
             
             global_data, adamodar_data = self.get_data()
-            
-            global_data_choose = global_data[global_data.index.year >= year_filter]
 
         st.markdown("""
             <div style="padding-top: 0px; padding-bottom: 0px;">
                     <h4 style="margin: 0; color: white"> Série Histórica de Preços- ETF SPDW (U$)</h4>
             </div>
             """, unsafe_allow_html=True)
+        
+        if len(global_data) == 0:
+            c1.error("Erro na API de dados")
+        global_data_choose = global_data[global_data.index.year >= year_filter]
 
         st.line_chart(global_data_choose, color=self.config.base_color)
 

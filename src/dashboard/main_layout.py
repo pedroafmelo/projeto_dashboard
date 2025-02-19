@@ -70,7 +70,7 @@ class MainLayout:
             return
 
         st.image(path.join(self.config.vars.img_dir, 
-                           self.config.vars.logo_bequest))
+                           self.config.vars.logo_bequest), width=350)
 
         st.markdown("""
             <div style="padding-top: 0px; padding-bottom: 0px;">
@@ -137,13 +137,13 @@ class MainLayout:
         """Make a sidebar menu"""
 
         with st.sidebar:
+            
+            st.image(path.join(self.config.vars.img_dir, 
+                           self.config.vars.icone_bequest), width=60)
+            st.write("#")
 
             if st.session_state["current_page"] == "cover":
                 st.success(f"Bem-vindo, *{st.session_state["name"]}*")
-                st.write("#")
-
-            st.image(path.join(self.config.vars.img_dir, 
-                           self.config.vars.logo_bequest), width=250)
             
             st.write("#")
 
