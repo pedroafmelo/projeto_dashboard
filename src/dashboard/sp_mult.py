@@ -46,7 +46,7 @@ class SPMult:
          Mult cover"""
 
         st.image(path.join(self.config.vars.img_dir, 
-                           self.config.vars.logo_bequest))
+                           self.config.vars.logo_bequest), width=350)
                 
         st.markdown("""
                 <style>

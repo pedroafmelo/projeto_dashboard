@@ -6,6 +6,7 @@ from datetime import datetime
 import google.generativeai as genai
 import warnings
 from fredapi import Fred
+import streamlit as st
 
 class LLMGen:
     """LLMGen Interface"""
@@ -48,10 +49,23 @@ class LLMGen:
         """Starts a chat 
         between the user and gemini"""
 
-        response = self.chat.send_message(question)
+        response = self.chat.send_message(question, stream=True)
 
-        return response.text
+        complete_response = ''
+        for stream in response:
+            if stream.text:
+                print(stream.text, end='', flush=True)
+                complete_response += stream.text
+
 
     def get_history(self, text: str):
 
         self.model.history.append({"role": "user", "parts": [text]})
+
+
+    @st.dialog("Tire dúvidas sobre os indicadores")
+    def chat_box(self):
+
+        self.call_model
+
+        st.write_stream(self.generate_response("me fale um pouco sobre inflação implícita"))

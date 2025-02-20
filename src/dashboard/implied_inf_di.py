@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import streamlit as st
 import warnings
 import altair as alt
+from src.generate import LLMGen
 
 
 class InfInterest:
@@ -23,6 +24,7 @@ class InfInterest:
         self.config = Config()
         self.extract = Extract()
         self.interpolate = Interpolate()
+        self.chat_bot = LLMGen()
 
         self.data_dir = self.config.vars.data_dir
         self.start = datetime(2000, 1, 1)
@@ -37,7 +39,7 @@ class InfInterest:
 
         
         st.image(path.join(self.config.vars.img_dir, 
-                           self.config.vars.logo_bequest))
+                           self.config.vars.logo_bequest), width=350)
                 
         st.markdown("""
                     
@@ -125,3 +127,14 @@ class InfInterest:
             """, unsafe_allow_html=True)
 
         c3.metric("Valor", f"{target_rates[0]:.2f}%", border=True)
+
+
+        if "generate" not in st.session_state:
+            st.session_state["generate"] = False
+
+        generate_button = st.button("Sobre este indicador")
+        if generate_button:
+            st.session_state.generate = True
+
+        if st.session_state["generate"] == True:
+            self.chat_bot.chat_box()

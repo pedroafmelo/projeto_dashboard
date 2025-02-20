@@ -9,6 +9,7 @@ from streamlit_authenticator.utilities import (CredentialsError,
                                                ResetError)
 from src.dashboard.main_layout import MainLayout
 from src.iface_config import Config
+from PIL import Image
 
 
 class Authentication:
@@ -18,6 +19,7 @@ class Authentication:
         """Applies login system"""
 
         self.config = Config()
+        Image.MAX_IMAGE_PIXELS = None
 
         yaml_file = Path(__file__).parent / "credentials.yaml"
 
@@ -33,37 +35,38 @@ class Authentication:
 
         st.set_page_config(
             page_title="Financial DashBoard",
-            page_icon="📊",
+            page_icon=path.join(self.config.vars.img_dir,
+                                self.config.vars.icone_bequest),
             layout="wide",
             initial_sidebar_state=sidebar_state,
         )
 
-        credentials, cookie_config = self.get_credentials(yaml_file)
+
+        with yaml_file.open("r") as file:
+             config = yaml.load(file, SafeLoader)
 
         authenticator = stauth.Authenticate(
-            credentials,
-            cookie_config["name"],
-            cookie_config["key"],
-            cookie_config["expiry_days"]
+            config["credentials"],
+            config["cookie"]["name"],
+            config["cookie"]["key"],
+            config["cookie"]["expiry_days"]
         )
+
+        print(st.session_state["authentication_status"])
         
         if "authentication_status" not in st.session_state:
             st.session_state["authentication_status"] = None
 
-        if st.session_state["authentication_status"] == None:
-            st.image(path.join(self.config.vars.img_dir, 
-                           self.config.vars.logo_bequest))
-
-            st.markdown("""<hr style="height:2px;border:none;color:blue;background-color:#faba19;" /> """,
-                    unsafe_allow_html=True)
-            st.write("#")
-
         col1, col2, col3 = st.columns([1, 3, 1])
+        c1, c2, c3 = col2.columns([.7,3,1])
 
-        with col2:
+        with c2:
             authenticator.login()
 
-        if st.session_state["authentication_status"]:
+
+        if st.session_state["authentication_status"] == True:
+
+            print(st.session_state["authentication_status"])
             
             ml = MainLayout()
             ml.render_page()
@@ -104,9 +107,12 @@ class Authentication:
             """,
                 unsafe_allow_html=True,
             )
-            col2.error("Usuário/Senha incorreto(s)")
+            c2.error("Usuário/Senha incorreto(s)")
 
         elif st.session_state['authentication_status'] is None:
+
+            st.logo(path.join(self.config.vars.img_dir, 
+                           self.config.vars.logo_bequest), size="large")
 
             st.markdown(
                 """
@@ -118,15 +124,7 @@ class Authentication:
             """,
                 unsafe_allow_html=True,
             )
-            col2.warning('Por favor, entre com login e senha') 
+            c2.warning('Por favor, entre com login e senha') 
 
         with yaml_file.open("w") as file:
             yaml.dump(config, file, default_flow_style=False)
-
-    @st.cache_data
-    def get_credentials(_self, _yaml_file):
-
-        with _yaml_file.open("r") as file:
-            config = yaml.load(file, SafeLoader)
-
-        return config["credentials"], config["cookie"]

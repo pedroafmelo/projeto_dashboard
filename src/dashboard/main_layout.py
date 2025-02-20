@@ -8,6 +8,7 @@ import streamlit as st
 from datetime import datetime
 import warnings
 import streamlit_authenticator as stauth
+from PIL import Image
 
 class MainLayout:
     """MainLayout Interface"""
@@ -17,6 +18,7 @@ class MainLayout:
 
         # import local module
         from src.iface_config import Config
+        from src.generate import LLMGen
         from src.dashboard.us_bonds import BondsYields
         from src.dashboard.us_eco import UsEco
         from src.dashboard.us_mkt import UsMkt
@@ -27,12 +29,14 @@ class MainLayout:
         from src.dashboard.implied_inf_di import InfInterest
 
         self.config = Config()
+        self.llm = LLMGen()
         self.data_dir = self.config.vars.data_dir
         self.icons_dir = self.config.vars.img_dir
         self.start = datetime(2000, 1, 1)
         self.end = datetime.today()
 
         warnings.filterwarnings('ignore')
+        Image.MAX_IMAGE_PIXELS = None
 
         self.us_bonds = BondsYields()
         self.us_eco = UsEco()
@@ -68,6 +72,7 @@ class MainLayout:
 
         if st.session_state["current_page"] != "cover":
             return
+        
 
         st.image(path.join(self.config.vars.img_dir, 
                            self.config.vars.logo_bequest), width=350)
@@ -203,3 +208,8 @@ class MainLayout:
         elif st.session_state["current_page"] == "inf_imp_juros":
             self.inf_interest.generate_graphs()
             self.side_bar()
+
+    # @st.dialog
+    # def dialog_box():
+
+        

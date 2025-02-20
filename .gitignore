@@ -5,3 +5,4 @@ __pycache__
 venv
 .env.secrets
 .env
+generate.py

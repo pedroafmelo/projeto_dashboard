@@ -144,10 +144,10 @@ class Config:
                 msci_eur_mult=data.get("msci_eur_mult"),
                 global_ex_us_etf=data.get("global_ex_us_etf"),
 
-                FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
-                # FRED_API_KEY="XXX",
-                # AV_API_KEY="YYY"
-                AV_API_KEY=secrets["general"]["AV_API_KEY"]
+                # FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
+                FRED_API_KEY="97d32927fcbb695624a531ded0e8bf4b",
+                AV_API_KEY="YYY"
+                # AV_API_KEY=secrets["general"]["AV_API_KEY"]
         )
         self.base_color = "#fba725"
 
