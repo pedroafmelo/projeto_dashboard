@@ -21,8 +21,10 @@ class Extract:
 
         # import local module
         from src.iface_config import Config
+        from src.indicators import Indicators
 
         self.config = Config()
+        self.indicators = Indicators()
         self.data_dir = self.config.vars.data_dir
         self.start = datetime(2000, 1, 1)
         self.end = datetime.today()
@@ -44,101 +46,6 @@ class Extract:
         Print Representation"""
 
         return f"Extract Class, staging dir: {str(self.data_dir)}"
-    
-
-    def get_bonds_yields(self) -> pd.DataFrame | list:
-        """Downloads the US Gov
-          Bonds Yields"""
-        
-        try:
-            yield_series = pdr.DataReader(self.config.vars.us_bonds_yields, "fred", self.start, self.end)
-        except Exception as error:
-            raise OSError(error) from error
-
-        return yield_series
-    
-
-    def get_sp_multiples(self) -> pd.DataFrame | tuple:
-        """Scraps the S&P500
-        multiples"""
-
-        multas_base_url = self.config.vars.mult_base_url
-        mults_dict = {mult: [] for mult in self.config.vars.sp_mult}
-
-        for mult in self.config.vars.sp_mult:
-
-            try:
-                response = requests.get(f"{multas_base_url}/{mult}", verify=False)
-                if not response.ok:
-                    raise FileNotFoundError(f"Unable to request the {mult}")
-                
-                soup = BeautifulSoup(response.content, "html.parser")
-                elems = [elem.text.strip() for elem in soup.find_all("td")]
-                mults_dict[mult] = elems
-
-            except Exception as error:
-                raise OSError(error) from error
-
-        sp_ey = [round(
-            float(elem.strip("†\n")[:-1])/100, 4
-            ) for elem 
-            in mults_dict[self.config.vars.sp_mult[0]][::-1] 
-            if "%" in elem]
-
-        sp_pe = [float(elem.strip("†\n")[:-1]) for elem 
-            in mults_dict[self.config.vars.sp_mult[1]][::-1]
-            if "." in elem]
-        
-        sp_pb = [float(elem.strip("†\n")) for elem 
-                 in mults_dict[self.config.vars.sp_mult[2]][::-1] if "." in elem]
-        
-        index_date_ey_pe = [elem for elem 
-            in mults_dict[self.config.vars.sp_mult[1]][::-1]
-            if "." not in elem]
-        
-        index_date_pb = [elem for elem 
-                 in mults_dict[self.config.vars.sp_mult[2]][::-1] if "," in elem]
-
-        df_ey_pe = pd.DataFrame({
-            "Date": index_date_ey_pe, 
-            "earning_yields": sp_ey,
-            "price_earnings": sp_pe,
-        })
-
-        df_ey_pe["Date"] = pd.to_datetime(df_ey_pe["Date"])
-        df_ey_pe["year"] = df_ey_pe["Date"].dt.year
-        df_ey_pe.set_index("Date", inplace=True)
-
-
-        df_pb = pd.DataFrame({
-            "Date": index_date_pb, 
-            "price_to_book": sp_pb,
-        })
-
-        df_pb["Date"] = pd.to_datetime(df_pb["Date"])
-        df_pb["year"] = df_pb["Date"].dt.year
-        df_pb.set_index("Date", inplace=True)
-
-        return df_ey_pe, df_pb
-    
-
-    def get_economic_indicators(self) -> pd.DataFrame | list:
-        """Download USA Economic
-          Indicators"""
-
-        ind_list = []
-
-        for ind in self.config.vars.us_eco_ind:
-            try:
-                ind_series = pdr.DataReader(ind, "fred", self.start, self.end)
-                if ind in ["CPIAUCSL", "PCE"]:
-                    ind_series = ind_series.pct_change()
-                ind_list.append(ind_series)
-
-            except Exception as error:
-                raise OSError(error) from error
-
-        return ind_list
     
 
     def get_adamodar_data(self):
@@ -183,9 +90,10 @@ class Extract:
         """Downloads USA Market
           Indicators"""
         
+        us_mkt = self.indicators.get_theme_dict("us_mkt")
         ind_list = []
 
-        for ind in self.config.vars.us_mkt_ind:
+        for ind in [value["id"] for value in us_mkt.values()][:-2]:
             try:
                 ind_series = self.fred.get_series(ind,
                                                   observation_start=self.start, 
@@ -203,8 +111,10 @@ class Extract:
         """Downloads dolar 
         index series"""
 
+        us_mkt = self.indicators.get_theme_dict("us_mkt")
+
         try:
-            dxy = yf.download(self.config.vars.dxy, start=self.start, end=self.end)["Close"]
+            dxy = yf.download([value["id"] for value in us_mkt.values()][-1], start=self.start, end=self.end)["Close"]
 
         except Exception as error:
             raise OSError(error) from error
@@ -214,8 +124,14 @@ class Extract:
 
     def get_mkt_returns(self) -> pd.DataFrame:
         """Downloads ff mkt-rf returns"""
+
+        us_mkt = self.indicators.get_theme_dict("us_mkt")
+
+        print([value["id"] for value in us_mkt.values()])
+
         try:
-            asset_series = pdr.DataReader(self.config.vars.equity_rf, "famafrench", self.start, self.end)[0]["Mkt-RF"]
+            asset_series = pdr.DataReader([value["id"] for value in us_mkt.values()][-2], 
+                                          "famafrench", self.start, self.end)[0]["Mkt-RF"]
             asset_series = asset_series.to_frame()
             asset_series.index.name = "Date"
             asset_series.index = asset_series.index.to_timestamp()
@@ -230,7 +146,7 @@ class Extract:
         
         comm_list = []
 
-        for comm_ind in self.config.vars.grain_prices:
+        for comm_ind in self.indicators.get_ids_list("grain_prices")[:-1]:
             try:
                 comm = self.fred.get_series(comm_ind, observation_start=self.start, 
                                      observation_end=self.end)
@@ -244,12 +160,13 @@ class Extract:
             
         return df_final
     
+
     def get_energy_prices(self) -> pd.DataFrame | list:
         """Download Commodities Prices"""
         
         comm_list = []
 
-        for comm_ind in self.config.vars.energy_prices:
+        for comm_ind in self.indicators.get_ids_list("energy_prices"):
             try:
                 comm = self.fred.get_series(comm_ind, observation_start=self.start, 
                                      observation_end=self.end)
@@ -263,23 +180,25 @@ class Extract:
             
         return df_final
     
+
     def get_gsci_series(self) -> pd.DataFrame:
         """Downloads GSCI etf
         series"""
         
         try:
-            gsci = yf.download(self.config.vars.gsci, start=self.start, end=self.end)["Close"]
+            gsci = yf.download(self.indicators.get_ids_list("comm_indexes")[0], start=self.start, end=self.end)["Close"]
         except Exception as error:
                 raise OSError(error) from error
 
         return gsci
     
+
     def get_all_comm_index(self) -> pd.DataFrame:
         """Downloads gld 
         etf vol series"""
         
         try:
-            all_comm = self.fred.get_series(self.config.vars.global_price_all_comm, observation_start=self.start, 
+            all_comm = self.fred.get_series(self.indicators.get_ids_list("comm_indexes")[-1], observation_start=self.start, 
                                      observation_end=self.end)
             all_comm = all_comm.to_frame()
             all_comm.index.name = "Date"
@@ -289,12 +208,13 @@ class Extract:
         
         return all_comm
     
+
     def get_gold_vol_series(self) -> pd.DataFrame:
         """Downloads gld 
         etf vol series"""
-        
+        print(self.indicators.get_ids_list("gold"))
         try:
-            gold_vol = self.fred.get_series(self.config.vars.gold_vol, observation_start=self.start, 
+            gold_vol = self.fred.get_series(self.indicators.get_ids_list("gold")[0], observation_start=self.start, 
                                      observation_end=self.end)
             gold_vol = gold_vol.to_frame()
             gold_vol.index.name = "Date"
@@ -309,7 +229,7 @@ class Extract:
         
         comm_list = []
 
-        for comm_ind in self.config.vars.comm_indexes:
+        for comm_ind in self.indicators.get_ids_list("comm_indexes")[1:-1]:
             try:
                 comm = self.fred.get_series(comm_ind, observation_start=self.start, 
                                      observation_end=self.end)
@@ -327,9 +247,9 @@ class Extract:
         """Downloads soybean series"""
         
         try:
-            soy = self.fred.get_series(self.config.vars.soy_price, observation_start=self.start, 
+            soy = self.fred.get_series(self.indicators.get_ids_list("grain_prices")[-1], observation_start=self.start, 
                                      observation_end=self.end)
-            soy = soy.to_frame(name=self.config.vars.soy_price)
+            soy = soy.to_frame()
             soy.index.name = "Date"
 
         except Exception as error:
@@ -343,7 +263,7 @@ class Extract:
         Markets Data"""
 
         ind_list = []
-        for ind in self.config.vars.em_mkt:
+        for ind in self.indicators.get_ids_list("emerging_markets"):
             try:
                 indicator_series = self.fred.get_series(ind,
                                                         observation_start=self.start, 
@@ -366,11 +286,9 @@ class Extract:
         emb = None
         
         try:
-            emb = yf.download(self.config.vars.emb, start=self.start, end=self.end)["Close"]
+            emb = yf.download(self.indicators.get_ids_list("emb"), start=self.start, end=self.end)["Close"]
         except Exception as error:
             raise OSError(error) from error
-        
-        print(emb)
         
         if emb is None or emb.empty:
             emb, metadata = self.av_tseries.get_daily(self.config.vars.emb,
@@ -386,12 +304,13 @@ class Extract:
         series"""
         
         try:
-            vxeem = self.fred.get_series(self.config.vars.em_etfs_vol,
+            for ind in self.indicators.get_ids_list("vxeem"):
+                vxeem = self.fred.get_series(ind,
                                         observation_start=self.start, 
                                         observation_end=self.end)
-            vxeem = vxeem.to_frame()
-            vxeem.dropna(inplace=True)
-            vxeem.index.name="Date"
+                vxeem = vxeem.to_frame()
+                vxeem.dropna(inplace=True)
+                vxeem.index.name="Date"
 
         except Exception as error:
                 raise OSError(error) from error
@@ -404,7 +323,7 @@ class Extract:
         ex US data"""
 
         try:
-            spdw = yf.download(self.config.vars.global_ex_us_etf, 
+            spdw = yf.download(self.indicators.get_ids_list("global_ex_us"), 
                         start=self.start, end=self.end)["Close"]
 
         except Exception as error:
@@ -422,7 +341,7 @@ class Extract:
         """Scrap Implied Inflation
         data for specific vertices"""
 
-        url = self.config.vars.inf_implicita_br
+        url = self.config.vars.url_anbima_inf
 
         try:
             response = requests.get(url)
@@ -450,14 +369,3 @@ class Extract:
                                      "Inflação Implicita": lista_inf_implicita})
 
         return df_implicita
-    
-# e= Extract()
-# print(e.get_comm_indexes())
-# print(e.get_sp_multiples())
-# print(e.get_economic_indicators())
-# print(e.get_market_indicators())
-# print(e.get_dxy_series())
-# print(e.get_mkt_returns())
-# print(e.get_commodities())
-# print(e.get_global_exus_data())
-# print(e.get_br_implied_inflation())

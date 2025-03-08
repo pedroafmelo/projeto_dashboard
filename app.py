@@ -1,11 +1,8 @@
-from src.dashboard.main_layout import MainLayout
-import streamlit_authenticator as stauth
-import streamlit as st
-import pickle
-from pathlib import Path
-from src.iface_config import Config
 from authentications import Authentication
+from app_pages.usa.subpages.activity import UsAct
 
 if __name__ == "__main__":
 
+    act = UsAct()
+    # act.generate_hist_graphs()
     auth = Authentication()

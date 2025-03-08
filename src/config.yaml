@@ -1,0 +1,48 @@
+# paths and extensions
+data_dir: "data"
+img_dir: "static/img"
+logo_bequest: "logo_bequest.png"
+logo_pleno: "logo_pleno.png"
+icons_dir: "static/icons"
+icone_bequest: "icone-bequest.png"
+
+# S&P500 Multiples
+mult_base_url: https://www.multpl.com
+url_sp_ey: "s-p-500-earnings-yield/table/by-month"
+url_sp_pe: "s-p-500-pe-ratio/table/by-month"
+url_sp_pb: "s-p-500-price-to-book/table/by-quarter"
+url_estimate_ey: "https://www.gurufocus.com/economic_indicators/6062/sp-500-earnings-yield-with-forward-estimate"
+url_estimate_pe: "https://www.gurufocus.com/economic_indicators/6061/sp-500-pe-ratio-with-forward-estimate"
+url_estimate_eps: "https://www.gurufocus.com/economic_indicators/4281/sp-500-eps-with-estimate-ttm"
+gdp_atlanta: "https://www.atlantafed.org/-/media/documents/cqer/researchcq/gdpnow/GDPTrackingModelDataAndForecasts.xlsx"
+gdp_ny: "https://www.newyorkfed.org/medialibrary/Research/Interactives/Data/NowCast/Downloads/New-York-Fed-Staff-Nowcast_download_data.xlsx"
+adamodar_url: "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html"
+url_anbima_inf: "https://www.anbima.com.br/informacoes/est-termo/CZ.asp"
+di_future: "https://www2.bmf.com.br/pages/portal/bmfbovespa/boletim1/SistemaPregao1.asp?pagetype=pop&caminho=Resumo%20Estat%EDstico%20-%20Sistema%20Preg%E3o&Data={data_di}&Mercadoria={mercadoria}"
+anbima_holidays: "https://www.anbima.com.br/feriados/arqs/feriados_nacionais.xls"
+url_ouro: "https://pt.bullion-rates.com/gold/USD/spot-price.htm"
+url_dsge: "https://www.newyorkfed.org//medialibrary/Research/Interactives/dsge/downloads/DSGE_data.xlsx"
+url_next_ffr_cme: "https://www.investing.com/central-banks/fed-rate-monitor"
+par_yield_curves_2024: "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2024/all?field_tdr_date_value=2024&type=daily_treasury_yield_curve&page&_format=csv"
+par_yield_curves_2025: "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2025/all?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv"
+
+# new data
+imf_gdp: "https://www.imf.org/external/datamapper/api/v1/NGDP_RPCH/"
+imf_cpi: "https://www.imf.org/external/datamapper/api/v1/PCPIPCH/"
+prod_industrial_url: "https://apisidra.ibge.gov.br/values/t/8887/n1/all/v/11603/p/all/c543/129300/d/v11603%201"
+vendas_varejo_url: "https://apisidra.ibge.gov.br/values/t/8880/n1/all/v/11710,11711/p/all/c11046/56734/d/v11710%201,v11711%201"
+relatorio_inflacao_url: "https://www.bcb.gov.br/content/ri/relatorioinflacao/{ano_tri}}/ri{ano_tri}anp.xlsx"
+cds_5anos: "https://www.worldgovernmentbonds.com/sovereign-cds/"
+taxas_juros: "https://www.worldgovernmentbonds.com/central-bank-rates/"
+ipca_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27IPCA%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
+pib_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27PIB%20Total%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
+selic_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27Selic%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
+cambio_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27C%C3%A2mbio%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
+
+indice_hsi: "https://api.investing.com/api/financialdata/179/historical/chart/?interval=P1M&period=MAX&pointscount=160"
+latin_am_msci: "https://api.investing.com/api/financialdata/942981/historical/chart/?interval=P1D&period=MAX&pointscount=160"
+taiwan_msci: "https://api.investing.com/api/financialdata/100150/historical/chart/?interval=P1M&period=MAX&pointscount=160"
+csi_300: "https://api.investing.com/api/financialdata/940801/historical/chart/?interval=P1M&period=MAX&pointscount=160"
+
+stoxx_600: "https://api.investing.com/api/financialdata/40823/historical/chart/?interval=P1M&period=MAX&pointscount=160"
+nikei_225: "https://api.investing.com/api/financialdata/178/historical/chart/?interval=P1M&period=MAX&pointscount=160"

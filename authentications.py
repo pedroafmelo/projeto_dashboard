@@ -7,7 +7,7 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from streamlit_authenticator.utilities import (CredentialsError,
                                                ResetError)
-from src.dashboard.main_layout import MainLayout
+from app_pages.main import MainLayout
 from src.iface_config import Config
 from PIL import Image
 
@@ -28,10 +28,19 @@ class Authentication:
 
         stauth.Hasher.hash_passwords(config["credentials"])
 
+        if "authentication_status" not in st.session_state:
+            st.session_state["authentication_status"] = None
+
         if "current_page" not in st.session_state:
             st.session_state["current_page"] = "cover"
 
-        sidebar_state = "expanded" if st.session_state["current_page"] == "cover" else "collapsed"
+        if st.session_state["current_page"] == "cover" and st.session_state["authentication_status"] == True:
+            sidebar_state = "expanded"
+            
+        else :
+            
+            sidebar_state = "collapsed"
+
 
         st.set_page_config(
             page_title="Financial DashBoard",
@@ -40,6 +49,22 @@ class Authentication:
             layout="wide",
             initial_sidebar_state=sidebar_state,
         )
+
+        st.markdown(
+            """
+                <style>
+                    .block-container {
+                            padding-top: 1rem;
+                            padding-bottom: 0rem;
+                            padding-left: 5rem;
+                            padding-right: 5rem;
+                        }
+                </style>
+                """,
+            unsafe_allow_html=True,
+        )
+
+        st.html("/Users/pedroafmelo/Documents/pleno_finance/projeto_dashboard/app_pages/styles.html")
 
 
         with yaml_file.open("r") as file:
@@ -52,10 +77,7 @@ class Authentication:
             config["cookie"]["expiry_days"]
         )
 
-        print(st.session_state["authentication_status"])
         
-        if "authentication_status" not in st.session_state:
-            st.session_state["authentication_status"] = None
 
         col1, col2, col3 = st.columns([1, 3, 1])
         c1, c2, c3 = col2.columns([.7,3,1])
@@ -65,12 +87,9 @@ class Authentication:
 
 
         if st.session_state["authentication_status"] == True:
-
-            print(st.session_state["authentication_status"])
             
             ml = MainLayout()
             ml.render_page()
-
 
             with st.sidebar:
                 
@@ -125,6 +144,7 @@ class Authentication:
                 unsafe_allow_html=True,
             )
             c2.warning('Por favor, entre com login e senha') 
+
 
         with yaml_file.open("w") as file:
             yaml.dump(config, file, default_flow_style=False)

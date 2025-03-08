@@ -1,0 +1,1298 @@
+# USA
+# Macro
+# Activity History
+# Este serve para todos os países
+imf_gdp:
+  id: "NGDP_RPCH"
+  name: "PIB Real - FMI"
+  description: |
+
+    #### **Gross Domestic Product (GDP)**
+
+    O Produto Interno Bruto (GDP - Gross Domestic Product) mede o valor total de bens e serviços produzidos em um país dentro de um determinado período. É o principal indicador da atividade econômica e do crescimento de uma economia.
+
+    - **GDP em crescimento** → Indica expansão econômica, aumento da produção e, geralmente, maior geração de empregos.  
+    - **GDP em queda** → Pode sinalizar recessão, menor consumo e queda na produção industrial.  
+
+    O GDP pode ser analisado em diferentes formatos:
+    - **Real GDP**: Ajustado pela inflação, reflete o crescimento econômico real.  
+    - **Nominal GDP**: Medido a preços de mercado, sem ajuste inflacionário.  
+    - **GDP per capita**: Divide o PIB pelo número de habitantes, mostrando a produção média por pessoa.  
+
+ind_production: 
+  id: "INDPRO"
+  name: "Produção Industrial"
+  description: |
+    #### **Industrial Production**
+    
+    O **Industrial Production** é um indicador econômico que mede a variação da produção das indústrias de manufatura, mineração e utilidades nos Estados Unidos, servindo como um termômetro da atividade econômica industrial.  
+
+    - **Crescimento na produção industrial** → Indica um fortalecimento da atividade econômica, podendo refletir aumento da demanda e confiança dos empresários.  
+    
+    - **Queda na produção industrial** → Pode sinalizar desaceleração econômica, redução da demanda ou desafios no setor industrial.
+
+retail_sales: 
+  id: "MRTSSM44000USS"
+  name: "Vendas do Varejo"
+  description: |
+    #### **Vendas no Varejo**
+
+    O indicador de **Vendas do Varejo** mede o valor total das vendas no setor varejista dos Estados Unidos, fornecendo uma visão sobre os gastos do consumidor e a força da economia. Este dado é um importante termômetro da demanda interna.  
+
+    - **Aumento nas vendas** → Indica confiança do consumidor, crescimento econômico e maior atividade comercial.  
+    - **Queda nas vendas** → Pode sinalizar redução no consumo, desaquecimento da economia e preocupações com inflação ou emprego.  
+
+    O relatório de **Vendas do Varejo** frequentemente exclui automóveis e combustíveis para fornecer uma visão mais precisa da tendência subjacente do consumo.  
+
+
+auxilio_desemprego_eua:
+  id: "ICSA"
+  name: "Pedidos de Auxílio-Desemprego nos EUA"
+  description: |
+    #### **Pedidos de Auxílio-Desemprego nos EUA**
+    
+    O **indicador de Pedidos de Auxílio-Desemprego** mede o número de pessoas que entraram com novos pedidos de seguro-desemprego nos Estados Unidos. Esse dado é um importante termômetro do mercado de trabalho e da atividade econômica.
+
+    - **Aumento nos pedidos** → Pode indicar uma piora no mercado de trabalho, sugerindo aumento no desemprego e possível desaceleração econômica.
+
+    - **Queda nos pedidos** → Sinaliza um mercado de trabalho mais aquecido, com menor desemprego e maior estabilidade econômica.
+
+consumer_conf: 
+  id: "UMCSENT"
+  name: "Índice de Confiança do Consumidor"
+  description: |
+    #### **Índice de Sentimento do Consumidor da Universidade de Michigan**
+
+    O **University of Michigan Consumer Sentiment Index (UMCSENT)** mede a confiança dos consumidores americanos em relação à economia. O índice é baseado em uma pesquisa mensal que avalia percepções sobre condições econômicas atuais e expectativas futuras.  
+
+    - **Índice alto** → Indica otimismo dos consumidores, maior disposição para gastar e potencial crescimento econômico.  
+    - **Índice baixo** → Sinaliza pessimismo, maior propensão à poupança e possíveis quedas no consumo.  
+
+    Como o consumo representa uma grande parte do PIB dos EUA, esse índice é um indicador importante da atividade econômica e pode influenciar decisões de política monetária do Federal Reserve.  
+
+# Activity Forecasts
+
+advanced_retail_sales: 
+  id: "RSXFS"
+  name: "Vendas do Varejo - Previsão"
+  description: |
+    #### **Vendas no Varejo**
+
+    O indicador de **Vendas do Varejo** mede o valor total das vendas no setor varejista dos Estados Unidos, fornecendo uma visão sobre os gastos do consumidor e a força da economia. Este dado é um importante termômetro da demanda interna.
+    Neste caso específico, o indicador mede o provável valor para as vendas no mês que se inicia.
+
+    - **Aumento nas vendas** → Indica confiança do consumidor, crescimento econômico e maior atividade comercial.  
+    - **Queda nas vendas** → Pode sinalizar redução no consumo, desaquecimento da economia e preocupações com inflação ou emprego.  
+
+    O relatório de **Vendas do Varejo** frequentemente exclui automóveis e combustíveis para fornecer uma visão mais precisa da tendência subjacente do consumo.  
+
+gdp_now_atlanta: 
+  id: "GDPNOW"
+  name: "GDP Nowcast - FED Atlanta"
+  description: |
+
+    #### **GDP Now**
+    
+    O **GDP Now** é uma estimativa em tempo real do crescimento do PIB dos Estados Unidos, fornecida pelo Federal Reserve Bank de Atlanta. Ele utiliza dados econômicos mais recentes para prever o desempenho do PIB no trimestre atual, ajudando a acompanhar a evolução da economia em tempo real.  
+
+    - **Crescimento do GDP Now em alta** → Indica que a economia dos EUA está se expandindo a um ritmo mais forte do que o esperado, podendo influenciar decisões de política monetária.  
+    
+    - **Crescimento do GDP Now em baixa** → Sugere que a economia está desacelerando, o que pode afetar as expectativas de inflação e de taxas de juros.
+
+gdp_now_ny: 
+  id: "GDPNOW_NY"
+  name: "GDP Nowcast - FED NY"
+  description: |
+
+    #### **GDP Now**
+    
+    O **GDP Now** é uma estimativa em tempo real do crescimento do PIB dos Estados Unidos, fornecida pelo Federal Reserve Bank Nova York e de nova Iorque. Ele utiliza dados econômicos mais recentes para prever o desempenho do PIB no trimestre atual, ajudando a acompanhar a evolução da economia em tempo real.  
+
+    - **Crescimento do GDP Now em alta** → Indica que a economia dos EUA está se expandindo a um ritmo mais forte do que o esperado, podendo influenciar decisões de política monetária.  
+    
+    - **Crescimento do GDP Now em baixa** → Sugere que a economia está desacelerando, o que pode afetar as expectativas de inflação e de taxas de juros.
+
+
+dsge: 
+  id: "DSGE"
+  name: "Modelo DSGE - FED NY"
+  description: |
+    #### **Modelo DSGE do Federal Reserve de Nova York**
+    
+    O **Modelo DSGE (Dynamic Stochastic General Equilibrium)** do Federal Reserve de Nova York é um modelo econômico usado para prever a dinâmica macroeconômica dos Estados Unidos. Ele é baseado em teorias que combinam microfundamentos com flutuações econômicas estocásticas e incorpora a interação de diversos agentes econômicos, como consumidores, empresas e o governo, para explicar os ciclos econômicos.
+
+    - **Função** → O modelo DSGE tenta prever o comportamento da economia em termos de variáveis como PIB, inflação, taxa de juros e consumo. Ele leva em consideração choques externos, como mudanças de política monetária, e analisa como esses choques afetam a economia no longo prazo. No gráfico, temos a previsão para o crescimento acumulado dos últimos 12 meses.
+    
+    - **Como ele é utilizado** → O Federal Reserve de Nova York utiliza o modelo DSGE para simular diferentes cenários econômicos e avaliar os efeitos de diferentes políticas monetárias, ajudando na previsão do crescimento econômico e da inflação. Ele também é utilizado para calibrar os modelos de política monetária e para fornecer informações aos formuladores de políticas do Fed.
+
+    - **Importância para a análise** → O modelo DSGE é uma ferramenta central para entender como as economias reagem a mudanças nos choques exógenos e na política monetária. Ele é frequentemente usado para gerar previsões econômicas que ajudam os formuladores de políticas a tomar decisões informadas sobre a taxa de juros e outras medidas de estímulo econômico.
+
+# Inflation History
+cpi_urban: 
+    id: "CPIAUCSL"
+    name: "CPI Urban"
+    description: |
+    
+      #### **CPI Urban**
+    
+      O **CPI Urban** (Consumer Price Index for All Urban Consumers) mede a variação média dos preços pagos por consumidores urbanos nos Estados Unidos por uma cesta de bens e serviços. Esse índice é divulgado pelo Bureau of Labor Statistics (BLS) e é um dos principais indicadores de inflação.  
+
+      - **CPI Urban em alta** → Indica aumento da inflação, o que pode reduzir o poder de compra dos consumidores e pressionar o Federal Reserve a ajustar a política monetária.  
+      
+      - **CPI Urban em queda** → Sugere desaceleração da inflação, o que pode favorecer o consumo e reduzir a necessidade de ajustes agressivos na taxa de juros.
+
+pce: 
+  id: "PCE"
+  name: "PCE"
+  description: |
+    
+    #### **PCE**
+
+    O **PCE** (Personal Consumption Expenditures) é um indicador econômico que mede o nível de consumo das famílias americanas. Ele reflete os gastos em bens e serviços, sendo um dos principais indicadores utilizados pelo Federal Reserve para avaliar a inflação e direcionar suas políticas monetárias.  
+
+    - **PCE em alta** → Indica um aumento nos preços e pode sinalizar uma pressão inflacionária, levando o Federal Reserve a aumentar as taxas de juros.  
+    
+    - **PCE em queda** → Sugere uma desaceleração na inflação, o que pode diminuir a necessidade de aumento nas taxas de juros e incentivar o consumo.
+
+us_hpi: 
+  id: "USSTHPI"
+  name: "Índice de Preços de Imóveis"
+  description: |
+    #### **Índice de Preços de Imóveis**
+
+    O **All-Transactions House Price Index** mede a variação dos preços dos imóveis residenciais nos Estados Unidos, considerando todas as transações de compra e venda. O índice é calculado pelo **Federal Housing Finance Agency (FHFA)** e reflete mudanças no mercado imobiliário com base em dados de hipotecas adquiridas pela Fannie Mae e Freddie Mac.  
+
+    - **Aumento no índice** → Indica valorização dos imóveis residenciais, possivelmente impulsionada por maior demanda, crescimento econômico ou taxas de juros baixas.  
+    - **Queda no índice** → Sugere desvalorização do mercado imobiliário, que pode ser causada por recessões, aumento nas taxas de juros ou redução do crédito disponível.  
+
+    Este índice é amplamente utilizado por economistas, investidores e formuladores de políticas para avaliar as condições do setor imobiliário e seu impacto na economia dos EUA.  
+
+inf_core:
+  id: "DPCCRV1Q225SBEA"
+  name: "Núcleo da Inflação"
+  description: |
+
+    ### **Núcleo da Inflação**
+
+    O **Núcleo da Inflação** (PCE sem Energia e Alimentos) é um indicador amplamente utilizado pelo Federal Reserve para monitorar a inflação nos Estados Unidos. Ele exclui os preços de energia e alimentos, que tendem a ser voláteis, proporcionando uma medida mais estável da inflação subjacente.
+
+    - **Indicador elevado** → Pode indicar pressões inflacionárias persistentes, o que pode levar o Federal Reserve a aumentar as taxas de juros para controlar a inflação.
+    
+    - **Indicador baixo** → Pode sugerir uma inflação moderada, permitindo que o Federal Reserve adote uma política monetária mais acomodatícia.
+
+    O Core PCE é considerado uma medida mais fiel da inflação de consumo, já que elimina a volatilidade causada por mudanças nos preços de commodities como alimentos e energia.
+
+# Inflation Forecast
+
+imf_cpi:
+  id: "PCPIPCH"
+  name: "CPI - FMI"
+  description: |
+
+    #### **Índice de Preços ao Consumidor (CPI)**
+    
+    O **Índice de Preços ao Consumidor (CPI)** é um indicador utilizado para medir a variação dos preços de uma cesta de bens e serviços consumidos pelas famílias. Esse índice é amplamente utilizado para avaliar a inflação em uma economia, refletindo as mudanças no custo de vida.
+
+    - **CPI alto** → Indica que os preços dos bens e serviços estão subindo, sinalizando inflação. Se a inflação for elevada, pode levar o Federal Reserve a adotar políticas monetárias mais restritivas, como o aumento das taxas de juros.
+    
+    - **CPI baixo ou negativo (deflação)** → Pode indicar uma desaceleração econômica ou uma queda nos preços. A deflação pode ser prejudicial, pois pode levar a um ciclo de queda no consumo e no investimento.
+
+    O CPI é uma medida importante para os formuladores de políticas econômicas, sendo usado para ajustar salários, benefícios governamentais e também para orientar as decisões de política monetária, como as ações do Federal Reserve.
+
+5_implied_inflation: 
+  id: "T5YIE"
+  name: "Inflação Implícita de 5 anos"
+  description: |
+
+    #### **Breakeven Inflation**
+    
+    O **5 Year Breakeven Inflation** é a inflação implícita americana, que representa a diferença entre o rendimento de títulos do Tesouro dos EUA de 5 anos e os títulos do Tesouro protegidos contra a inflação (TIPS) de 5 anos. Esse indicador é utilizado para medir as expectativas de inflação do mercado para os próximos 5 anos.  
+
+    - **Breakeven Inflation em alta** → Indica que os investidores esperam um aumento da inflação nos próximos 5 anos, o que pode levar a ajustes nas políticas monetárias.  
+    
+    - **Breakeven Inflation em baixa** → Sugere que o mercado espera uma inflação mais baixa ou até deflação nos próximos anos, o que pode levar a uma postura mais dovish do Federal Reserve.
+
+10_implied_inflation: 
+  id: "T10YIE"
+  name: "Inflação Implícita de 10 anos"
+  description: |
+    #### **Breakeven Inflation**
+
+    O **10 Year Breakeven Inflation** é a inflação implícita americana, que representa a diferença entre o rendimento de títulos do Tesouro dos EUA de 10 anos e os títulos do Tesouro protegidos contra a inflação (TIPS) de 10 anos. Esse indicador é utilizado para medir as expectativas de inflação do mercado para os próximos 10 anos.  
+
+    - **Breakeven Inflation em alta** → Indica que os investidores esperam um aumento da inflação nos próximos 10 anos, o que pode levar a ajustes nas políticas monetárias.  
+    
+    - **Breakeven Inflation em baixa** → Sugere que o mercado espera uma inflação mais baixa ou até deflação nos próximos anos, o que pode levar a uma postura mais dovish do Federal Reserve.
+
+michigan_inflation_expec: 
+  id: "MICH"
+  name: "Expectativa de Inflação - Universidade de Michigan"
+  description: |
+    
+    #### **Expectativa de Inflação da Universidade de Michigan**
+    
+    A **Expectativa de Inflação da Universidade de Michigan** é um indicador baseado em uma pesquisa realizada com consumidores nos Estados Unidos. Ele mede as expectativas dos consumidores em relação à inflação nos próximos 1 a 5 anos. Esse indicador é importante porque as expectativas de inflação podem influenciar o comportamento de consumo e a política monetária.
+
+    - **Expectativas de inflação altas** → Podem indicar preocupações com o aumento de preços no futuro, o que pode levar a ajustes nas taxas de juros pelo Federal Reserve para controlar a inflação.
+    
+    - **Expectativas de inflação baixas** → Podem sugerir que os consumidores não esperam grandes pressões inflacionárias, o que pode permitir ao Federal Reserve manter uma política monetária mais flexível.
+
+    Esse indicador é utilizado pelo Federal Reserve para ajustar suas políticas monetárias, com o objetivo de estabilizar os preços e fomentar o crescimento econômico sustentável.
+
+# Fed Funds Rate
+fed_funds: 
+  id: "DFF"
+  name: "Taxa de Juros dos Fundos Federais (Federal Funds Rate)"
+  description: |
+
+    #### **Taxa de Juros dos Fundos Federais (Federal Funds Rate)**
+    
+    A **Taxa de Juros dos Fundos Federais (Federal Funds Rate)** é a taxa de juros à qual os bancos de depósitos dos EUA emprestam e tomam emprestado fundos overnight entre si, para manter seus requisitos de reserva. Esta taxa é definida pelo Federal Reserve e é uma das ferramentas mais importantes de sua política monetária.
+
+    - **Aumento da taxa** → O Federal Reserve pode aumentar a taxa para combater a inflação ou esfriar uma economia que está crescendo muito rapidamente. Aumentos na taxa de juros tornam os empréstimos mais caros, o que pode desacelerar o consumo e o investimento.
+    
+    - **Redução da taxa** → O Fed pode reduzir a taxa para estimular a economia durante uma desaceleração econômica ou uma recessão. A redução torna o crédito mais barato, incentivando o consumo e o investimento.
+
+    O **Federal Funds Rate** é amplamente observado pelos mercados financeiros, pois influencia as taxas de juros de outros produtos financeiros, como empréstimos, hipotecas e títulos. Mudanças nessa taxa impactam diretamente a economia, afetando tudo, desde o crescimento econômico até o mercado de trabalho e o nível de preços.
+
+cme_target_rate_pro:
+  id: "cme_target_rate_probability"
+  name: "Probabilidade de Alvo da Taxa de Juros dos EUA (CME)"
+  description: |
+    #### **Probabilidade de Alvo da Taxa de Juros dos EUA (CME)**
+    
+    A **Probabilidade de Alvo da Taxa de Juros dos EUA** refere-se às probabilidades implícitas nos contratos de futuros de fundos federais negociados na Chicago Mercantile Exchange (CME) sobre o nível da taxa de juros do Federal Reserve (Fed) em uma determinada reunião de política monetária. Esses contratos de futuros refletem as expectativas do mercado sobre as futuras decisões de política monetária do Fed, com base na interpretação das condições econômicas atuais.
+
+    - **Como funciona** → O mercado de futuros de taxa de juros da CME calcula as probabilidades para uma série de alvos de taxa de juros (por exemplo, 4,25%, 4,50%, etc.) em determinadas datas, com base no preço dos contratos de futuros. Se a probabilidade para uma determinada taxa for alta, isso sugere que o mercado acredita que o Fed pode aumentar ou reduzir a taxa de juros de acordo com esse nível.
+    
+    - **Por que é importante** → A probabilidade de alvo da taxa de juros do CME fornece uma visão do mercado sobre as expectativas de política monetária do Fed. Ela é útil para os investidores e analistas entenderem o que o mercado acredita que o Fed fará em termos de ajuste da taxa de juros, considerando o estado atual da economia.
+
+    A **Probabilidade de Alvo da Taxa de Juros** é frequentemente usada para ajudar a antecipar mudanças na política monetária e pode influenciar as decisões dos investidores, especialmente em relação a ativos de renda fixa, como títulos e outros investimentos sensíveis à taxa de juros.
+
+taxa_juros_real_natural:
+  id: "real_natural_rate"
+  name: "Taxa de Juros Real Natural"
+  description: |
+    #### **Taxa de Juros Real Natural**
+    
+    Esse é um conceito importante na macroeconomia:
+
+    - Representa a **taxa de juros real neutra** que **não acelera nem desacelera** a economia.
+    - É uma estimativa da taxa de juros que manteria a economia **em equilíbrio**, sem gerar inflação ou recessão.
+    - Se o banco central definir uma taxa **acima da taxa natural**, a economia pode esfriar.
+    - Se definir **abaixo**, pode estimular crescimento e inflação.
+
+# USA Market indicators
+# Financial Conditions 
+chicago_fci:
+  id: "NFCI"
+  name: "Índice de Condição Financeira - FED de Chicago"
+  description: |
+
+    #### **Chicago Fed National Financial Conditions Index**
+    
+    O **Chicago Fed National Financial Conditions Index** mede as condições financeiras nos Estados Unidos com base em indicadores de risco, liquidez e alavancagem no mercado financeiro. Ele é projetado para capturar a tensão nos mercados financeiros em um único valor, onde valores positivos indicam condições financeiras mais restritivas e valores negativos indicam condições mais frouxas.  
+
+    - **NFCI positivo** → Sugere que as condições financeiras estão mais apertadas, o que pode indicar maior aversão ao risco, aperto no crédito e um impacto potencialmente negativo no crescimento econômico.  
+    
+    - **NFCI negativo** → Indica que as condições financeiras estão mais favoráveis, com maior disponibilidade de crédito e maior apetite ao risco, o que pode impulsionar o crescimento econômico."
+
+leverage_subindex: 
+  id: "NFCILEVERAGE"
+  name: "Sub-Índice de Alavancagem do FCI"
+  description: |
+
+    #### **NFCI Leverage Subindex (NFCILEVERAGE)**
+    
+    O **NFCI Leverage Subindex (NFCILEVERAGE)** é um dos subíndices do Chicago Fed National Financial Conditions Index (NFCI) e mede a alavancagem no sistema financeiro. Ele captura a dependência do crédito por parte de empresas e consumidores, refletindo o grau de endividamento na economia.  
+
+    - **Leverage Subindex em alta** → Indica um aumento na alavancagem financeira, sugerindo que empresas e consumidores estão assumindo mais dívidas, o que pode aumentar o risco sistêmico no longo prazo.  
+    
+    - **Leverage Subindex em baixa** → Sugere uma redução no uso de alavancagem, o que pode indicar uma postura mais cautelosa dos agentes econômicos em relação ao endividamento e menor risco financeiro agregado.
+
+risk_subindex:
+  id: "NFCIRISK"
+  name: "Sub-Índice de Risco do FCI"
+  description: |
+
+    #### **NFCI Risk Subindex**
+
+    O **NFCI Risk Subindex** mede as percepções do mercado em relação ao risco financeiro e econômico. Ele reflete mudanças nas condições de financiamento que podem indicar crises financeiras ou períodos de estresse nos mercados.  
+
+    - **Risk Subindex em alta** → Sugere um aumento da percepção de risco no mercado financeiro, possivelmente indicando maior aversão ao risco, instabilidade financeira ou eventos macroeconômicos adversos.  
+    
+    - **Risk Subindex em baixa** → Indica menor percepção de risco, sugerindo que os mercados estão operando de forma mais estável, com maior confiança e menor volatilidade.
+
+credit_subindex:
+  id: "NFCICREDIT"
+  name: "Sub-Índice de Crédito do FCI"
+  description: |
+
+    #### **NFCI Credit Subindex**
+
+    O **NFCI Credit Subindex** avalia as condições de crédito na economia, refletindo a disponibilidade e o custo do crédito para empresas e consumidores. Ele mede restrições no acesso ao financiamento e a rigidez dos padrões de concessão de crédito.  
+
+    - **Credit Subindex em alta** → Indica que as condições de crédito estão mais restritivas, o que pode dificultar o financiamento para empresas e consumidores, reduzindo o crescimento econômico.  
+    
+    - **Credit Subindex em baixa** → Sugere que o crédito está mais acessível, facilitando o financiamento e impulsionando o consumo e os investimentos na economia.
+
+# Spread de Crédito
+ice_bofa_cred_spread: 
+  id: "BAMLC0A0CM"
+  name: "ICE BofA US Corporate Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA US Corporate Index Option-Adjusted Spread**
+    
+    O **ICE BofA US Corporate Index Option-Adjusted Spread** mede a diferença entre o rendimento dos títulos corporativos dos EUA e os títulos do Tesouro dos EUA, ajustada pelas opções embutidas nos títulos. Esse indicador oferece uma visão sobre o risco de crédito no mercado corporativo, levando em conta a possibilidade de os emissores exercerem opções em seus títulos.  
+
+    - **Option-Adjusted Spread em alta** → Indica uma percepção maior de risco no mercado de crédito corporativo, sugerindo que os investidores exigem um prêmio maior para assumir o risco, levando em consideração as opções embutidas.  
+    
+    - **Option-Adjusted Spread em baixa** → Reflete uma menor percepção de risco no mercado de crédito, com os investidores mais dispostos a aceitar rendimentos mais baixos devido à confiança na saúde financeira das empresas e na estabilidade do mercado.
+
+ice_bofa_hy_spread: 
+  id: "BAMLH0A0HYM2"
+  name: "ICE BofA US High Yield Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA US High Yield Index Option-Adjusted Spread**
+    
+    O **ICE BofA US High Yield Index Option-Adjusted Spread** mede a diferença entre o rendimento dos títulos high yield e os títulos do Tesouro dos EUA, ajustada pelas opções embutidas nesses títulos. Esse indicador reflete o risco de crédito no mercado de títulos de alto rendimento, levando em conta o risco de inadimplência das empresas emissoras.  
+
+    - **Option-Adjusted Spread em alta** → Indica que os investidores estão exigindo um prêmio mais alto devido a uma maior percepção de risco no mercado de títulos de alto rendimento, sugerindo uma possibilidade de aumento nas taxas de inadimplência ou incertezas econômicas.  
+    
+    - **Option-Adjusted Spread em baixa** → Sugere uma confiança maior no mercado de crédito de alto rendimento, com os investidores mais dispostos a aceitar rendimentos mais baixos devido à menor percepção de risco e expectativas de estabilidade econômica.
+
+# Interest rates
+
+spread_10y_2y:
+  id: "T10Y2Y"
+  name: "Spread da Treasury de 10 anos e 2 anos"
+  description: |
+    #### **Spread da Treasury de 10 anos e 2 anos**
+    
+    O **spread entre os títulos do Tesouro dos EUA de 10 anos e 2 anos** mede a diferença entre os rendimentos dessas duas maturidades. Esse indicador é amplamente utilizado para avaliar a expectativa do mercado sobre crescimento econômico e política monetária.
+
+    - **Spread positivo (normal)** → Quando os rendimentos dos títulos de 10 anos são maiores que os de 2 anos, indica expectativas de crescimento econômico estável e política monetária neutra ou expansionista.
+    
+    - **Spread negativo (inversão da curva)** → Quando os rendimentos dos títulos de 2 anos são maiores que os de 10 anos, historicamente tem sido um sinal de recessão iminente, pois reflete expectativas de aperto monetário e menor crescimento futuro.
+
+2_y: 
+  id: "DGS2"
+  name: "Yield de 2 anos da U.S. Treasury"
+  description: |
+  
+
+    #### **U.S Treasury Yields**
+    
+    As **U.S Treasury Yields** representam as taxas de rendimento dos títulos do Tesouro dos EUA de um determinado prazo. Esse indicador é frequentemente utilizado para avaliar as expectativas do mercado em relação à política monetária de curto prazo e à saúde econômica.  
+
+    - **Yield em alta** → Indica que os investidores exigem um retorno maior para manter títulos de curto prazo, o que pode refletir expectativas de aumento nas taxas de juros ou incertezas econômicas.  
+    
+    - **Yield em baixa** → Sugere que os investidores estão mais dispostos a manter títulos de curto prazo com menor retorno, o que pode indicar expectativas de baixa inflação ou políticas monetárias mais dovish.
+
+5_y: 
+  name: "Yield de 5 anos da U.S. Treasury"
+  id: "DGS5"  
+  description: |
+
+    #### **U.S Treasury Yields**
+    
+    As **U.S Treasury Yields** representam as taxas de rendimento dos títulos do Tesouro dos EUA de um determinado prazo. Esse indicador é frequentemente utilizado para avaliar as expectativas do mercado em relação à política monetária de curto prazo e à saúde econômica.  
+
+    - **Yield em alta** → Indica que os investidores exigem um retorno maior para manter títulos de curto prazo, o que pode refletir expectativas de aumento nas taxas de juros ou incertezas econômicas.  
+    
+    - **Yield em baixa** → Sugere que os investidores estão mais dispostos a manter títulos de curto prazo com menor retorno, o que pode indicar expectativas de baixa inflação ou políticas monetárias mais dovish.
+
+
+10_y: 
+  name: "Yield de 10 anos da U.S. Treasury"
+  id: "DGS10"
+  description: |
+
+    #### **U.S Treasury Yields**
+    
+    As **U.S Treasury Yields** representam as taxas de rendimento dos títulos do Tesouro dos EUA de um determinado prazo. Esse indicador é frequentemente utilizado para avaliar as expectativas do mercado em relação à política monetária de curto prazo e à saúde econômica.  
+
+    - **Yield em alta** → Indica que os investidores exigem um retorno maior para manter títulos de curto prazo, o que pode refletir expectativas de aumento nas taxas de juros ou incertezas econômicas.  
+    
+    - **Yield em baixa** → Sugere que os investidores estão mais dispostos a manter títulos de curto prazo com menor retorno, o que pode indicar expectativas de baixa inflação ou políticas monetárias mais dovish.
+
+20_y: 
+  name: "Yield de 20 anos da U.S. Treasury"
+  id: "DGS20"
+  description: |
+
+    #### **U.S Treasury Yields**
+
+    As **U.S Treasury Yields** representam as taxas de rendimento dos títulos do Tesouro dos EUA de um determinado prazo. Esse indicador é frequentemente utilizado para avaliar as expectativas do mercado em relação à política monetária de curto prazo e à saúde econômica.  
+
+    - **Yield em alta** → Indica que os investidores exigem um retorno maior para manter títulos de curto prazo, o que pode refletir expectativas de aumento nas taxas de juros ou incertezas econômicas.  
+    
+    - **Yield em baixa** → Sugere que os investidores estão mais dispostos a manter títulos de curto prazo com menor retorno, o que pode indicar expectativas de baixa inflação ou políticas monetárias mais dovish.
+
+30_y: 
+  name: "Yield de 30 anos da U.S. Treasury"
+  id: "DGS30"
+  description: |
+
+    #### **U.S Treasury Yields**
+    
+    As **U.S Treasury Yields** representam as taxas de rendimento dos títulos do Tesouro dos EUA de um determinado prazo. Esse indicador é frequentemente utilizado para avaliar as expectativas do mercado em relação à política monetária de curto prazo e à saúde econômica.  
+
+    - **Yield em alta** → Indica que os investidores exigem um retorno maior para manter títulos de curto prazo, o que pode refletir expectativas de aumento nas taxas de juros ou incertezas econômicas.  
+    
+    - **Yield em baixa** → Sugere que os investidores estão mais dispostos a manter títulos de curto prazo com menor retorno, o que pode indicar expectativas de baixa inflação ou políticas monetárias mais dovish.
+
+us_yield_curve:
+  id: "us_yield_curve"
+  name: "Curva de Juros dos EUA"
+  description: |
+    #### **Curva de Juros dos EUA**
+    
+    A **curva de juros dos EUA** é a representação gráfica das taxas de juros dos títulos do Tesouro dos EUA com diferentes prazos de vencimento, que variam de curto a longo prazo. As taxas de juros, como as taxas DGS (Daily Treasury Yield Curve Rates) publicadas pelo Federal Reserve, mostram os rendimentos dos títulos de dívida do governo dos EUA, como os de 2, 5, 10, 20 e 30 anos. A curva é utilizada para entender as expectativas do mercado em relação à economia, à inflação e às taxas de juros futuras.
+
+    - **Curva Normal (Ascendente)** → Uma curva de juros ascendente (com as taxas de longo prazo mais altas que as de curto prazo) é geralmente associada a um ambiente econômico saudável, com expectativas de crescimento econômico e inflação. Os investidores exigem taxas mais altas para títulos com vencimentos mais longos, devido ao risco e à incerteza associados ao futuro.
+
+    - **Curva Invertida (Descendente)** → Quando as taxas de curto prazo são mais altas do que as de longo prazo, ocorre uma **curva invertida**, que pode ser um sinal de que o mercado espera uma desaceleração econômica ou até uma recessão. Isso acontece porque os investidores buscam títulos de longo prazo como um "porto seguro" e, ao fazer isso, aumentam o preço desses títulos, o que reduz sua taxa de juros.
+
+    - **Curva de Juros Flat** → Quando as taxas de curto e longo prazo são semelhantes, a curva de juros fica "flat", indicando incerteza sobre o futuro da economia. Isso pode ocorrer em uma fase de transição econômica ou quando os investidores não têm certeza sobre as políticas futuras do banco central.
+
+    - **Indicadores de Risco e Expectativas Econômicas** → A curva de juros é um dos indicadores mais importantes para os investidores, economistas e formuladores de políticas, pois reflete a percepção do mercado sobre o risco e as expectativas futuras em relação ao crescimento econômico, inflação e políticas monetárias. O comportamento da curva pode sinalizar mudanças nas condições econômicas e orientar decisões de investimentos.
+
+    **Acompanhar a curva de juros é essencial para entender as expectativas do mercado sobre o futuro da economia dos EUA e pode ajudar a prever a direção das taxas de juros do banco central, a inflação e o crescimento econômico.**
+
+equity-rf:
+  id: "F-F_Research_Data_Factors"
+  name: "Retorno Líquido do Mercado - Maket Return - RFr"
+  description: |
+
+    #### **Fama-French Market Factor: Mkt - RF**
+
+    O **Fama-French Market Factor: Mkt - RF** representa o fator de mercado utilizado no modelo de três fatores de Fama e French. Ele é calculado como o retorno do mercado (Mkt) menos a taxa livre de risco (RF), sendo um dos principais fatores de risco utilizados na explicação dos retornos de ativos.  
+
+    - **Mkt - RF positivo** → Indica que o mercado superou a taxa livre de risco no período analisado, sugerindo que os investidores foram recompensados por assumirem risco de mercado.  
+    
+    - **Mkt - RF negativo** → Significa que o retorno do mercado ficou abaixo da taxa livre de risco, o que pode indicar períodos de baixo desempenho do mercado ou crises financeiras.
+
+dxy:
+  id: "DX-Y.NYB"
+  name: "DX-Y - Dolar Index"
+  description: |
+
+    #### **U.S. Dollar Index (DXY)**
+
+    O **U.S. Dollar Index (DXY)** mede o valor do dólar americano em relação a uma cesta de moedas de parceiros comerciais dos EUA. O índice é ponderado e inclui moedas como o euro, iene japonês, libra esterlina, dólar canadense, coroa sueca e franco suíço. Ele é amplamente utilizado para avaliar a força do dólar no mercado global.  
+
+    - **DXY em alta** → Indica um fortalecimento do dólar americano em relação às principais moedas globais, o que pode impactar negativamente commodities precificadas em dólar e economias emergentes.  
+    
+    - **DXY em baixa** → Sugere uma desvalorização do dólar, o que pode beneficiar exportadores dos EUA e aumentar a atratividade de ativos denominados em outras moedas.
+
+# Price History
+sp_earnings_yields: 
+  id: "earning_yields"
+  name: "S&P 500 Earning Yields"
+  description: |
+    #### **S&P 500 Earning Yields**
+
+    O  representa o lucro por ação (EPS) das empresas do índice S&P 500 dividido pelo preço atual das ações. Ele é o inverso do P/L (Price-to-Earnings, ou P/E).
+
+    - **Earning Yield alto** → Pode indicar que as ações estão baratas em relação aos lucros, podendo representar uma oportunidade de investimento.
+
+    - **Earning Yield baixo** → Sugere que o mercado está disposto a pagar um prêmio pelos lucros futuros, podendo indicar ações caras ou expectativas de crescimento elevado.
+
+sp_pe: 
+  id: "price_earnings"
+  name: "S&P 500 Price/Earnings"
+  description: |
+
+    #### **S&P 500 Price to Earnings**
+    
+    O S&P 500 P/E (Price-to-Earnings) representa a relação entre o preço médio das ações das empresas do índice S&P 500 e seus lucros por ação (EPS). Ele é um dos principais indicadores de valuation do mercado.  
+    
+    - **P/E alto** → Indica que o mercado está disposto a pagar um prêmio pelos lucros futuros, podendo sinalizar expectativas de crescimento elevado ou um mercado sobrevalorizado.  
+  
+    - **P/E baixo** → Sugere que as ações podem estar subvalorizadas ou que há preocupações com o crescimento futuro das empresas do índice.
+
+sp_pb: 
+  id: "price_to_book"
+  name: "S&P 500 Price-to-Book"
+  description: |
+    #### **S&P 500 Price to Book**
+    
+    O S&P 500 P/B (Price-to-Book) representa a relação entre o preço médio das ações das empresas do índice S&P 500 e o seu valor patrimonial por ação (Book Value per Share). Ele é utilizado para avaliar se o mercado está pagando um prêmio sobre o valor contábil das empresas.  
+
+    - **P/B alto** → Indica que os investidores estão dispostos a pagar um prêmio sobre o valor contábil, o que pode refletir expectativas de crescimento ou ativos intangíveis valiosos.  
+    
+    - **P/B baixo** → Sugere que as ações podem estar subvalorizadas em relação ao seu valor patrimonial, mas também pode indicar problemas financeiros ou baixa expectativa de crescimento.
+
+
+# BRASIL
+# Macro
+# Histórico Atividade
+# GDP já tem
+
+ibcbr:
+  id: 24364
+  name: "IBC-Br - Índice de Atividade Econômica do Banco Central"
+  description: |
+    #### **IBC-Br - Índice de Atividade Econômica do Banco Central**
+    
+    O **IBC-Br (Índice de Atividade Econômica do Banco Central)** é um indicador criado pelo Banco Central do Brasil para fornecer uma estimativa mensal do nível de atividade econômica do país antes da divulgação oficial do PIB. Ele é utilizado como uma proxy do desempenho da economia brasileira e pode influenciar as expectativas do mercado sobre o crescimento econômico.
+
+    - **Objetivo** → O IBC-Br foi desenvolvido para auxiliar na formulação da política monetária e servir como um termômetro do desempenho econômico antes dos dados oficiais do PIB, que são divulgados trimestralmente pelo IBGE.
+
+    - **Cálculo** → O índice é calculado com base em diversos dados da economia, incluindo a produção industrial, o volume de serviços, o comércio e outros indicadores setoriais que refletem a atividade econômica do Brasil.
+
+    - **Importância** → Como o PIB é divulgado apenas a cada três meses, o IBC-Br é um dado antecipado que pode ajudar economistas, investidores e formuladores de políticas a ajustar suas projeções econômicas e estratégias de investimento.
+
+    - **Interpretação**:
+      - **IBC-Br em alta** → Indica expansão econômica e pode sugerir um crescimento do PIB.
+      - **IBC-Br em queda** → Pode sinalizar desaceleração econômica e riscos de recessão.
+
+    - **Relação com a política monetária** → O Banco Central pode considerar o comportamento do IBC-Br ao tomar decisões sobre a taxa de juros (Selic), pois o índice reflete a atividade econômica e pode indicar pressões inflacionárias ou recessivas.
+
+    **O IBC-Br é um indicador relevante para monitorar a economia brasileira e antecipar tendências de crescimento antes da divulgação oficial do PIB.**
+
+producao_industrial:
+  id: "producao_industrial"
+  name: "Produção Industrial"
+  description: |
+    #### **Produção Industrial**  
+
+    A **Produção Industrial** mede a variação da quantidade de bens produzidos pela indústria em um determinado período. Esse indicador é um dos principais termômetros da atividade econômica, pois reflete o nível de demanda e a capacidade produtiva do setor industrial.  
+
+    - **Crescimento na produção industrial** → Indica expansão da atividade econômica, aumento da demanda e, possivelmente, maior geração de empregos no setor.  
+    - **Queda na produção industrial** → Pode sinalizar desaceleração econômica, menor demanda e impacto negativo no mercado de trabalho.  
+
+    Esse indicador pode ser analisado de forma mensal ou anual, e muitas vezes é desagregado por setores para identificar quais segmentos industriais estão crescendo ou encolhendo.  
+
+vendas_varejo:
+  id: "retail_sales_br"
+  name: "Vendas no Varejo"
+  description: |
+    #### **Vendas no Varejo**
+    
+    O indicador **Vendas no Varejo**, publicado pelo **IBGE (Instituto Brasileiro de Geografia e Estatística)**, mede a evolução mensal do volume de vendas no comércio varejista brasileiro. Ele é um dos principais termômetros do consumo das famílias e do dinamismo da economia, e esta série possui ajuste sazonal.
+
+    - **Objetivo** → O indicador acompanha o desempenho do setor varejista, servindo como um importante referencial para a atividade econômica e para a formulação de políticas públicas e decisões de mercado.
+
+    - **Categorias** → O IBGE divulga os dados de vendas no varejo em duas principais versões:
+      - **Varejo Restrito** → Considera apenas as vendas de setores específicos, excluindo veículos, autopeças e material de construção.
+      - **Varejo Ampliado** → Inclui as vendas de automóveis, autopeças e material de construção, fornecendo uma visão mais abrangente do setor.
+
+    - **Interpretação**:
+      - **Crescimento nas vendas** → Indica um aumento na demanda do consumidor, o que pode sinalizar aquecimento da economia.
+      - **Queda nas vendas** → Pode indicar desaceleração do consumo, refletindo menor confiança dos consumidores e possível retração econômica.
+
+    - **Relação com a política monetária** → Como o consumo é um dos principais motores da economia, o Banco Central acompanha os dados de vendas no varejo para avaliar a necessidade de ajustes na taxa Selic, influenciando decisões de crédito e inflação.
+
+    **O indicador de Vendas no Varejo é essencial para monitorar o comportamento do consumo e as tendências da economia brasileira.**
+
+inec_ano_corrente:
+  id: 7345
+  name: "Expectativas do Consumidor para o ano corrente"
+  description: |
+    #### **Índice Nacional de Expectativas do Consumidor (INEC) - Ano Corrente**
+    
+    O **Índice Nacional de Expectativas do Consumidor (INEC)** mede a percepção e as expectativas dos consumidores brasileiros em relação à economia, renda, emprego, inflação e endividamento. Ele é calculado por instituições como a **Confederação Nacional da Indústria (CNI)** e reflete o nível de confiança do consumidor ao longo do ano.
+
+    - **Objetivo** → Avaliar o sentimento dos consumidores sobre sua situação financeira e a economia brasileira, servindo como um termômetro para o comportamento do consumo e da demanda agregada.
+
+    - **Componentes do índice**:
+      - **Expectativa sobre a renda pessoal** → Indica se os consumidores acreditam que sua renda aumentará ou diminuirá nos próximos meses.
+      - **Perspectiva de inflação** → Mede a percepção sobre a evolução dos preços no futuro.
+      - **Expectativa sobre desemprego** → Avalia a confiança dos consumidores no mercado de trabalho.
+      - **Endividamento e intenção de compra** → Reflete a disposição do consumidor em contrair dívidas e realizar compras de bens duráveis.
+
+    - **Interpretação**:
+      - **INEC alto** → Indica otimismo dos consumidores, o que pode impulsionar o consumo e o crescimento econômico.
+      - **INEC baixo** → Sugere pessimismo, podendo sinalizar redução no consumo e desaquecimento da economia.
+
+    - **Importância**:
+      - O indicador é utilizado por formuladores de políticas econômicas e pelo mercado financeiro para antecipar tendências no consumo e ajustar estratégias de negócios e investimentos.
+
+    **O Índice Nacional de Expectativas do Consumidor é essencial para monitorar o humor da população e suas perspectivas sobre a economia ao longo do ano.**
+
+inec_compras:
+  id: 7346
+  name: "Expectativas do Consumidor - Intenção de Compras"
+  description: |
+    #### **Índice Nacional de Expectativas do Consumidor - Intenção de Compras**  
+
+    Este indicador mede a disposição dos consumidores para realizar compras de bens duráveis e outros itens importantes no curto prazo. Ele reflete a confiança do consumidor em sua situação financeira pessoal e na economia como um todo.  
+
+    - **Valores elevados** → Indicam maior propensão ao consumo e maior confiança econômica.  
+    - **Valores baixos** → Sinalizam cautela dos consumidores, geralmente devido a incertezas econômicas ou aumento do endividamento.  
+
+    O INEC - Intenção de Compras é útil para prever tendências de varejo e consumo, sendo uma ferramenta importante para empresas e formuladores de políticas econômicas.  
+
+inec_renda_pessoal:
+  id: 7347
+  name: "Expectativas do Consumidor - Renda Pessoal"
+  description: |
+    #### **Índice Nacional de Expectativas do Consumidor (INEC) - Expectativa de Renda Pessoal**  
+
+    O Índice Nacional de Expectativas do Consumidor (INEC) - Expectativa de Renda Pessoal mede a percepção dos consumidores sobre a evolução futura da sua própria renda. Esse indicador reflete o grau de otimismo ou pessimismo em relação ao poder de compra e às condições financeiras individuais nos próximos meses.  
+
+    - **Valores elevados** → Indicam que os consumidores esperam um aumento na renda, o que pode impulsionar o consumo e o crescimento econômico.  
+    - **Valores baixos** → Sinalizam preocupação com redução de ganhos ou dificuldades financeiras, podendo levar a um comportamento mais cauteloso em relação a gastos.  
+
+    Esse indicador é relevante para análises de consumo, crédito e planejamento econômico, ajudando a prever tendências do mercado interno.
+
+icei_condicoes:
+  id: 7342
+  name: "Confiança do Empresário Industrial - Condições"
+  description: |
+    #### **Confiança do Empresário Industrial - Condições**  
+
+    O **Índice de Confiança do Empresário Industrial (ICEI)** - Condições mede a percepção dos empresários da indústria sobre a situação atual da economia e do próprio setor industrial. Ele reflete o grau de confiança dos empresários com base em variáveis como demanda, custos de produção e ambiente de negócios.  
+
+    - **Valores acima de 50 pontos** → Indicam melhora nas condições econômicas e industriais em relação aos meses anteriores.  
+    - **Valores abaixo de 50 pontos** → Sinalizam deterioração das condições econômicas e do setor industrial.  
+
+    Esse indicador é essencial para avaliar o humor da indústria e antecipar tendências no setor produtivo.  
+
+icei_expectativas:
+  id: 7343
+  name: "Confiança do Empresário Industrial - Expectativas"
+  description: |
+    #### **Índice de Confiança do Empresário Industrial (ICEI) - Expectativas**  
+
+    O **Índice de Confiança do Empresário Industrial (ICEI)** - Expectativas mede a percepção dos empresários da indústria em relação às condições futuras da economia e do próprio setor industrial. Ele reflete o otimismo ou pessimismo dos industriais sobre os próximos meses.  
+
+    - **Valores acima de 50 pontos** → Indicam otimismo em relação à economia e ao setor industrial no futuro.  
+    - **Valores abaixo de 50 pontos** → Sinalizam pessimismo e expectativas negativas sobre a atividade econômica.  
+
+    Esse indicador é essencial para entender a confiança do setor produtivo e sua disposição para investir e expandir negócios.  
+
+# Previsões de Atividade
+# GDP já temos
+
+projecao_pib_bcb:
+  id: "C1 Boxe1 Tab 2"
+  name: "Projeção do PIB - Banco Central do Brasil"
+  description: |
+    #### **Projeção do PIB - Banco Central do Brasil**  
+
+    A **Projeção do PIB** do Banco Central do Brasil reflete as estimativas oficiais para o crescimento da economia brasileira nos próximos trimestres e anos. Essa projeção é baseada em modelos macroeconômicos que consideram variáveis como consumo, investimentos, exportações, inflação e política monetária.  
+
+    - **Estimativa central** → Representa a taxa esperada de crescimento do PIB em determinado horizonte de tempo.  
+    - **Fontes principais** → O Banco Central publica suas projeções no **Relatório de Inflação** e no **Boletim Focus**, que compila as expectativas do mercado.  
+    - **Importância** → As projeções do PIB são utilizadas para orientar decisões de política monetária, fiscal e de investimentos, sendo um dos principais indicadores da atividade econômica.  
+
+    Essas previsões são ajustadas periodicamente com base em novos dados econômicos e nas mudanças do cenário global e interno.  
+
+# Histórico Inflação 
+
+ipca:
+  id: 433
+  name: "Índice de Preços ao Consumidor Amplo (IPCA)"
+  description: |
+    #### **Índice de Preços ao Consumidor Amplo (IPCA)**  
+
+    O **IPCA** é o principal indicador da inflação no Brasil, calculado pelo **IBGE**. Ele mede a variação dos preços de uma cesta de bens e serviços consumidos pelas famílias com renda de **1 a 40 salários mínimos**, servindo como referência para as metas de inflação definidas pelo Banco Central.  
+
+    - **Abrangência** → Mede a inflação em diversas regiões metropolitanas do Brasil.  
+    - **Uso na economia** → É utilizado pelo Banco Central para a definição da **taxa Selic** e pela sociedade para reajustes salariais, contratos e preços regulados.  
+
+    O IPCA é a referência oficial da inflação e influencia diretamente as decisões de política econômica no Brasil.
+
+igpm:
+  id: 
+  name: "Índice Geral de Preços - Mercado (IGP-M)"
+  description: |
+    #### **Índice Geral de Preços - Mercado (IGP-M)**  
+
+    O **IGP-M** é um índice de inflação calculado pela **FGV (Fundação Getulio Vargas)**. Ele mede a variação de preços em diferentes setores da economia e é amplamente utilizado para o reajuste de contratos, como aluguéis e tarifas públicas.  
+ 
+    - **Composição** → É formado por três subíndices:  
+      - **IPA-M (60%)** → Índice de Preços ao Produtor Amplo, que mede os preços no atacado.  
+      - **IPC-M (30%)** → Índice de Preços ao Consumidor, que reflete a variação de preços para o consumidor final.  
+      - **INCC-M (10%)** → Índice Nacional de Custo da Construção, que mede os custos na construção civil.  
+    - **Uso na economia** → Principalmente utilizado para reajuste de contratos de aluguel e tarifas de serviços.  
+
+    O IGP-M tem grande aplicação em contratos imobiliários.  
+
+ipca_ms:
+  id: 4466
+  name: "Núcleo da Inflação - IPCA-MS"
+  description: |
+    #### **Núcleo da Inflação - IPCA-MS**  
+
+    O **Núcleo da Inflação** medido pelo **IPCA-MS** (Média Suavizada) é um indicador calculado pelo Banco Central do Brasil para avaliar a **tendência subjacente da inflação**, eliminando efeitos voláteis de preços.  
+
+    - **O que é?** → Uma medida do **núcleo da inflação**, que busca identificar a tendência da inflação de forma mais estável, filtrando choques temporários.  
+    - **Base de cálculo** → Calculado a partir do **IPCA (Índice de Preços ao Consumidor Amplo)**, mas aplicando métodos estatísticos para suavizar variações extremas.  
+    - **Uso na política monetária** → O Banco Central do Brasil acompanha o **IPCA-MS** para avaliar a dinâmica inflacionária e tomar decisões sobre a taxa de juros (**Selic**).  
+
+    Este núcleo é uma das várias métricas utilizadas para análise de inflação no Brasil, complementando outras medidas como **IPCA-EX, IPCA-DP e IPCA-Trimmed Mean**.  c
+
+# Previsões inflação
+
+projecao_inflacao_bcb:
+  id: "Graf 2.2.9"
+  name: "Projeção da Inflação - BCB"
+  description: |
+    #### **Projeção da Inflação - Banco Central do Brasil**  
+
+    A **Projeção da Inflação** do Banco Central do Brasil representa as estimativas para a inflação futura, geralmente expressa pelo IPCA (Índice de Preços ao Consumidor Amplo). O leque representa a incerteza dessas projeções, indicando a faixa de probabilidade em torno da previsão central.  
+
+    - **Projeção central** → Representa a estimativa mais provável para a inflação nos próximos trimestres e anos, baseada em modelos econométricos e no cenário macroeconômico.  
+    - **Leque de incerteza** → Indica o grau de confiança da previsão, com bandas mais largas sugerindo maior incerteza.  
+    - **Utilização** → Serve como referência para o mercado financeiro e para a formulação da política monetária, auxiliando na definição da taxa Selic.  
+
+    As projeções são publicadas periodicamente no **Relatório de Inflação** e no **Boletim Focus**, considerando fatores como taxa de juros, câmbio e atividade econômica.  
+
+inf_implicita_br: 
+  id: "INFIMP"
+  name: "Inflação Implícita"
+  description: |
+
+    #### **Inflação Implícita**
+
+    O **índice de inflação implícita no Brasil** reflete as expectativas do mercado em relação à inflação futura, com base na diferença de rendimentos entre os títulos públicos pré-fixados e atrelados ao IPCA, emitidos pelo  governo brasileiro. Esse índice mede a inflação esperada pelos investidores para os próximos anos, considerando a rentabilidade dos títulos e a percepção de risco.
+
+    - **Inflação implícita em alta** → Indica que os investidores esperam um aumento na inflação futura, o que pode ser causado por fatores como aumento da demanda ou incertezas econômicas.
+
+    - **Inflação implícita em baixa** → Reflete uma expectativa de menor pressão inflacionária, o que pode ser resultado de um cenário de estabilidade econômica e política, ou políticas monetárias eficazes.
+
+# SELIC
+
+selic:
+  id: "selic"
+  name: "Taxa Selic"
+  description: |
+    #### **Taxa Selic**  
+
+    A **Selic** (Sistema Especial de Liquidação e de Custódia) é a **taxa básica de juros da economia brasileira**, definida pelo Comitê de Política Monetária (**Copom**) do Banco Central.  
+
+    - **Objetivo** → Regular a inflação e influenciar o crédito e o crescimento econômico.  
+    - **Impacto na economia** → Quando a Selic sobe, o crédito fica mais caro, reduzindo o consumo e a inflação. Quando cai, o crédito fica mais barato, incentivando o crescimento econômico.  
+    - **Referência** → A Selic é usada como referência para diversas aplicações financeiras, como **títulos públicos (Tesouro Selic), empréstimos e investimentos**.  
+
+selic_real:
+  id: "selic_real"
+  name: "Selic Real"
+  description: |
+    #### **Selic Real**  
+
+    A **Selic Real** é a **Taxa Selic ajustada pela inflação**, ou seja, representa o **retorno real dos juros na economia brasileira**.  
+
+    - **Cálculo** → Selic Real = **(1 + Selic Nominal) / (1 + Inflação) - 1**  
+    - **Importância** → Mostra o **poder de compra efetivo dos juros**, pois desconta a inflação.  
+    - **Uso na economia** → Um **juros real positivo** indica ganhos acima da inflação, enquanto um **juros real negativo** significa que o retorno é menor que a inflação, corroendo o poder de compra.  
+
+    A Selic Real é um indicador essencial para investidores, empresas e governos na tomada de decisões financeiras.  
+
+# Mercado
+
+# Juros
+curva_juros: 
+  id: "INTYIELD"
+  name: "Curva de Juros Interpolada"
+  description: |
+
+    #### **Curva de Juros Interpolada**
+
+    A **Curva de Juros** construída a partir da interpolação dos contratos futuros de DI1 (Depósito Interbancário de 1 dia) reflete as expectativas do mercado para a taxa de juros em diferentes momentos.
+
+    Esta curva é uma informação útil para a operação com instrumentos de renda fixa, tendo em vista que é uma boa aproximação para o juros nas datas futuras.
+
+# Preço
+pl_ibovespa:
+  id: "pl_ibovespa"
+  name: "Preço sobre Lucro (P/L) do Ibovespa"
+  description: |
+    #### **Preço sobre Lucro (P/L) do Ibovespa**  
+
+    O **P/L (Preço sobre Lucro) do Ibovespa** mede a relação entre o **preço médio das ações das empresas do índice** e o **lucro por ação (LPA)**. Esse indicador é usado para avaliar se o índice está caro ou barato em relação ao lucro das empresas que o compõem.  
+
+    - **P/L Alto** → O mercado está disposto a pagar mais por cada unidade de lucro das empresas, o que pode indicar **expectativas de crescimento futuro** ou um **mercado sobrevalorizado**.  
+    - **P/L Baixo** → Pode sugerir que o mercado vê **risco** ou **falta de crescimento**, mas também pode indicar **oportunidade de compra** caso os fundamentos estejam sólidos.  
+    - **Uso** → Investidores utilizam o P/L do Ibovespa para comparar períodos históricos e avaliar se o mercado está em um momento de **otimismo ou pessimismo**.  
+
+    Esse indicador é amplamente acompanhado em análises de **valuation e ciclos de mercado** no Brasil.  
+
+# Focus
+projecoes_focus:
+  id: "projecoes_focus"
+  name: "Projeções Focus"
+  description: |
+    #### **Projeções Focus**  
+
+    As **Projeções Focus** são estimativas para os principais indicadores econômicos do Brasil, coletadas semanalmente pelo **Banco Central** a partir das expectativas de bancos, gestoras e instituições financeiras. Essas projeções são publicadas no **Boletim Focus** e servem como referência para decisões de política monetária e planejamento econômico.  
+
+    - **Principais Indicadores monitorados**:  
+      - **PIB** → Crescimento da economia.  
+      - **IPCA** → Inflação oficial do Brasil.  
+      - **Selic** → Taxa básica de juros.  
+      - **Câmbio** → Expectativa para o dólar.  
+
+    - **Importância**:  
+      - Serve como um termômetro das expectativas do mercado.  
+      - Influencia decisões do Banco Central sobre a **Selic** e a política monetária.  
+      - Utilizado por empresas e investidores para embasar estratégias financeiras.  
+
+    O **Boletim Focus** é divulgado todas as segundas-feiras e reflete a visão do mercado sobre a economia brasileira no curto, médio e longo prazo.  
+
+
+# Emerging Markets
+# Macro
+# Histórico e previsão de atividade
+# Já tem o GDP e CPI do FMI
+
+# Taxas de juros dos países emergentes (link no config)
+taxa_juros_pais:
+  id: "taxa_juros_pais"
+  name: "Taxa de Juros"
+  description: |
+    #### **Taxa de Juros**  
+
+    A **taxa de juros** é o custo do crédito ou o retorno de um investimento, expresso como uma porcentagem do valor emprestado ou investido. Cada país possui uma taxa de juros básica definida pelas autoridades monetárias (como o Banco Central) para influenciar a economia e regular a inflação, o crescimento econômico e o nível de emprego.
+
+    - **Função da Taxa de Juros**:  
+      A taxa de juros é um dos principais instrumentos de política monetária. Ela afeta o consumo e o investimento no país, influenciando diretamente o nível de demanda agregada e, consequentemente, a inflação. Os bancos centrais ajustam a taxa de juros para tentar manter a inflação dentro de uma faixa target.
+
+    - **Impacto na Economia**:  
+      - **Aumento da Taxa de Juros** → Eleva o custo do crédito, desincentiva o consumo e o investimento, e pode ajudar a controlar a inflação, mas pode também desacelerar o crescimento econômico.
+      - **Redução da Taxa de Juros** → Torna o crédito mais barato, incentivando o consumo e os investimentos, mas se mantida baixa por muito tempo, pode gerar pressões inflacionárias.
+
+    A **taxa de juros** de um país é um indicador chave utilizado pelos mercados financeiros para avaliar a saúde da economia e é amplamente monitorada por investidores e analistas em todo o mundo.
+
+# CDS Países emergentes
+cds_5_anos:
+  id: "cds_5_anos"
+  name: "CDS-5 anos"
+  description: |
+    #### **CDS-5 anos**  
+
+    O **CDS (Credit Default Swap)** de 5 anos é um contrato de derivativo financeiro que oferece proteção contra o risco de crédito de um país ou empresa, representando a probabilidade de default (inadimplência) nos próximos 5 anos. O **CDS-5 anos** é amplamente utilizado para medir o risco de crédito soberano ou corporativo, sendo um indicador importante de risco percebido pelos investidores.
+
+    - **Como funciona**:  
+      Um investidor paga um prêmio periódico (spreads) para um vendedor de CDS, em troca de proteção caso o emissor do crédito não pague sua dívida. O preço do CDS é expresso como um spread (em pontos base) sobre a dívida emitida. 
+
+    - **Quando o spread é alto**:  
+      Significa que o mercado vê uma maior probabilidade de inadimplência, ou seja, um maior risco de crédito.  
+      
+    - **Quando o spread é baixo**:  
+      Reflete a percepção de menor risco de inadimplência, indicando maior confiança na capacidade do emissor de honrar suas dívidas.  
+
+    O **CDS-5 anos** para um país como o Brasil é comumente utilizado por investidores internacionais para avaliar a estabilidade econômica e o risco de crédito soberano de um país. Ele também é um indicativo importante para decisões de política monetária e financeira.
+
+# Mercado
+
+# Spread de crédito
+ice_bofa_hy_em_spread:
+  id: "BAMLEMHBHYCRPIOAS"
+  name: "ICE BofA High Yield Emerging Markets Corporate Plus Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA High Yield Emerging Markets Corporate Plus Index Option-Adjusted Spread**
+
+    O **ICE BofA High Yield Emerging Markets Corporate Plus Index Option-Adjusted Spread** reflete a diferença de rendimento entre os títulos de alta renda (high yield) corporativos emitidos por empresas de mercados emergentes e os títulos de referência do Tesouro dos EUA. O spread ajustado por opções considera a volatilidade e a probabilidade de inadimplência.  
+
+    - **Spread em alta** → Indica aumento no risco percebido, geralmente relacionado a fatores macroeconômicos ou políticos que afetam os emissores de mercados emergentes.  
+    
+    - **Spread em baixa** → Reflete maior apetite pelo risco por parte dos investidores, indicando uma percepção de menor risco ou uma melhoria nas condições econômicas.
+
+ice_bofa_cred_em_spread:
+  id: "BAMLEMCBPIOAS"
+  name: "ICE BofA Emerging Markets Corporate Plus Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA Emerging Markets Corporate Plus Index Option-Adjusted Spread**
+
+    O **ICE BofA Emerging Markets Corporate Plus Index Option-Adjusted Spread** representa a diferença de rendimento entre os títulos corporativos emitidos por empresas de mercados emergentes e os títulos do Tesouro dos EUA, ajustado por opções. Esse índice reflete a percepção de risco de crédito nos mercados emergentes e pode ser influenciado por fatores políticos, econômicos e de liquidez.  
+
+    - **Spread em alta** → Pode indicar aumento da incerteza econômica ou política nos mercados emergentes, resultando em maior risco de crédito.  
+    
+    - **Spread em baixa** → Sugere um apetite mais forte por risco, com os investidores mais dispostos a adquirir títulos de mercados emergentes, devido a uma melhoria nas condições econômicas globais ou regionais.
+
+asia_em_bofa:
+  id: "BAMLEMRACRPIASIAOAS"
+  name: "ICE BofA Asia Emerging Markets Corporate Plus Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA Asia Emerging Markets Corporate Plus Index Option-Adjusted Spread**
+
+    O **ICE BofA Asia Emerging Markets Corporate Plus Index Option-Adjusted Spread** mede a diferença de rendimento entre os títulos corporativos emitidos por empresas de mercados emergentes asiáticos e os títulos do Tesouro dos EUA, ajustada por opções. Esse índice reflete a percepção de risco nas economias emergentes da Ásia.  
+
+    - **Spread em alta** → Pode sinalizar aumento no risco percebido, devido a questões econômicas ou políticas específicas da região asiática.  
+    
+    - **Spread em baixa** → Indica uma menor percepção de risco, refletindo uma melhora nas perspectivas econômicas ou maior confiança nos emissores asiáticos.
+
+latin_em_bofa:
+  id: "BAMLEMRLCRPILAOAS"
+  name: "ICE BofA **Latin America** Emerging Markets Corporate Plus Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA Latin American Emerging Markets Corporate Plus Index Option-Adjusted Spread**
+    
+    O **ICE BofA Latin American Emerging Markets Corporate Plus Index Option-Adjusted Spread** reflete a diferença de rendimento entre os títulos corporativos emitidos por empresas de mercados emergentes da América Latina e os títulos do Tesouro dos EUA, ajustada por opções. Este índice mostra o risco associado às economias latino-americanas.  
+
+    - **Spread em alta** → Pode indicar aumento do risco percebido nos mercados latino-americanos, causado por incertezas políticas, econômicas ou financeiras.  
+    
+    - **Spread em baixa** → Reflete uma maior confiança na estabilidade econômica e política da América Latina, com os investidores mais dispostos a aceitar o risco.
+
+euro_em_bofa:
+  id: "BAMLEMEBCRPIEOAS"
+  name: "ICE BofA Euro Emerging Markets Corporate Plus Index Option-Adjusted Spread"
+  description: |
+
+    #### **ICE BofA **Euro** Emerging Markets Corporate Plus Index Option-Adjusted Spread**
+
+    O **ICE BofA **Euro** Emerging Markets Corporate Plus Index Option-Adjusted Spread** mede o spread entre os títulos corporativos de mercados emergentes da região da Europa e os títulos do Tesouro dos EUA, ajustado por opções. Este índice reflete o risco de crédito nos mercados emergentes europeus.  
+
+    - **Spread em alta** → Pode indicar aumento do risco percebido nas economias emergentes da Europa, frequentemente associado a questões geopolíticas ou econômicas regionais.  
+    
+    - **Spread em baixa** → Sugere uma maior confiança nos mercados emergentes europeus, com os investidores aceitando menores prêmios de risco.
+
+# Índices
+
+hsi:
+  id: "hsi"
+  name: "Hang Seng Index"
+  description: |
+    #### **Hang Seng Index**
+    
+    O **Hang Seng Index (HSI)** é o principal índice de ações de Hong Kong, composto pelas 50 empresas mais representativas e negociadas da Bolsa de Valores de Hong Kong. Este índice reflete o desempenho do mercado de ações de Hong Kong e serve como um barômetro importante para a economia de Hong Kong.
+
+    - **Composição do Índice**:  
+      O HSI é ponderado de acordo com o valor de mercado das empresas, o que significa que as maiores empresas têm um impacto maior sobre o desempenho do índice. Ele inclui empresas dos setores financeiros, imobiliários, de consumo, energia e tecnologia, entre outros.
+
+    - **Uso do Índice**:  
+      O HSI é utilizado por investidores e analistas como uma medida do desempenho geral da economia de Hong Kong. Seu comportamento é observado por traders que querem avaliar as tendências do mercado e a saúde econômica da região. Além disso, é usado como benchmark para fundos de investimento e ETFs relacionados ao mercado de Hong Kong.
+
+    - **Indicadores Relacionados**:
+      - **Alta do Índice**: Pode indicar um mercado otimista, com expectativas positivas para o crescimento das empresas listadas e para a economia de Hong Kong.
+      - **Queda do Índice**: Pode sugerir pessimismo no mercado, frequentemente relacionado a questões econômicas ou políticas que afetam as empresas e a economia de Hong Kong.
+
+    O HSI é amplamente acompanhado por investidores em Hong Kong e internacionalmente, sendo considerado um dos índices mais importantes da Ásia.
+
+csi_300:
+  id: "csi_300"
+  name: "CSI 300 Index"
+  description: |
+    #### **CSI 300 Index**
+    
+    O **CSI 300 Index** é um índice de ações que representa as 300 principais empresas listadas nas bolsas de valores de Xangai e Shenzhen, na China. Ele é composto pelas empresas com maior capitalização de mercado e maior liquidez dessas duas bolsas, proporcionando uma visão ampla e representativa do mercado de ações chinês.
+
+    - **Composição do Índice**:  
+      O CSI 300 é ponderado pelo valor de mercado das empresas, o que significa que as maiores empresas têm maior peso no índice. Ele inclui empresas de diversos setores, como finanças, consumo, tecnologia, saúde, energia e infraestrutura.
+
+    - **Uso do Índice**:  
+      O CSI 300 é um indicador chave para os investidores que buscam monitorar o desempenho do mercado de ações da China. Ele serve como um benchmark para fundos de investimento e ETFs que buscam refletir o mercado chinês, além de ser uma referência importante para analistas e traders que avaliam a saúde da economia chinesa.
+
+    - **Indicadores Relacionados**:
+      - **Alta do Índice**: Pode indicar um mercado otimista, refletindo crescimento robusto das empresas chinesas e uma economia em expansão.
+      - **Queda do Índice**: Pode sinalizar uma desaceleração econômica, incertezas políticas ou outros fatores adversos que afetam as perspectivas das empresas chinesas.
+
+    O CSI 300 é amplamente acompanhado por investidores domésticos e internacionais, sendo um dos índices mais importantes para acompanhar a evolução do mercado de ações da China.
+
+msci_taiwan:
+  id: "msci_taiwan"
+  name: "MSCI Taiwan Index"
+  description: |
+    #### **MSCI Taiwan Index**
+    
+    O **MSCI Taiwan** é um índice de ações que reflete o desempenho do mercado de ações de Taiwan, composto por empresas de grande e médio porte negociadas na Bolsa de Valores de Taiwan (TWSE). O índice MSCI é amplamente utilizado por investidores para acompanhar o desempenho das ações de Taiwan em mercados globais.
+
+    - **Objetivo**: O índice busca representar o setor de ações de Taiwan, cobrindo aproximadamente 85% da capitalização de mercado do país.
+    
+    - **Composição**: O MSCI Taiwan inclui empresas dos setores de tecnologia, indústria, finanças, consumo e outros. Empresas de tecnologia, como a Taiwan Semiconductor Manufacturing Company (TSMC), têm grande peso dentro do índice devido à sua significativa contribuição para a economia do país.
+    
+    - **Uso**: O índice é amplamente utilizado como referência para fundos de investimentos e ETFs que buscam exposição ao mercado taiwanês.
+
+    - **Importância**: Considerado um dos principais índices de mercado de ações de Taiwan, o MSCI Taiwan é crucial para avaliar a saúde econômica e as perspectivas de crescimento do país. Além disso, o índice serve como benchmark para os investidores internacionais que buscam investir em ações de Taiwan.
+
+msci_latin_emerging:
+  id: "msci_latin_emerging"
+  name: "MSCI Latin American Emerging Markets Index"
+  description: |
+    #### **MSCI Latin American Emerging Markets**
+    
+    O **MSCI Latin American Emerging Markets** é um índice que reflete o desempenho do mercado de ações de países emergentes na América Latina. Ele cobre ações de grandes e médias empresas listadas em bolsas de valores da região, incluindo países como Brasil, México, Chile e outros mercados latino-americanos emergentes.
+
+    - **Objetivo**: O índice busca representar o desempenho de ações de países emergentes da América Latina, com foco em países em desenvolvimento que estão em transição para economias de mercados mais livres.
+    
+    - **Composição**: O índice é composto por empresas de diversos setores, incluindo finanças, energia, telecomunicações e consumo, que estão listadas nas bolsas de valores dos países da região. O Brasil e o México geralmente possuem uma grande participação no índice devido ao tamanho de suas economias e mercados de capitais.
+
+    - **Uso**: O MSCI Latin American Emerging Markets é utilizado como benchmark para fundos de investimento, ETFs e outros produtos financeiros que buscam fornecer exposição ao mercado latino-americano emergente.
+
+    - **Importância**: Este índice é amplamente seguido por investidores globais que buscam diversificar suas carteiras de investimento com exposição a mercados emergentes da América Latina. Ele reflete tanto o risco quanto o potencial de crescimento desses mercados dinâmicos.
+
+    - **Diversificação**: Apesar de ser composto por economias emergentes, o MSCI Latin American Emerging Markets fornece uma visão diversificada de diferentes setores, o que torna o índice uma opção interessante para investidores que desejam se expor a essa região, mas de forma diversificada.
+
+em_etfs_vol:
+  id: "VXEEMCLS"
+  name: "CBOE Emerging Markets ETF Volatility Index"
+  description: |
+
+    #### **CBOE Emerging Markets ETF Volatility Index**
+
+    O **CBOE Emerging Markets ETF Volatility Index** mede a volatilidade implícita das opções do ETF **EEM** (iShares MSCI Emerging Markets ETF). Esse índice reflete as expectativas do mercado sobre a volatilidade futura dos mercados emergentes, com base nas opções do ETF. A volatilidade implícita é um indicador importante de percepção de risco e incerteza nos mercados.  
+
+    - **Índice em alta** → Indica aumento nas expectativas de volatilidade e incerteza nos mercados emergentes, frequentemente devido a eventos geopolíticos, mudanças econômicas ou crises financeiras.  
+    
+    - **Índice em baixa** → Reflete uma menor percepção de risco, com o mercado projetando maior estabilidade ou menor incerteza para os mercados emergentes.
+
+
+# Preço
+
+msci_emerging_markets_pl:
+  id: "msci_emerging_markets_pl"
+  name: "MSCI Emerging Markets Price-to-Earnings (P/E) Ratio"
+  description: |
+    #### **MSCI Emerging Markets Price-to-Earnings (P/E) Ratio**
+    
+    O **Índice MSCI Emerging Markets Price-to-Earnings (P/E) Ratio** é uma métrica que avalia a valorização das ações de empresas que compõem o índice MSCI Emerging Markets. O **P/E Ratio** (Preço sobre Lucro) é calculado dividindo o preço atual de uma ação pelo lucro por ação (EPS) da empresa.
+
+    - **Objetivo**: Este indicador tem como objetivo medir a atratividade de preços das ações de empresas em mercados emergentes. O P/E ratio é amplamente utilizado para avaliar se as ações estão caras ou baratas, com base no lucro das empresas.
+
+    - **Interpretação**:
+      - **P/E alto** → Pode indicar que as ações estão supervalorizadas ou que os investidores têm expectativas de crescimento futuro elevado para as empresas do índice.
+      - **P/E baixo** → Pode sugerir que as ações estão subvalorizadas em relação aos lucros atuais, mas também pode refletir uma percepção de risco maior nos mercados emergentes.
+
+# Developed Ex US
+# Macro
+# Histórico e previsões de atividade - DGP FMI
+# Histórico e previsões de inflação - CPI do FMI
+# Taxas básicas de juros
+# CDS - 5 anos
+
+# Mercado
+# índices
+stoxx_600:
+  id: "stoxx_600"
+  name: "STOXX Europe 600"
+  description: |
+    #### **STOXX Europe 600**
+    
+    O **STOXX Europe 600** é um índice de ações que representa as 600 maiores empresas listadas em bolsas de valores de 17 países europeus. Ele cobre uma ampla gama de setores, incluindo tecnologia, finanças, saúde, consumo e energia, e é um dos principais benchmarks para investidores que buscam exposição ao mercado de ações europeu. O índice visa refletir a performance do mercado de ações europeu, incluindo as maiores e mais líquidas empresas de toda a Europa. Ele é projetado para ser um indicador representativo da economia europeia.
+
+    - **Interpretação**:
+      - **Performance**: A performance do **STOXX 600** é frequentemente usada para medir a saúde do mercado de ações europeu. Se o índice estiver subindo, isso pode ser visto como um sinal de confiança na economia europeia, enquanto uma queda pode refletir uma desaceleração econômica ou crises políticas.
+      - **Exposição**: Ao investir no **STOXX 600**, os investidores estão adquirindo uma exposição diversificada a ações europeias, o que pode ser vantajoso para quem busca uma alocação internacional.
+
+nikkei_225:
+  id: "nikkei_225"
+  name: "Nikkei 225"
+  description: |
+    #### **Nikkei 225**
+    
+    O **Nikkei 225** é o principal índice da Bolsa de Valores de Tóquio (TSE) e é composto pelas 225 maiores empresas do Japão, abrangendo diversos setores, como automotivo, tecnologia, finanças e consumo. 
+
+    - **Composição** → O índice é ponderado por preço, o que significa que as empresas com preços de ações mais elevados têm maior impacto no movimento do índice.
+    
+    - **Significado** → O Nikkei 225 é amplamente utilizado como um termômetro da economia japonesa e é seguido globalmente por investidores interessados na economia asiática.
+
+# Preços
+
+pl_dev_ex_us:
+  id: "pl_dev_ex_us"
+  name: "P/L dos Mercados Desenvolvidos Excluindo os EUA"
+  description: |
+    #### **P/L dos Mercados Desenvolvidos Excluindo os EUA**
+    
+    O **P/L dos Mercados Desenvolvidos Excluindo os EUA** representa o índice Preço sobre Lucro (P/L) das principais bolsas de valores em mercados desenvolvidos, exceto os Estados Unidos. Esse índice é utilizado para avaliar se o mercado está subvalorizado ou supervalorizado em relação aos lucros das empresas.
+
+    - **P/L alto** → Indica que as ações das empresas nesses mercados estão sendo negociadas a preços elevados em relação aos lucros, o que pode sugerir uma expectativa de crescimento forte ou uma bolha.
+    
+    - **P/L baixo** → Indica que as ações podem estar subvalorizadas em relação aos lucros das empresas, sugerindo que o mercado pode estar negligenciando o potencial de crescimento ou refletindo uma visão mais pessimista sobre a economia.
+
+# Commodities
+
+# Grains
+wheat_global_price:
+  id: "PWHEAMTUSDM"
+  name: "Preço Global - Trigo (U$/Ton)"
+  description: |
+    
+    #### **Preço Global do Trigo**
+
+    O **Preço Global do Trigo** representa a cotação internacional do trigo em dólares por tonelada métrica. Ele é um dos principais indicadores do mercado agrícola e pode ser influenciado por fatores como clima, produção, demanda global e políticas comerciais.  
+
+    - **Preço do trigo em alta** → Pode indicar menor oferta devido a problemas climáticos, conflitos em regiões produtoras ou aumento na demanda global.  
+    
+    - **Preço do trigo em baixa** → Sugere aumento da produção, menor demanda ou estoques elevados, tornando o trigo mais acessível para consumidores e indústrias.
+
+corn_global_price:
+  id: "PMAIZMTUSDM"
+  name: "Preço Global - Milho (U$/Ton)"
+  description: |
+
+    #### **Preço Global do Milho**
+
+    O **Preço Global do Milho** reflete a cotação internacional do milho em dólares por tonelada métrica. O milho é amplamente utilizado na alimentação humana e animal, além de ser um insumo para biocombustíveis como o etanol.  
+
+    - **Preço do milho em alta** → Pode ser impulsionado por secas, aumento da demanda para biocombustíveis ou exportações elevadas.  
+    
+    - **Preço do milho em baixa** → Indica oferta abundante, boas safras ou menor demanda global, impactando setores como pecuária e produção de etanol.
+
+soy_global_price:
+  id: "PSOYBUSDQ"
+  name: "Preço Global - Soja (U$/Ton)"
+  description: |
+
+    #### **Preço Global da Soja (Soybean Price)**
+
+    O **Preço Global da Soja** representa a cotação da soja em dólares por bushel. A soja é uma commodity fundamental na produção de alimentos, rações e biocombustíveis, sendo fortemente influenciada por demanda chinesa, safras nos EUA e Brasil, e fatores climáticos.  
+
+    - **Preço da soja em alta** → Indica forte demanda global, problemas climáticos afetando a produção ou restrições comerciais.  
+    
+    - **Preço da soja em baixa** → Pode sinalizar estoques elevados, aumento da área plantada ou redução da demanda, afetando produtores e exportadores.
+
+# Energy
+brent_oil_price:
+  id: "DCOILBRENTEU"
+  name: "Preço Global - Petróleo Brent (U$/Barril)"
+  description: |
+
+    #### **Preço do Petróleo Brent**
+
+    O **Preço do Petróleo Brent** é a cotação do petróleo extraído no Mar do Norte e serve como referência global para precificação da commodity. Ele é amplamente utilizado na Europa, Ásia e África.  
+
+    - **Brent em alta** → Pode indicar maior demanda global, restrições na oferta (como cortes da OPEP) ou tensões geopolíticas em países produtores.  
+    
+    - **Brent em baixa** → Sugere excesso de oferta, menor demanda global ou avanços em fontes alternativas de energia.
+
+wti_oil_price:
+  id: "DCOILWTICO"
+  name: "Preço Global - Petróleo WTI (U$/Barril)"
+  description: |
+
+    #### **Preço do Petróleo WTI**
+
+    O **Preço do Petróleo WTI (West Texas Intermediate)** é a cotação do petróleo produzido nos EUA e negociado na NYMEX. Ele é um dos principais benchmarks do mercado de energia.  
+
+    - **WTI em alta** → Indica crescimento da demanda interna e global, além de possíveis interrupções na produção.  
+    
+    - **WTI em baixa** → Pode ser resultado de estoques elevados, menor consumo de combustíveis ou aumento na produção de petróleo de xisto.
+
+henry_pub_ng_price:
+  id: "DHHNGSP"
+  name: "Preço Global - Gás Natural (U$/Milhão de BTU)"
+  description: |
+
+    #### **Preço do Gás Natural Henry Hub**
+
+    O **Preço do Gás Natural Henry Hub** representa a cotação do gás natural nos EUA, servindo como referência para contratos futuros da NYMEX.  
+
+    - **Preço do gás natural em alta** → Indica maior demanda por aquecimento no inverno, restrições na oferta ou aumento das exportações de GNL (Gás Natural Liquefeito).  
+    
+    - **Preço do gás natural em baixa** → Pode sinalizar oferta abundante, menor consumo industrial ou clima mais ameno reduzindo a necessidade de aquecimento.
+
+# Indexes
+gsci:
+  id: "^SPGSCI"
+  name: "Índice S&P GSCI"
+  description: |
+
+    #### **S&P GSCI**
+
+    O **S&P GSCI (Goldman Sachs Commodity Index)** é um dos principais índices de commodities, representando uma cesta diversificada de contratos futuros de commodities, incluindo energia, metais e produtos agrícolas. Ele é usado como um benchmark para o desempenho do mercado de commodities.  
+
+    - **GSCI em alta** → Indica valorização das commodities no mercado global, sugerindo um ambiente inflacionário ou aumento na demanda por matérias-primas.  
+    
+    - **GSCI em baixa** → Pode sinalizar queda na demanda por commodities, possíveis recessões ou aumento da oferta global.
+
+gold_vol:
+  id: "GVZCLS"
+  name: "Gold Volatility Index"
+  description: |
+
+    #### **Gold Volatility Index**
+
+    O **Gold Volatility Index** mede a volatilidade esperada do preço do ouro com base nas opções do ETF SPDR Gold Trust (GLD). Ele é frequentemente comparado ao VIX, mas aplicado ao mercado de ouro.  
+
+    - **Índice alto** → Indica aumento da incerteza no mercado de ouro, geralmente associado a crises econômicas, inflação elevada ou instabilidade geopolítica.  
+    
+    - **Índice baixo** → Sugere menor volatilidade no mercado de ouro, refletindo estabilidade nos preços e menor demanda por ativos de proteção.
+
+global_price_energy:
+  id: "PNRGINDEXM"
+  name: "Índice Global de Preços de Energia"
+  description: |
+    
+    #### **Índice Global de Preços de Energia**
+
+    O **Índice Global de Preços de Energia** representa a variação dos preços das principais fontes de energia, incluindo petróleo, gás natural e carvão, em nível global. Ele é um indicador importante para avaliar tendências no setor energético e impactos inflacionários.  
+
+    - **Índice em alta** → Pode indicar aumento da demanda global por energia, restrições na oferta ou tensões geopolíticas afetando a produção.  
+    
+    - **Índice em baixa** → Sugere excesso de oferta, desaceleração econômica ou avanços em energias renováveis reduzindo a dependência de combustíveis fósseis.
+
+grains_export_price_index:
+  id: "IQ000"
+  name: "Índice de Preços de Exportação de Grãos"
+  description: |
+
+    #### **Índice de Preços de Exportação de Grãos**
+
+    O **Índice de Preços de Exportação de Grãos** mede a variação dos preços médios das principais commodities agrícolas exportadas globalmente, como trigo, milho e soja. Ele reflete a oferta e demanda no mercado internacional.  
+
+    - **Índice em alta** → Pode ser impulsionado por problemas climáticos, aumento da demanda global ou restrições na produção/exportação.  
+    
+    - **Índice em baixa** → Indica oferta abundante, boas safras ou menor demanda global, reduzindo o custo dos alimentos.
+
+global_price_all_comm:
+  id: "PALLFNFINDEXQ"
+  name: "Índice Global de Preços de Todas as Commodities"
+  description: |
+
+    #### **Índice Global de Preços de Todas as Commodities**
+
+    O **Índice Global de Preços de Todas as Commodities** acompanha a evolução dos preços de um amplo conjunto de commodities, incluindo energia, metais, produtos agrícolas e matérias-primas industriais. Ele é utilizado para avaliar tendências inflacionárias e ciclos econômicos.  
+
+    - **Índice em alta** → Indica aumento da demanda global por matérias-primas, pressões inflacionárias ou restrições na oferta.  
+    
+    - **Índice em baixa** → Pode sinalizar desaceleração econômica, excesso de oferta ou avanços tecnológicos reduzindo custos de produção.
+
+comm_br:
+  id: 27574
+  name: "Índice Geral de Commodities Brasil"
+  description: |
+    #### **Índice Geral de Commodities Brasil**
+    
+    O **Índice Geral de Commodities Brasil** acompanha o desempenho das principais commodities brasileiras no mercado global. Ele reflete a variação do preço das commodities mais relevantes para a economia brasileira, como soja, café, açúcar, petróleo, entre outras.
+
+    - **Aumento no índice** → Indica um aumento nos preços das commodities brasileiras, o que pode resultar em crescimento econômico para o Brasil devido à maior receita com exportações.
+    
+    - **Queda no índice** → Pode indicar uma redução nas receitas com exportações de commodities, afetando a economia brasileira, especialmente os setores ligados à exportação e agricultura.
+
+comm_br_metal:
+  id: 27576
+  name: "Índice de Commodities Brasil - Metais"
+  description: |
+    #### **Índice de Commodities Brasil - Metais**
+    
+    O **Índice de Commodities Brasil - Metais** acompanha o desempenho dos metais mais relevantes para a economia brasileira, como ferro, cobre, alumínio, entre outros. Esse índice reflete a variação de preços desses metais, que têm grande importância no comércio exterior brasileiro.
+
+    - **Aumento no índice** → Sinaliza um aumento nos preços dos metais, o que pode ser positivo para as exportações brasileiras de minério de ferro e outros metais, além de beneficiar as empresas do setor.
+    
+    - **Queda no índice** → Indica uma diminuição nos preços dos metais, o que pode afetar negativamente as exportações do Brasil e os setores industriais dependentes desses recursos.
+
+comm_br_metal_agro:
+  id: 27575
+  name: "Índice de Commodities Brasil - Agropecuária"
+  description: |
+    #### **Índice de Commodities Brasil - Agropecuária**
+    
+    O **Índice de Commodities Brasil - Agropecuária** reflete a variação dos preços das principais commodities agrícolas do Brasil, como soja, milho, café e carne. Esse índice é importante para monitorar o impacto das flutuações de preços no setor agrícola brasileiro.
+
+    - **Aumento no índice** → Indica uma alta nos preços das commodities agrícolas brasileiras, o que é positivo para a receita com exportações de produtos como soja e carne, além de beneficiar o setor agrícola.
+    
+    - **Queda no índice** → Pode sinalizar uma redução nos preços agrícolas, afetando negativamente a receita das exportações e o desempenho do setor agrícola no Brasil.
+
+comm_br_energia:
+  id: 27577
+  name: "Índice de Commodities Brasil - Energia"
+  description: |
+    #### **Índice de Commodities Brasil - Energia**
+    
+    O **Índice de Commodities Brasil - Energia** acompanha o desempenho dos preços das commodities energéticas, como petróleo, gás natural e carvão, que são essenciais para a economia brasileira, especialmente no setor de energia e exportações.
+
+    - **Aumento no índice** → Sinaliza um aumento nos preços de energia, o que pode ser benéfico para o Brasil, já que o país é um grande exportador de petróleo e derivados.
+    
+    - **Queda no índice** → Pode refletir uma redução nos preços do petróleo e outras fontes de energia, impactando negativamente a receita de exportação e a indústria de energia do Brasil.

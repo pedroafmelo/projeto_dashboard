@@ -61,7 +61,7 @@ class Interpolate:
         date = datetime.strftime(date, format=r"%d/%m/%Y")
         url = self.config.vars.di_future.replace(r"{data_di}", date).replace(r"{mercadoria}", mercadoria)
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--headless")  
+        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")  
         chrome_options.add_argument("--no-sandbox")
         try:
@@ -124,8 +124,7 @@ class Interpolate:
         Holidays"""
 
         try:
-
-            data_anbima = pd.read_excel(self.config.vars.ambima_holidays)[:-9]
+            data_anbima = pd.read_excel(self.config.vars.anbima_holidays)[:-9]
             data_anbima["Data"] = pd.to_datetime(data_anbima["Data"], format=r"%Y-%m-%d")
             data_anbima = data_anbima[data_anbima["Data"] >= self.end]["Data"].to_list()
 
