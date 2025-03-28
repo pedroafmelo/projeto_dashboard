@@ -39,7 +39,7 @@ class UsExtras:
         self.ind_ids = self.indicators.get_ids_list("us_mkt_extras")
 
         self.us_mkt_extras = dict(zip(list(self.ind.keys()), 
-                               list(range(2))))
+                               list(range(3))))
         
         self.fred = Fred(api_key=self.config.vars.FRED_API_KEY)
         
@@ -53,7 +53,8 @@ class UsExtras:
             index series"""
 
             try:
-                dxy = yf.download(_self.ind_ids[1], start=_self.start, end=_self.end)["Close"]
+                dxy = yf.download(_self.ind_ids[1], start=_self.start, end=_self.end,
+                                          progress=False)["Close"]
 
             except Exception as error:
                 raise OSError(error) from error
@@ -73,6 +74,18 @@ class UsExtras:
             raise OSError(error) from error
 
         return asset_series
+    
+
+    @st.cache_data(show_spinner=False)
+    def get_vix_index(_self) -> pd.DataFrame:
+        """Gets vix index"""
+
+        try:
+            data = yf.download(_self.ind_ids[-1], _self.start, _self.end, progress=False)["Close"]
+        except Exception as error:
+            raise OSError(error) from error
+        
+        return data
 
 
     @st.fragment()
@@ -84,7 +97,7 @@ class UsExtras:
 
         with st.spinner("Carregando os dados..."):
 
-            us_mkt_extras = [self.get_mkt_returns(), self.get_dxy_series()]
+            us_mkt_extras = [self.get_mkt_returns(), self.get_dxy_series(), self.get_vix_index()]
             
             indicator_filter = coluna1.selectbox(
                 " ", 
@@ -98,7 +111,7 @@ class UsExtras:
         
         options = self.utils.echart_dict(us_mkt_extra_data, label_format="%", title=indicator_filter)
         formatter = "%"
-        if "DX-Y" in indicator_filter:
+        if "Return" not in indicator_filter:
             options = self.utils.echart_dict(us_mkt_extra_data, title=indicator_filter)
             formatter = ""
         

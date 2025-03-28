@@ -52,36 +52,12 @@ class UsAct:
     def us_macro_cover(_self):
         """Generates the us 
         macro cover"""
-
-
-        # columns = st.columns([3, 5, 2])
-        # columns[0].image(path.join(_self.config.vars.img_dir, 
-        #                     _self.config.vars.logo_bequest), width=300)
-
-        # columns[2].image(path.join(_self.config.vars.img_dir, 
-        #                     _self.config.vars.logo_pleno), width=300)
-                
-        # st.markdown("""
-        #         <style>
-        #         [data-baseweb = "tag"] {
-        #             color: black;
-        #         }
-        #         </style>
-        #         <div style="padding-top: 0px; padding-bottom: 0px;">
-        #             <h1 style="margin: 0; color: white">Indicadores Macro - EUA</h1>
-        #         </div>
-                    
-        #         """, unsafe_allow_html=True
-        #     )
         
         col1, col2, col3 = st.columns([10.5, .5, 2])
-        col1.subheader("Indicadores Macro - EUA", divider="orange")
+        col1.subheader("Indicadores Macro - EUA", divider="grey")
 
         col3.image(path.join(_self.config.vars.img_dir, 
-                            _self.config.vars.logo_bequest), width=300)
-        
-        # st.markdown("""<hr style="height:2px;border:none;color:blue;background-color:#faba19;" /> """,
-                        # unsafe_allow_html=True)
+                            _self.config.vars.logo_bequest), width=400)
         
     # Data Extraction
     @st.cache_data(show_spinner=False)

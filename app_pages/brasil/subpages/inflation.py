@@ -11,10 +11,10 @@ import requests
 import pandas_datareader.data as pdr
 from streamlit_echarts import st_echarts
 import numpy as np
+from bs4 import BeautifulSoup
 
-
-class UsInf:
-    """US Macro Inflation Indicators"""
+class BrInf:
+    """Br Macro Inflation Indicators"""
 
     def __init__(self) -> None:
         """Initializes instance"""
@@ -34,38 +34,82 @@ class UsInf:
         self.start = datetime(2000, 1, 1)
         self.end = datetime.today()
 
-        self.hist_ind = self.indicators.get_theme_dict("us_macro_inf_hist")
-        self.hist_ind_ids = self.indicators.get_ids_list("us_macro_inf_hist")
-        self.for_ind = self.indicators.get_theme_dict("us_macro_inf_for")
-        self.for_ind_ids = self.indicators.get_ids_list("us_macro_inf_for")
+        self.hist_ind = self.indicators.get_theme_dict("br_macro_inf_hist")
+        self.hist_ind_ids = self.indicators.get_ids_list("br_macro_inf_hist")
+        self.for_ind = self.indicators.get_theme_dict("br_macro_inf_for")
+        self.for_ind_ids = self.indicators.get_ids_list("br_macro_inf_for")
 
-        self.us_macro_inf_hist= dict(zip(list(self.hist_ind.keys()), 
-                               list(range(4))))
+        self.br_macro_inf_hist= dict(zip(list(self.hist_ind.keys()), 
+                               list(range(3))))
         
-        self.us_macro_inf_for= dict(zip(list(self.for_ind.keys()), 
-                               list(range(4))))
+        self.br_macro_inf_for= dict(zip(list(self.for_ind.keys()), 
+                               list(range(2))))
         
         
         warnings.filterwarnings('ignore')
-       
-        
-    # Data Extraction
+    
+    
     @st.cache_data(show_spinner=False)
-    def get_usa_macro_inf_indicators(_self, ids: list) -> pd.DataFrame | list:
-        """Download USA Macro Inflation
-          Indicators"""
+    def get_br_implied_inflation(_self) -> str:
+        """Scrap Implied Inflation
+        data for specific vertices"""
 
-        ind_list = []
+        url = _self.config.vars.url_anbima_inf
 
-        for id in ids:
-            try:
-                ind_series = pdr.DataReader(id, "fred", _self.start, _self.end)
-                ind_list.append(ind_series)
-            except Exception as error:
-                raise OSError(error) from error
+        try:
+            response = requests.get(url)
+            if not response.ok:
+                raise FileNotFoundError(f"Unable to request the AMBIMA web site")
+            soup = BeautifulSoup(response.content, "html.parser")
 
-        return ind_list
+            lista_elems = [elem.text for elem in soup.find_all("div", id="ETTJs")]
+            lista_elems = [elem.replace("\n", " ").replace("\t", " ") for elem in lista_elems]
+            lista_elems = lista_elems[0].split(" ")
+            lista_elems = [elem for elem in lista_elems if elem not in [" ", ""]]
+            lista_elems = lista_elems[lista_elems.index("Implícita") + 1:lista_elems.index("2.394") + 4]
 
+            lista_vertices = [int(lista_elems[i].replace(".", "")) for i in range(0, len(lista_elems) - 2, 4)]
+            lista_eetj_ntnb = [float(lista_elems[i].replace(",", ".")) for i in range(1, len(lista_elems) - 1, 4)]
+            lista_eetj_pre = [float(lista_elems[i].replace(",", ".")) for i in range(2, len(lista_elems), 4)]
+            lista_inf_implicita = [float(lista_elems[i].replace(",", ".")) for i in range(3, len(lista_elems) + 1, 4)]
+
+        except Exception as error:
+            raise OSError(error) from error
+        
+        df_implicita = pd.DataFrame({"Vértice": lista_vertices,
+                                     "ETTJ PRE": lista_eetj_pre,
+                                     "ETTJ NTNB": lista_eetj_ntnb,
+                                     "Inflação Implicita": lista_inf_implicita})
+
+        return df_implicita
+    
+
+    @st.cache_data(show_spinner=False)
+    def proj_inf_bcb(_self):
+        """Gets BCB inflation forecasts"""
+
+        lista = [3, 6, 9, 12]
+
+        atual = 3
+
+        ano_tri = next((f"{datetime.today().year}0{mes}" 
+                         for mes in lista if 1 <= (atual - mes) <= 3), 
+                         f"{datetime.today().year - 1}{12}")
+        
+        try:
+            url = _self.config.vars.relatorio_inflacao_url.replace(r"{ano_tri}", ano_tri)
+            data = pd.read_excel(url, sheet_name="Graf 2.2.9", skiprows=8)
+            data = data.drop(0, axis=0)
+            data.set_index("Trimestre", inplace=True)
+            data["Data"] = data.index.date
+            data = data[["Data", "Valor Central", "Meta de inflação", "Sup da meta", "Inf da meta", 95]]
+            data.columns = ["Data", "Centro da Projeção", "Meta de Inflação", "Sup da meta", "Inf da meta", "95% de Confiança"]
+            data = data[data.index >= datetime.today()]
+
+        except Exception as error:
+            raise OSError(error) from error
+        
+        return data
 
     # Plot historical Dashboard
     @st.fragment()
@@ -82,26 +126,28 @@ class UsInf:
                 
                 indicator_filter = coluna1.selectbox(
                     " ", 
-                    list(self.us_macro_inf_hist.keys()), 
+                    list(self.br_macro_inf_hist.keys()), 
                     index=0, key="inflation_indicator"
                     )
                 
-                us_inf_ind = self.get_usa_macro_inf_indicators(ids=self.hist_ind_ids)
-            us_macro_inf_data = us_inf_ind[self.us_macro_inf_hist.get(indicator_filter)]
-            if coluna2.toggle("Anual", value=True, key="inflation_toggle"):
-                us_macro_inf_data = us_macro_inf_data.resample("Y").first().dropna()
+                ipca = self.utils.get_bcb("IPCA", 433)
+                igpm = self.utils.get_bcb("IGPM", 189)
+                ipca_ms = self.utils.get_bcb("IPCA-MS", 4466)
             
-            if indicator_filter != "Núcleo da Inflação":
-                us_macro_inf_data = round(us_macro_inf_data.pct_change().dropna(), 3) * 100
+            br_macro_inf_hist = [ipca, igpm, ipca_ms]
+            br_macro_inf_data = br_macro_inf_hist[self.br_macro_inf_hist[indicator_filter]]
+            if coluna2.toggle("Anual", value=True, key="inflation_toggle"):
+                br_macro_inf_data = br_macro_inf_data.resample("Y").apply(lambda x: (1 + x/100).prod() - 1) * 100
+            
             
             c1, c2, c3 = st.columns([6, .3, 3], vertical_alignment="center")
             
-            options = self.utils.echart_dict(us_macro_inf_data, label_format="%", title=indicator_filter)
+            options = self.utils.echart_dict(br_macro_inf_data, label_format="%", title=indicator_filter)
             formatter = "%"
             
-            if coluna3.toggle("Barras"):
+            if coluna3.toggle("Barras", value=True):
                 formatter = "%"
-                options = self.utils.bar_chart_dict(us_macro_inf_data, title=indicator_filter)
+                options = self.utils.bar_chart_dict(br_macro_inf_data, title=indicator_filter)
             
             with c1.container():
                 st.html("<span class='column_graph'></span>")
@@ -112,60 +158,56 @@ class UsInf:
             with st.popover("Sobre", icon=":material/info:"):
                 st.write(self.hist_ind[indicator_filter]["description"])
 
-            current_value = round(us_macro_inf_data.iloc[-1].values[0], 3)
-            lowest_value = round(us_macro_inf_data.min().values[0], 3)
-            highest_value = round(us_macro_inf_data.max().values[0], 3)
+            current_value = round(br_macro_inf_data.iloc[-1].values[0], 3)
+            lowest_value = round(br_macro_inf_data.min().values[0], 3)
+            highest_value = round(br_macro_inf_data.max().values[0], 3)
             with c3:
                 co1, co2, co3 = st.columns([1, 3, 1])
                 st.html("<span class='indicators'></span>")
-                co2.metric("Valor Atual", f"{current_value}{formatter}")
-                co2.metric("Maior Valor", f"{highest_value}{formatter}")
-                co2.metric("Menor Valor", f"{lowest_value}{formatter}")
+                co2.metric("Valor Atual", f"{round(current_value, 2)}{formatter}")
+                co2.metric("Maior Valor", f"{round(highest_value, 2)}{formatter}")
+                co2.metric("Menor Valor", f"{round(lowest_value, 2)}{formatter}")
 
         else:
+
+            col1, col2, col3, col4 = st.columns([4, .4, 6, .8])
             
             with st.spinner("Carregando os dados..."):
                 
-                indicator_filter = coluna1.selectbox(
-                    " ", 
-                    list(self.for_ind.keys()), 
-                    index=0 
-                    )
-                
-            us_inf_forecasts = self.get_usa_macro_inf_indicators(ids=self.for_ind_ids[1:])
-            us_inf_forecasts.insert(0, self.utils.get_gdp("USA", self.for_ind_ids[0], forward=True))
-            us_macro_inf_forecast = us_inf_forecasts[self.us_macro_inf_for.get(indicator_filter)]
-            if coluna2.toggle("Anual", value=True, key="inflation_toggle"):
-                us_macro_inf_forecast = us_macro_inf_forecast.resample("Y").first().dropna()
+                inf_implicita = self.get_br_implied_inflation()
+                projecao_inflacao = self.proj_inf_bcb()
 
-            if "Implícita" in indicator_filter:
-                us_macro_inf_forecast = us_macro_inf_forecast.interpolate()
+            col1.markdown("""
+                            <h5 style='color: white'>
+                              Projeções do Banco Central do Brasil - Relatório Trimestral da Inflação  
+                            </h5>
+                            """, unsafe_allow_html=True)
+            col1.dataframe(projecao_inflacao, hide_index=True)
 
-            c1, c2, c3 = st.columns([6, .3, 3], vertical_alignment="center")
+            col3.markdown("""
+                            <h5 style='color: white'>
+                              Inflação Implícita do Brasil  
+                            </h5>
+                            """, unsafe_allow_html=True)
             
-            options = self.utils.echart_dict(us_macro_inf_forecast, label_format="%", title=indicator_filter)
+            table_tog = col4.toggle("Tabela")
+            inf_implicita_copia = inf_implicita.copy()
+            inf_implicita_copia.set_index("Vértice", inplace=True)
             
-            if coluna3.toggle("Barras"):
-                formatter = "%"
-                options = self.utils.bar_chart_dict(us_macro_inf_forecast, title=indicator_filter)
+            options = self.utils.no_time_echart(inf_implicita_copia, smooth=True, label_format="%")
+            if table_tog:
+                col3.dataframe(inf_implicita, hide_index=True)
+            
+            else:
+                with col3.container():
+                    st.html("<span class='column_graph'></span>")
+                    col,_ = st.columns([10,.05])
+                    with col:
+                        st_echarts(options, height="400px", theme="dark")
+            
+            
+            with col1.popover("Sobre", icon=":material/info:"):
+                st.write(self.for_ind["Projeção da Inflação - BCB"]["description"])
 
-            with c1.container():
-                st.html("<span class='column_graph'></span>")
-                col,_ = st.columns([10,.05])
-                with col:
-                    st_echarts(options=options, height="500px", theme="dark")
-
-            with st.popover("Sobre", icon=":material/info:"):
-                st.write(self.for_ind[indicator_filter]["description"])
-
-            current_value = round(us_macro_inf_forecast.iloc[-1].values[0], 3)
-            if "FMI" in indicator_filter:
-                current_value = round(us_macro_inf_forecast.iloc[0].values[0], 3)
-            lowest_value = round(us_macro_inf_forecast.min().values[0], 3)
-            highest_value = round(us_macro_inf_forecast.max().values[0], 3)
-            with c3:
-                co1, co2, co3 = st.columns([1, 3, 1])
-                st.html("<span class='indicators'></span>")
-                co2.metric("Valor Atual", f"{current_value}%")
-                co2.metric("Maior Valor", f"{highest_value}%")
-                co2.metric("Menor Valor", f"{lowest_value}%")
+            with col3.popover("Sobre", icon=":material/info:"):
+                st.write(self.for_ind["Inflação Implícita"]["description"])

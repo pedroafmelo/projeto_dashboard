@@ -14,8 +14,9 @@ import numpy as np
 from fredapi import Fred
 
 
-class UsFinCond:
-    """US Market Financial Conditions"""
+class EmCredSpread:
+    """Emerging Markets 
+    Market Credit Spread"""
 
     def __init__(self) -> None:
         """Initializes instance"""
@@ -35,34 +36,35 @@ class UsFinCond:
         self.start = datetime(2000, 1, 1)
         self.end = datetime.today()
 
-        self.ind = self.indicators.get_theme_dict("us_mkt_fin")
-        self.ind_ids = self.indicators.get_ids_list("us_mkt_fin")
+        self.ind = self.indicators.get_theme_dict("em_mkt_spread_cred")
+        self.ind_ids = self.indicators.get_ids_list("em_mkt_spread_cred")
 
-        self.us_mkt_fincond = dict(zip(list(self.ind.keys()), 
-                               list(range(4))))
+        self.em_mkt_cred_spread = dict(zip(list(self.ind.keys()), 
+                               list(range(5))))
         
         self.fred = Fred(api_key=self.config.vars.FRED_API_KEY)
         
         
         warnings.filterwarnings('ignore')
 
-
+    
     @st.cache_resource(show_spinner=False)
-    def markets_cover(_self):
+    def em_markets_cover(_self):
         """Generates the S&P
          Mult cover"""
         
 
         col1, col2, col3 = st.columns([10.5, .5, 2])
-        col1.subheader("Indicadores de Mercado - EUA", divider="grey")
+        col1.subheader("Indicadores de Mercado - Mercados Emergentes", divider="grey")
 
         col3.image(path.join(_self.config.vars.img_dir, 
                             _self.config.vars.logo_bequest), width=300)
+
         
 
     @st.cache_data(show_spinner=False)
     def get_market_indicators(_self) -> pd.DataFrame | list:
-        """Downloads USA Market
+        """Downloads EM Market
           Indicators"""
         
         ind_list = []
@@ -86,30 +88,37 @@ class UsFinCond:
     def generate_graphs(self) -> None:
         """Generates dashboard interface"""
         
-        c1, c2, c3 = st.columns([4, .5, 1])
-        coluna1, coluna2, coluna3 = c1.columns([6,2,4], vertical_alignment="center")
+        c1, c2, c3 = st.columns([20, .5, 1])
+        coluna1, coluna2, coluna3 = c1.columns([4,2,4], vertical_alignment="center")
 
         with st.spinner("Carregando os dados..."):
             
             indicator_filter = coluna1.selectbox(
                 " ", 
-                list(self.us_mkt_fincond.keys()), 
+                list(self.em_mkt_cred_spread.keys()), 
                 index=0 
                 )
             
-            us_cond_ind = self.get_market_indicators()
-        us_mkt_cond_data = us_cond_ind[self.us_mkt_fincond.get(indicator_filter)]
-        if coluna2.toggle("Anual", key="fincond_toggle"):
-            us_mkt_cond_data = us_mkt_cond_data.resample("Y").first().dropna()
+            em_spread_ind = self.get_market_indicators()
+        em_mkt_spread_data = em_spread_ind[self.em_mkt_cred_spread.get(indicator_filter)]
+        if coluna2.toggle("Anual", value=True, key="cred_spread_toggle"):
+            em_mkt_spread_data = em_mkt_spread_data.resample("Y").first().dropna()
+        
+        em_mkt_spread_data = em_mkt_spread_data.interpolate()
 
         c1, c2, c3 = st.columns([6, .3, 3], vertical_alignment="center")
         
-        options = self.utils.echart_dict(us_mkt_cond_data, title=indicator_filter)
-        formatter = ""
-
+        options = self.utils.echart_dict(em_mkt_spread_data, label_format="%")
+        formatter = "%"
+        
         if coluna3.toggle("Barras"):
-            options = self.utils.bar_chart_dict(us_mkt_cond_data, title=indicator_filter)
-            formatter = "%"
+            options = self.utils.bar_chart_dict(em_mkt_spread_data)
+        
+        formatter = "%"
+
+        c1.markdown(f"""
+                <h5 style: 'color: white'>{indicator_filter}</h5>
+                """, unsafe_allow_html=True)
         
         with c1.container():
             st.html("<span class='column_graph'></span>")
@@ -121,9 +130,9 @@ class UsFinCond:
             st.write(self.ind[indicator_filter]["description"])
 
 
-        current_value = round(us_mkt_cond_data.iloc[-1].values[0], 3)
-        lowest_value = round(us_mkt_cond_data.min().values[0], 3)
-        highest_value = round(us_mkt_cond_data.max().values[0], 3)
+        current_value = round(em_mkt_spread_data.iloc[-1].values[0], 3)
+        lowest_value = round(em_mkt_spread_data.min().values[0], 3)
+        highest_value = round(em_mkt_spread_data.max().values[0], 3)
 
         with c3:
             co1, co2, co3 = st.columns([1, 3, 1])

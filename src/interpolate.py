@@ -3,6 +3,7 @@
 
 from os import path, system
 import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
 from scipy import interpolate
 from selenium import webdriver
@@ -11,6 +12,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import warnings
 import holidays
+from functools import reduce
+
 
 class Interpolate:
     """Interpolate Interface"""
@@ -39,26 +42,28 @@ class Interpolate:
         Print Representation"""
 
         return f"Interpolate Class, staging dir: {str(self.data_dir)}"
-    
+
     @staticmethod
     def ajustar_para_dia_util(data_hora, pais='BR'):
+
         feriados = holidays.country_holidays(pais)
-        
+
+        feriados.update({
+            "2024-12-24": "Véspera de Natal",
+            "2024-12-31": "Véspera de Ano Novo"
+        })
+
         data_hora -= timedelta(days=1)
-        
+
         while data_hora.weekday() in [5, 6] or data_hora.date() in feriados:
             data_hora -= timedelta(days=1)
-    
+
         return data_hora.replace(hour=11, minute=0, second=0)
 
-
-    def get_di_table(self, mercadoria: str = "DI1") -> pd.DataFrame:
+    def get_di_table(self, date, mercadoria: str = "DI1") -> pd.DataFrame:
         """Get the CDI table 
         for given date"""
 
-        
-        date = self.ajustar_para_dia_util(datetime.today())
-        date = datetime.strftime(date, format=r"%d/%m/%Y")
         url = self.config.vars.di_future.replace(r"{data_di}", date).replace(r"{mercadoria}", mercadoria)
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--headless")
@@ -118,7 +123,6 @@ class Interpolate:
 
         return table
 
-
     def get_anbima_holidays(self) -> pd.DataFrame:
         """Gets ANBIMA National
         Holidays"""
@@ -133,46 +137,51 @@ class Interpolate:
 
         return data_anbima
 
-
-    def interpolate(self, date):
+    def interpolate(self, interp_days):
         """Interpolate DI Interest Rate
         Return In date Rate"""
 
+        lista_datas = [
+            datetime.strftime(
+                self.ajustar_para_dia_util(datetime.today() - timedelta(days=30 * i)),
+                format=r"%d/%m/%Y",
+            )
+            for i in [0, 1, 3, 2]
+        ]
 
-        holidays = self.get_anbima_holidays()
-        di_table = self.get_di_table()
-        bus_days_list = []
+        headers = ["atual", "1_mes", "3_meses", "6_meses"]
 
-        for day in di_table.index:
-            try:
-                bus_days = len(
-                    pd.date_range(
-                        self.end,
-                        day,
-                        freq=pd.tseries.offsets.CustomBusinessDay(holidays=holidays),
+        lista_dfs = []
+
+        for i, date in enumerate(lista_datas):
+
+            holidays = self.get_anbima_holidays()
+            di_table = self.get_di_table(date)
+            bus_days_list = []
+
+            for day in di_table.index:
+                try:
+                    bus_days = len(
+                        pd.date_range(
+                            date,
+                            day,
+                            freq=pd.tseries.offsets.CustomBusinessDay(holidays=holidays),
+                        )
                     )
-                )
-                bus_days_list.append(bus_days)
+                    bus_days_list.append(bus_days)
 
-            except Exception as error:
-                raise OSError(error) from error
+                except Exception as error:
+                    raise OSError(error) from error
 
-        rates = list(di_table.values)
+            rates = list(di_table.values)
 
-        try:
-            forward_bus_days = len(
-                pd.date_range(
-                    self.end,
-                    date, 
-                    freq=pd.tseries.offsets.CustomBusinessDay(holidays=holidays)
-                    )
-                )
+
             cubic = interpolate.interp1d(bus_days_list, rates, kind="cubic")
-            new_days = [forward_bus_days, 126, 252]
+            cubic_rates = list(cubic(interp_days))
+            df = pd.DataFrame({"Vértices": interp_days, headers[i]: cubic_rates})
 
-        except Exception as error:
-            raise OSError(error) from error
+            lista_dfs.append(df)
 
-        cubic_rates = list(cubic(new_days))
+        df_final = reduce(lambda left, right: pd.merge(left, right, on='Vértices'), lista_dfs)
 
-        return new_days, cubic_rates, bus_days_list, rates
+        return df_final

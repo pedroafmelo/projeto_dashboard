@@ -53,6 +53,10 @@ class Variables:
     selic_focus: str
     cambio_focus: str
 
+    url_b3_flows: str
+
+    pmi_paises: str
+    juros_paises: str
     indice_hsi: str
     latin_am_msci: str
     taiwan_msci: str
@@ -60,6 +64,10 @@ class Variables:
 
     stoxx_600: str
     nikei_225: str
+
+    gold_prices: str
+    silver_prices: str
+    pl_ibov: str
 
     FRED_API_KEY: str
     AV_API_KEY: str
@@ -128,6 +136,11 @@ class Config:
                 selic_focus=data.get("selic_focus"),
                 cambio_focus=data.get("cambio_focus"),
 
+                url_b3_flows=data.get("url_b3_flows"),
+
+                pmi_paises=data.get("pmi_paises"),
+
+                juros_paises=data.get("juros_paises"),
                 indice_hsi=data.get("indice_hsi"),
                 latin_am_msci=data.get("latin_am_msci"),
                 taiwan_msci=data.get("taiwan_msci"),
@@ -136,10 +149,12 @@ class Config:
                 stoxx_600=data.get("stoxx_600"),
                 nikei_225=data.get("nikei_225"),
 
-                # FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
-                FRED_API_KEY="97d32927fcbb695624a531ded0e8bf4b",
-                AV_API_KEY="YYY"
-                # AV_API_KEY=secrets["general"]["AV_API_KEY"]
+                gold_prices=data.get("gold_prices"),
+                silver_prices=data.get("silver_prices"),
+                pl_ibov=data.get("pl_ibov"),
+
+                FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
+                AV_API_KEY=secrets["general"]["AV_API_KEY"]
         )
         self.base_color = "#fba725"
         self.multiple_color = ["#dd4f00", "#983f4a", "#ffae42", "#ffffff", "#ffba6a"]

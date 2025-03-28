@@ -7,7 +7,7 @@ icons_dir: "static/icons"
 icone_bequest: "icone-bequest.png"
 
 # S&P500 Multiples
-mult_base_url: https://www.multpl.com
+mult_base_url: "https://www.multpl.com"
 url_sp_ey: "s-p-500-earnings-yield/table/by-month"
 url_sp_pe: "s-p-500-pe-ratio/table/by-month"
 url_sp_pb: "s-p-500-price-to-book/table/by-quarter"
@@ -31,14 +31,19 @@ imf_gdp: "https://www.imf.org/external/datamapper/api/v1/NGDP_RPCH/"
 imf_cpi: "https://www.imf.org/external/datamapper/api/v1/PCPIPCH/"
 prod_industrial_url: "https://apisidra.ibge.gov.br/values/t/8887/n1/all/v/11603/p/all/c543/129300/d/v11603%201"
 vendas_varejo_url: "https://apisidra.ibge.gov.br/values/t/8880/n1/all/v/11710,11711/p/all/c11046/56734/d/v11710%201,v11711%201"
-relatorio_inflacao_url: "https://www.bcb.gov.br/content/ri/relatorioinflacao/{ano_tri}}/ri{ano_tri}anp.xlsx"
+relatorio_inflacao_url: "https://www.bcb.gov.br/content/ri/relatorioinflacao/{ano_tri}/ri{ano_tri}anp.xlsx"
 cds_5anos: "https://www.worldgovernmentbonds.com/sovereign-cds/"
 taxas_juros: "https://www.worldgovernmentbonds.com/central-bank-rates/"
-ipca_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27IPCA%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
-pib_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27PIB%20Total%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
-selic_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27Selic%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
-cambio_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27C%C3%A2mbio%27%20and%20Data%20ge%20%272024-11-01%27&$format=json"
+#focus
+ipca_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27IPCA%27%20and%20DataReferencia%20ge%20%27{data_inicial}%27%20and%20DataReferencia%20le%20%27{data_final}%27%20and%20baseCalculo%20eq%200&$format=json"
+pib_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27PIB%20Total%27%20and%20DataReferencia%20ge%20%27{data_inicial}%27%20and%20DataReferencia%20le%20%27{data_final}%27%20and%20baseCalculo%20eq%200&$format=json"
+selic_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27Selic%27%20and%20DataReferencia%20ge%20%27{data_inicial}%27%20and%20DataReferencia%20le%20%27{data_final}%27%20and%20baseCalculo%20eq%200&$format=json"
+cambio_focus: "https://olinda.bcb.gov.br/olinda/servico/Expectativas/versao/v1/odata/ExpectativasMercadoAnuais?$filter=Indicador%20eq%20%27C%C3%A2mbio%27%20and%20DataReferencia%20ge%20%27{data_inicial}%27%20and%20DataReferencia%20le%20%27{data_final}%27%20and%20baseCalculo%20eq%200&$format=json"
 
+url_b3_flows: "https://www.dadosdemercado.com.br/fluxo"
+
+pmi_paises: "https://pt.tradingeconomics.com/country-list/{type}-pmi"
+juros_paises: "https://pt.tradingeconomics.com/country-list/interest-rate?continent={continente}"
 indice_hsi: "https://api.investing.com/api/financialdata/179/historical/chart/?interval=P1M&period=MAX&pointscount=160"
 latin_am_msci: "https://api.investing.com/api/financialdata/942981/historical/chart/?interval=P1D&period=MAX&pointscount=160"
 taiwan_msci: "https://api.investing.com/api/financialdata/100150/historical/chart/?interval=P1M&period=MAX&pointscount=160"
@@ -46,3 +51,7 @@ csi_300: "https://api.investing.com/api/financialdata/940801/historical/chart/?i
 
 stoxx_600: "https://api.investing.com/api/financialdata/40823/historical/chart/?interval=P1M&period=MAX&pointscount=160"
 nikei_225: "https://api.investing.com/api/financialdata/178/historical/chart/?interval=P1M&period=MAX&pointscount=160"
+
+gold_prices: "https://pt.bullion-rates.com/gold/USD/spot-price.htm"
+silver_prices: "https://pt.bullion-rates.com/silver/USD/spot-price.htm"
+pl_ibov: "https://www.oceans14.com.br/acoes/historico-pl-bovespa"

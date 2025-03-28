@@ -91,7 +91,8 @@ class Indicators:
             ],
             "us_mkt_extras": [
                 "dxy",
-                "equity-rf"
+                "equity-rf",
+                "indice_vix"
             ],
             "us_mkt_prices_hist": [
                 "sp_earnings_yields",
@@ -106,12 +107,12 @@ class Indicators:
                 "inec_ano_corrente",
                 "inec_compras",
                 "inec_renda_pessoal",
-                "icei_condicoes",
-                "icei_expectativas"
+                "icei_condicoes"
             ],
             "br_macro_act_for": [
                 "imf_gdp",
-                "projecao_pib_bcb"
+                "projecao_pib_bcb",
+                "icei_expectativas"
             ],
             "br_macro_inf_hist": [
                 "ipca",
@@ -126,17 +127,27 @@ class Indicators:
                 "selic",
                 "selic_real"
             ],
-            "br_mkt_juros": [
-                "curva_juros"
-            ],
-            "br_mkt_preco": [
-                "pl_ibov"
-            ],
-            "br_mkt_focus": [
+            "br_macro_focus": [
                 "projecoes_focus"
             ],
+            "br_mkt_investimento": [
+                "investimento_estrangeiro",
+                "investimento_institucional",
+                "investimento_pf",
+                "investimento_if",
+                "investimento_outros"
+            ],
+            "br_mkt_juros": [
+                "curva_juros_pre",
+                "curva_juros_pos",
+                "curva_juros_ipca"
+            ],
+            "br_mkt_preco": [
+                "pl_ibovespa"
+            ],
             "em_macro_act": [
-                "imf_gdp"
+                "imf_gdp",
+                "pmi_paises"
             ],
             "em_macro_cpi": [
                 "imf_cpi"
@@ -144,8 +155,8 @@ class Indicators:
             "em_macro_juros": [
                 "taxa_juros_pais"
             ],
-            "em_macro_cds": [
-                "cds_5_anos"
+            "em_macro_risco": [
+                "adamodar_risk"
             ],
             "em_mkt_spread_cred": [
                 "ice_bofa_hy_em_spread",
@@ -154,18 +165,15 @@ class Indicators:
                 "latin_em_bofa",
                 "euro_em_bofa"
             ],
-            "em_mkt_indexes": [
-                "hsi",
-                "csi_300",
-                "msci_taiwan",
-                "msci_latin_emerging",
-                "em_etfs_vol"
-            ],
             "em_mkt_preco": [
                 "msci_emerging_markets_pl",
             ],
+            "em_mkt_extras": [
+                "em_etfs_vol"
+            ],
             "global_macro_act": [
-                "fmi_gdp"
+                "imf_gdp",
+                "pmi_paises"
             ],
             "global_macro_inf": [
                 "imf_cpi"
@@ -173,12 +181,8 @@ class Indicators:
             "global_macro_juros": [
                 "taxa_juros_pais",
             ],
-            "global_mkt_cds": [
-                "cds_5_anos"
-            ],
-            "global_mkt_indexes": [
-                "stoxx_600",
-                "nikkei_225"
+            "global_macro_risco": [
+                "adamodar_risk"
             ],
             "global_mkt_preco": [
                 "pl_dev_ex_us"
@@ -195,7 +199,7 @@ class Indicators:
             ],
             "gold": [
                 "gold_vol",
-                "gol_prices"
+                "gold_prices"
             ],
             "comm_indexes": [
                 "gsci",
@@ -204,7 +208,7 @@ class Indicators:
                 "global_price_all_comm",
                 "comm_br",
                 "comm_br_metal",
-                "comm_br_metal_agro",
+                "comm_br_agro",
                 "comm_br_energia"
             ],
         }

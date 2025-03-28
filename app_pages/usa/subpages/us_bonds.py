@@ -75,7 +75,7 @@ class BondsYields:
 
             lista_datas = [datetime.strptime(data.replace("de", ""), "%d %b %Y") for data in lista_meetings]
 
-            dias_proximo_meeting = [len(pd.date_range(datetime.today(), fim, freq=BDay())) for fim in lista_datas]
+            dias_proximo_meeting = [len(pd.date_range(datetime.today(), fim)) for fim in lista_datas]
 
             df = pd.DataFrame(
                     {"Próximo Meeting": lista_meet,
@@ -157,6 +157,9 @@ class BondsYields:
                 col,_ = st.columns([10,.05])
                 with col:
                     st_echarts(options, height="500px", theme="dark")
+
+            with st.popover("Sobre", icon=":material/info:"):
+                st.write(self.yields["Curva de Juros dos EUA"]["description"])
 
 
         elif selected_indicator == "10Y - 2Y Treasury Spread":

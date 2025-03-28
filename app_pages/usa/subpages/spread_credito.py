@@ -74,7 +74,7 @@ class UsCredSpread:
     def generate_graphs(self) -> None:
         """Generates dashboard interface"""
         
-        c1, c2, c3 = st.columns([2, .5, 1])
+        c1, c2, c3 = st.columns([4, .5, 1])
         coluna1, coluna2, coluna3 = c1.columns([4,2,4], vertical_alignment="center")
 
         with st.spinner("Carregando os dados..."):

@@ -14,8 +14,8 @@ import yfinance as yf
 from fredapi import Fred
 
 
-class UsExtras:
-    """US Market Financial Conditions"""
+class EmExtras:
+    """Emerging Markets Extras Indicators"""
 
     def __init__(self) -> None:
         """Initializes instance"""
@@ -35,44 +35,36 @@ class UsExtras:
         self.start = datetime(2000, 1, 1)
         self.end = datetime.today()
 
-        self.ind = self.indicators.get_theme_dict("us_mkt_extras")
-        self.ind_ids = self.indicators.get_ids_list("us_mkt_extras")
+        self.ind = self.indicators.get_theme_dict("em_mkt_extras")
+        self.ind_ids = self.indicators.get_ids_list("em_mkt_extras")
 
-        self.us_mkt_extras = dict(zip(list(self.ind.keys()), 
-                               list(range(2))))
+        self.em_mkt_extras = dict(zip(list(self.ind.keys()), 
+                               list(range(1))))
         
         self.fred = Fred(api_key=self.config.vars.FRED_API_KEY)
         
         warnings.filterwarnings('ignore')
 
-        
+    
 
     @st.cache_data(show_spinner=False)
-    def get_dxy_series(_self) -> pd.DataFrame:
-            """Downloads dolar 
-            index series"""
+    def get_vix_index(_self) -> pd.DataFrame:
+        """Gets vix index"""
 
-            try:
-                dxy = yf.download(_self.ind_ids[1], start=_self.start, end=_self.end)["Close"]
-
-            except Exception as error:
-                raise OSError(error) from error
-            
-            return dxy
-
-    def get_mkt_returns(_self) -> pd.DataFrame:
-        """Downloads ff mkt-rf returns"""
+        print(_self.ind_ids[0])
 
         try:
-            asset_series = pdr.DataReader(_self.ind_ids[0], 
-                                          "famafrench", _self.start, _self.end)[0]["Mkt-RF"]
-            asset_series = asset_series.to_frame()
-            asset_series.index.name = "Date"
-            asset_series.index = asset_series.index.to_timestamp()
+            data = _self.fred.get_series(_self.ind_ids[0],
+                                                observation_start=_self.start, 
+                                                observation_end=_self.end)
+            data = data.to_frame(name=list(_self.ind.keys())[0]).interpolate()
+            data.index.name = "Date"
+
         except Exception as error:
             raise OSError(error) from error
-
-        return asset_series
+        
+        
+        return data
 
 
     @st.fragment()
@@ -84,23 +76,12 @@ class UsExtras:
 
         with st.spinner("Carregando os dados..."):
 
-            us_mkt_extras = [self.get_mkt_returns(), self.get_dxy_series()]
-            
-            indicator_filter = coluna1.selectbox(
-                " ", 
-                list(self.us_mkt_extras.keys()), 
-                index=0 
-                )
-            
-        us_mkt_extra_data = us_mkt_extras[self.us_mkt_extras[indicator_filter]]
+            em_mkt_extras = self.get_vix_index()
 
         c1, c2, c3 = st.columns([6, .3, 3], vertical_alignment="center")
         
-        options = self.utils.echart_dict(us_mkt_extra_data, label_format="%", title=indicator_filter)
-        formatter = "%"
-        if "DX-Y" in indicator_filter:
-            options = self.utils.echart_dict(us_mkt_extra_data, title=indicator_filter)
-            formatter = ""
+        options = self.utils.echart_dict(em_mkt_extras, title="Emerging Markets VIX")
+        formatter = ""
         
         with c1.container():
             st.html("<span class='column_graph'></span>")
@@ -109,11 +90,11 @@ class UsExtras:
                 st_echarts(options, height="500px", theme="dark")
 
         with st.popover("Sobre", icon=":material/info:"):
-            st.write(self.ind[indicator_filter]["description"])
+            st.write(self.ind["CBOE Emerging Markets ETF Volatility Index"]["description"])
 
-        current_value = round(us_mkt_extra_data.iloc[-1].values[0], 3)
-        lowest_value = round(us_mkt_extra_data.min().values[0], 3)
-        highest_value = round(us_mkt_extra_data.max().values[0], 3)
+        current_value = round(em_mkt_extras.iloc[-1].values[0], 3)
+        lowest_value = round(em_mkt_extras.min().values[0], 3)
+        highest_value = round(em_mkt_extras.max().values[0], 3)
 
         with c3:
             co1, co2, co3 = st.columns([1, 3, 1])

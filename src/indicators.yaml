@@ -488,6 +488,21 @@ dxy:
     
     - **DXY em baixa** → Sugere uma desvalorização do dólar, o que pode beneficiar exportadores dos EUA e aumentar a atratividade de ativos denominados em outras moedas.
 
+indice_vix:
+  id: "^VIX"
+  name: "Índice de Volatilidade VIX"
+  description: |
+    #### **Índice de Volatilidade VIX**
+    
+    O **Índice de Volatilidade VIX**, também conhecido como "índice do medo", mede a expectativa de volatilidade do mercado de ações dos EUA nos próximos 30 dias com base nas opções do S&P 500.
+
+    - **Aumento no VIX** → Indica maior incerteza e medo no mercado, podendo estar associado a quedas no mercado acionário e períodos de instabilidade econômica.
+    
+    - **Queda no VIX** → Sinaliza menor volatilidade esperada, geralmente acompanhada de maior confiança dos investidores e estabilidade nos mercados financeiros.
+
+    O VIX é amplamente utilizado como um indicador do sentimento do mercado e pode impactar diversas classes de ativos, incluindo ações, câmbio e commodities.
+
+
 # Price History
 sp_earnings_yields: 
   id: "earning_yields"
@@ -653,6 +668,8 @@ icei_condicoes:
 
     Esse indicador é essencial para avaliar o humor da indústria e antecipar tendências no setor produtivo.  
 
+# Previsões de Atividade
+# GDP já temos
 icei_expectativas:
   id: 7343
   name: "Confiança do Empresário Industrial - Expectativas"
@@ -666,8 +683,6 @@ icei_expectativas:
 
     Esse indicador é essencial para entender a confiança do setor produtivo e sua disposição para investir e expandir negócios.  
 
-# Previsões de Atividade
-# GDP já temos
 
 projecao_pib_bcb:
   id: "C1 Boxe1 Tab 2"
@@ -687,7 +702,7 @@ projecao_pib_bcb:
 
 ipca:
   id: 433
-  name: "Índice de Preços ao Consumidor Amplo (IPCA)"
+  name: "IPCA - Acumulado 12 meses"
   description: |
     #### **Índice de Preços ao Consumidor Amplo (IPCA)**  
 
@@ -699,7 +714,7 @@ ipca:
     O IPCA é a referência oficial da inflação e influencia diretamente as decisões de política econômica no Brasil.
 
 igpm:
-  id: 
+  id: 189
   name: "Índice Geral de Preços - Mercado (IGP-M)"
   description: |
     #### **Índice Geral de Preços - Mercado (IGP-M)**  
@@ -736,10 +751,10 @@ projecao_inflacao_bcb:
   description: |
     #### **Projeção da Inflação - Banco Central do Brasil**  
 
-    A **Projeção da Inflação** do Banco Central do Brasil representa as estimativas para a inflação futura, geralmente expressa pelo IPCA (Índice de Preços ao Consumidor Amplo). O leque representa a incerteza dessas projeções, indicando a faixa de probabilidade em torno da previsão central.  
-
-    - **Projeção central** → Representa a estimativa mais provável para a inflação nos próximos trimestres e anos, baseada em modelos econométricos e no cenário macroeconômico.  
-    - **Leque de incerteza** → Indica o grau de confiança da previsão, com bandas mais largas sugerindo maior incerteza.  
+    A **Projeção da Inflação** do Banco Central do Brasil representa as estimativas para a inflação futura, geralmente expressa pelo IPCA (Índice de Preços ao Consumidor Amplo).
+    É importante ressaltar que as projeções são feitas com base no cenário de referência, ou seja, caso outras variáveis macroeconômicas permaneçam inalteradas.
+    
+    - **Projeção central** → Representa a estimativa mais provável para a inflação nos próximos trimestres e anos, baseada em modelos econométricos e no cenário macroeconômico. 
     - **Utilização** → Serve como referência para o mercado financeiro e para a formulação da política monetária, auxiliando na definição da taxa Selic.  
 
     As projeções são publicadas periodicamente no **Relatório de Inflação** e no **Boletim Focus**, considerando fatores como taxa de juros, câmbio e atividade econômica.  
@@ -761,31 +776,118 @@ inf_implicita_br:
 
 selic:
   id: "selic"
-  name: "Taxa Selic"
+  name: "Taxa Selic Efetiva"
   description: |
     #### **Taxa Selic**  
 
     A **Selic** (Sistema Especial de Liquidação e de Custódia) é a **taxa básica de juros da economia brasileira**, definida pelo Comitê de Política Monetária (**Copom**) do Banco Central.  
-
+    Sendo a Selic Efetiva, é  ataxa realmente utilizada nas operações de um dia entre bancos, lastreadas em títulos públicos.
     - **Objetivo** → Regular a inflação e influenciar o crédito e o crescimento econômico.  
     - **Impacto na economia** → Quando a Selic sobe, o crédito fica mais caro, reduzindo o consumo e a inflação. Quando cai, o crédito fica mais barato, incentivando o crescimento econômico.  
     - **Referência** → A Selic é usada como referência para diversas aplicações financeiras, como **títulos públicos (Tesouro Selic), empréstimos e investimentos**.  
 
 selic_real:
-  id: "selic_real"
-  name: "Selic Real"
+  id: 1178
+  name: "Selic Efetiva Real"
   description: |
-    #### **Selic Real**  
+    #### **Selic Efetiva Real**
 
-    A **Selic Real** é a **Taxa Selic ajustada pela inflação**, ou seja, representa o **retorno real dos juros na economia brasileira**.  
+    A **Selic Real** é a **Taxa Selic Efetiva ajustada pela inflação**, ou seja, representa o **retorno real dos juros na economia brasileira**.  
 
     - **Cálculo** → Selic Real = **(1 + Selic Nominal) / (1 + Inflação) - 1**  
     - **Importância** → Mostra o **poder de compra efetivo dos juros**, pois desconta a inflação.  
     - **Uso na economia** → Um **juros real positivo** indica ganhos acima da inflação, enquanto um **juros real negativo** significa que o retorno é menor que a inflação, corroendo o poder de compra.  
 
-    A Selic Real é um indicador essencial para investidores, empresas e governos na tomada de decisões financeiras.  
+    A Selic Real é um indicador essencial para investidores, empresas e governos na tomada de decisões financeiras.
+
+
+# Focus
+projecoes_focus:
+  id: "projecoes_focus"
+  name: "Projeções Focus"
+  description: |
+    #### **Projeções Focus**  
+
+    As **Projeções Focus** são estimativas para os principais indicadores econômicos do Brasil, coletadas semanalmente pelo **Banco Central** a partir das expectativas de bancos, gestoras e instituições financeiras. Essas projeções são publicadas no **Boletim Focus** e servem como referência para decisões de política monetária e planejamento econômico.  
+
+    - **Principais Indicadores monitorados**:  
+      - **PIB** → Crescimento da economia.  
+      - **IPCA** → Inflação oficial do Brasil.  
+      - **Selic** → Taxa básica de juros.  
+      - **Câmbio** → Expectativa para o dólar.  
+
+    - **Importância**:  
+      - Serve como um termômetro das expectativas do mercado.  
+      - Influencia decisões do Banco Central sobre a **Selic** e a política monetária.  
+      - Utilizado por empresas e investidores para embasar estratégias financeiras.  
+
+    O **Boletim Focus** é divulgado todas as segundas-feiras e reflete a visão do mercado sobre a economia brasileira no curto, médio e longo prazo.  
+  
 
 # Mercado
+
+# Fluxos de investimento
+
+investimento_estrangeiro:
+  id: "capital_investidor_estrangeiro"
+  name: "Investimento Estrangeiro"
+  description: |
+    #### **Investimento Estrangeiro na B3**
+    
+    O **Investimento Estrangeiro** representa o fluxo de capital de investidores estrangeiros na B3. Esses investidores incluem fundos internacionais, bancos e gestoras globais de ativos.
+    
+    - **Entrada líquida** → Indica maior interesse de investidores estrangeiros no mercado brasileiro, podendo impulsionar a valorização dos ativos.
+    
+    - **Saída líquida** → Sugere que investidores estrangeiros estão retirando capital da B3, o que pode gerar pressão de venda sobre os ativos brasileiros.
+
+investimento_institucional:
+  id: "capital_investidor_institucional"
+  name: "Investimento Institucional"
+  description: |
+    #### **Investimento Institucional na B3**
+    
+    O **Investimento Institucional** representa os aportes de fundos de pensão, seguradoras, bancos e grandes instituições financeiras no mercado brasileiro.
+    
+    - **Entrada líquida** → Indica confiança das instituições na B3 e pode trazer maior estabilidade ao mercado.
+    
+    - **Saída líquida** → Pode indicar realocações de portfólio ou aversão ao risco, impactando os preços dos ativos.
+
+investimento_pf:
+  id: "capital_investidor_pessoa_fisica"
+  name: "Investimento Pessoa Física"
+  description: |
+    #### **Investimento Pessoa Física na B3**
+    
+    O **Investimento Pessoa Física** representa os aportes feitos por investidores individuais na bolsa de valores brasileira.
+    
+    - **Entrada líquida** → Indica maior participação de investidores de varejo, muitas vezes impulsionada por otimismo no mercado.
+    
+    - **Saída líquida** → Pode refletir aversão ao risco ou movimentações especulativas.
+
+investimento_if:
+  id: "capital_investidor_if"
+  name: "Investimento Inst. Financeira"
+  description: |
+    #### **Investimento de Instituições Financeiras na B3**
+    
+    O **Investimento das Instituições Financeiras** inclui operações de bancos e outras entidades financeiras no mercado de capitais.
+    
+    - **Entrada líquida** → Pode indicar maior atividade financeira e liquidez no mercado.
+    
+    - **Saída líquida** → Pode refletir ajustes de portfólio ou mudanças na política monetária.
+
+investimento_outros:
+  id: "capital_investidor_outros"
+  name: "Investimento Outros"
+  description: |
+    #### **Outros Investimentos na B3**
+    
+    A categoria **Outros Investimentos** agrupa fluxos de capital de entidades que não se enquadram nas demais categorias, incluindo empresas, governos e veículos de investimento específicos.
+    
+    - **Entrada líquida** → Indica um fluxo de capital positivo vindo de diversas fontes.
+    
+    - **Saída líquida** → Pode indicar menor apetite por risco ou mudanças na regulação e estrutura de mercado.
+
 
 # Juros
 curva_juros: 
@@ -814,38 +916,27 @@ pl_ibovespa:
 
     Esse indicador é amplamente acompanhado em análises de **valuation e ciclos de mercado** no Brasil.  
 
-# Focus
-projecoes_focus:
-  id: "projecoes_focus"
-  name: "Projeções Focus"
-  description: |
-    #### **Projeções Focus**  
-
-    As **Projeções Focus** são estimativas para os principais indicadores econômicos do Brasil, coletadas semanalmente pelo **Banco Central** a partir das expectativas de bancos, gestoras e instituições financeiras. Essas projeções são publicadas no **Boletim Focus** e servem como referência para decisões de política monetária e planejamento econômico.  
-
-    - **Principais Indicadores monitorados**:  
-      - **PIB** → Crescimento da economia.  
-      - **IPCA** → Inflação oficial do Brasil.  
-      - **Selic** → Taxa básica de juros.  
-      - **Câmbio** → Expectativa para o dólar.  
-
-    - **Importância**:  
-      - Serve como um termômetro das expectativas do mercado.  
-      - Influencia decisões do Banco Central sobre a **Selic** e a política monetária.  
-      - Utilizado por empresas e investidores para embasar estratégias financeiras.  
-
-    O **Boletim Focus** é divulgado todas as segundas-feiras e reflete a visão do mercado sobre a economia brasileira no curto, médio e longo prazo.  
-
 
 # Emerging Markets
 # Macro
 # Histórico e previsão de atividade
 # Já tem o GDP e CPI do FMI
 
+pmi_paises:
+  id: "pmi_paises"
+  name: "PMI"
+  description: |
+    #### **Índice de Gerentes de Compras (PMI)**
+    O PMI é um indicador econômico utilizado para medir a atividade no setor manufatureiro e de serviços de um país. 
+    Ele é baseado em pesquisas realizadas com empresas e reflete o nível de expansão ou contração da economia.
+    
+    - **Acima de 50** → Indica expansão da atividade econômica.
+    - **Abaixo de 50** → Indica contração da atividade econômica.
+
 # Taxas de juros dos países emergentes (link no config)
 taxa_juros_pais:
   id: "taxa_juros_pais"
-  name: "Taxa de Juros"
+  name: "Taxas de Juros"
   description: |
     #### **Taxa de Juros**  
 
@@ -879,6 +970,21 @@ cds_5_anos:
       Reflete a percepção de menor risco de inadimplência, indicando maior confiança na capacidade do emissor de honrar suas dívidas.  
 
     O **CDS-5 anos** para um país como o Brasil é comumente utilizado por investidores internacionais para avaliar a estabilidade econômica e o risco de crédito soberano de um país. Ele também é um indicativo importante para decisões de política monetária e financeira.
+
+# CDS Países emergentes
+adamodar_risk:
+  id: "adamodar_risk"
+  name: "Default Spreads e Prêmios de Risco de países"
+  description: |
+    #### **Default Spreads e Prêmios de Risco de países**  
+
+    O **Default Spreads e Prêmios de Risco de países** reúne um conjunto de indicadores que auxilia na análise do risco de um país. Dentre os indicadores, têm-se o diferencial dos rendimentos de títulos soberanos 
+    entre o país e o dos EUA, o prêmio de risco exigido por um investidor para alocar o seu capital no mercado acionário, os impostos pagos por uma empresa sobre os seus lucros e o rating de crédito da Moody's.
+
+    Uma análise do conjunto de indicadores disponibilizados pode levar a uma tomada de decisão quanto ao risco de se investir em um determinado país.
+
+    Vale ressaltar que os dados são disponibilizados pelo Aswalth Damodaran, autor de grandes obras como 'Avaliação de Investimentos'
+
 
 # Mercado
 
@@ -1106,7 +1212,7 @@ pl_dev_ex_us:
 # Grains
 wheat_global_price:
   id: "PWHEAMTUSDM"
-  name: "Preço Global - Trigo (U$/Ton)"
+  name: "Preço Global - Trigo"
   description: |
     
     #### **Preço Global do Trigo**
@@ -1119,7 +1225,7 @@ wheat_global_price:
 
 corn_global_price:
   id: "PMAIZMTUSDM"
-  name: "Preço Global - Milho (U$/Ton)"
+  name: "Preço Global - Milho"
   description: |
 
     #### **Preço Global do Milho**
@@ -1132,7 +1238,7 @@ corn_global_price:
 
 soy_global_price:
   id: "PSOYBUSDQ"
-  name: "Preço Global - Soja (U$/Ton)"
+  name: "Preço Global - Soja"
   description: |
 
     #### **Preço Global da Soja (Soybean Price)**
@@ -1146,7 +1252,7 @@ soy_global_price:
 # Energy
 brent_oil_price:
   id: "DCOILBRENTEU"
-  name: "Preço Global - Petróleo Brent (U$/Barril)"
+  name: "Preço Global - Petróleo Brent"
   description: |
 
     #### **Preço do Petróleo Brent**
@@ -1159,7 +1265,7 @@ brent_oil_price:
 
 wti_oil_price:
   id: "DCOILWTICO"
-  name: "Preço Global - Petróleo WTI (U$/Barril)"
+  name: "Preço Global - Petróleo WTI"
   description: |
 
     #### **Preço do Petróleo WTI**
@@ -1172,7 +1278,7 @@ wti_oil_price:
 
 henry_pub_ng_price:
   id: "DHHNGSP"
-  name: "Preço Global - Gás Natural (U$/Milhão de BTU)"
+  name: "Preço Global - Gás Natural"
   description: |
 
     #### **Preço do Gás Natural Henry Hub**
@@ -1273,7 +1379,7 @@ comm_br_metal:
     
     - **Queda no índice** → Indica uma diminuição nos preços dos metais, o que pode afetar negativamente as exportações do Brasil e os setores industriais dependentes desses recursos.
 
-comm_br_metal_agro:
+comm_br_agro:
   id: 27575
   name: "Índice de Commodities Brasil - Agropecuária"
   description: |

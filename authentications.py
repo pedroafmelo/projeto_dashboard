@@ -78,7 +78,6 @@ class Authentication:
         )
 
         
-
         col1, col2, col3 = st.columns([1, 3, 1])
         c1, c2, c3 = col2.columns([.7,3,1])
 

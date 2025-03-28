@@ -49,28 +49,23 @@ class MainLayout:
                             self.config.vars.icone_bequest), size="medium")
             st.write("#")
 
-        cover = st.Page("app_pages/cover.py", title="Home", icon=":material/home:")
         us_macro = st.Page("app_pages/usa/macro.py", title="Indicadores Macro", icon=":material/account_balance:", default=True)
         us_market = st.Page("app_pages/usa/markets.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
-        # br_macro = st.Page("app_pages/brasil/macro.py", title="Indicadores Macro", icon=":material/savings:")
-        # br_market = st.Page("app_pages/brasil/markets.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
-        # em_macro = st.Page("app_pages/em_mkts/macro.py", title="Indicadores Macro", icon=":material/savings:")
-        # em_market = st.Page("app_pages/em_mkts/markets.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
-        # global_macro = st.Page("app_pages/brasil/macro.py", title="Indicadores Macro", icon=":material/savings:")
-        # global_market = st.Page("app_pages/brasil/markets.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
-        # comm_min = st.Page("app_pages/commodities/comm_min.py", title="Minérios", icon=":material/oil_barrel:")
-        # comm_engy = st.Page("app_pages/commodities/comm_energy.py", title="Energia", icon=":material/oil_barrel:")
-        # comm_agric = st.Page("app_pages/commodities/comm_grains.py", title="Agricultura", icon=":material/oil_barrel:")
-        # comm_indexes = st.Page("app_pages/commodities/comm_indexes.py", title="Índices", icon=":material/oil_barrel:")
+        br_macro = st.Page("app_pages/brasil/macro_br.py", title="Indicadores Macro", icon=":material/savings:")
+        br_market = st.Page("app_pages/brasil/markets_br.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
+        em_macro = st.Page("app_pages/em_mkts/macro_em.py", title="Indicadores Macro", icon=":material/savings:")
+        em_market = st.Page("app_pages/em_mkts/markets_em.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
+        global_macro = st.Page("app_pages/global_ex_us/global_macro.py", title="Indicadores Macro", icon=":material/savings:")
+        global_market = st.Page("app_pages/global_ex_us/global_markets.py", title="Indicadores de Mercado", icon=":material/finance_mode:")
+        comm = st.Page("app_pages/commodities/comm.py", title="Commodities Global", icon=":material/oil_barrel:")
         
         pg = st.navigation(
             {
-                "Home": [cover],
                 "Estados Unidos": [us_macro, us_market],
-                # "Brasil": [br_macro, br_market],
-                # "Mercados Emergentes": [em_macro, em_market],
-                # "Global Ex US": [global_macro, global_market],
-                # "Commodities": [comm_min, comm_engy, comm_agric, comm_indexes]
+                "Brasil": [br_macro, br_market],
+                "Mercados Emergentes": [em_macro, em_market],
+                "Global Ex US": [global_macro, global_market],
+                "Commodities": [comm]
             }
         )
 
