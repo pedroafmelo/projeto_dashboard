@@ -64,7 +64,7 @@ class Authentication:
             unsafe_allow_html=True,
         )
 
-        st.html("app_pages/styles.html")
+        st.html(Path(__file__).parent / "app_pages/styles.html")
 
 
         with yaml_file.open("r") as file:
@@ -78,7 +78,7 @@ class Authentication:
         )
 
         
-        col1, col2, col3 = st.columns([1, 3, 1])
+        col1, col2, col3 = st.columns([1.2, 3, 1])
         c1, c2, c3 = col2.columns([.7,3,1])
 
         with c2:
@@ -86,6 +86,9 @@ class Authentication:
 
 
         if st.session_state["authentication_status"] == True:
+
+            if "selected_tab" not in st.session_state:
+                st.session_state.selected_tab = "Atividade Econômica"
             
             ml = MainLayout()
             ml.render_page()
