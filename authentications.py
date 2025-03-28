@@ -64,7 +64,7 @@ class Authentication:
             unsafe_allow_html=True,
         )
 
-        st.html("/Users/pedroafmelo/Documents/pleno_finance/projeto_dashboard/app_pages/styles.html")
+        st.html("app_pages/styles.html")
 
 
         with yaml_file.open("r") as file:
