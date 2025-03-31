@@ -12,6 +12,7 @@ import pandas_datareader.data as pdr
 from streamlit_echarts import st_echarts
 import numpy as np
 from bs4 import BeautifulSoup
+from fredapi import Fred
 
 
 class UsFFR:
@@ -37,6 +38,8 @@ class UsFFR:
 
         self.ind = self.indicators.get_theme_dict("us_macro_ffr")
         self.ind_ids = self.indicators.get_ids_list("us_macro_ffr")
+
+        self.fred = Fred(self.config.vars.FRED_API_KEY)
         
         warnings.filterwarnings('ignore')
        
@@ -53,6 +56,28 @@ class UsFFR:
             raise OSError(error) from error
 
         return ind_series
+    
+    
+    @st.cache_data(show_spinner=False)
+    def get_ffrate_target_limits(_self) -> pd.DataFrame | list:
+        """Gets ffrate targets limits"""
+        
+        ind_list = ["DFEDTARU", "DFEDTARL"]
+        series_list = []
+
+        for ind in ind_list:
+            try:
+                ind_series = _self.fred.get_series(ind,
+                                                  observation_start=_self.start, 
+                                                  observation_end=_self.end)
+                ind_series = ind_series.to_frame(name=ind)
+                ind_series.index.name = "Date"
+                series_list.append(ind_series)
+
+            except Exception as error:
+                raise OSError(error) from error
+            
+        return series_list
     
     @st.cache_resource(show_spinner=False)
     def get_meetings_list(_self):
@@ -197,10 +222,12 @@ class UsFFR:
                     col,_ = st.columns([10,.05])
                     with col:
                         st_echarts(options=options, height="500px", theme="dark")
+                
+                upper_bound, lower_bound = self.get_ffrate_target_limits()
 
                 with c3:
                     st.html("<span class='indicators'></span")
-                    c3.metric("Valor Atual", f"400-425")
+                    c3.metric("Valor Atual", f"{lower_bound.values[-1][0]} - {upper_bound.values[-1][0]}")
 
                 with st.popover("Sobre", icon=":material/info:"):
                     st.write(self.ind["Probabilidade de Alvo da Taxa de Juros dos EUA (CME)"]["description"])
