@@ -84,7 +84,17 @@ class GlobalRisk:
         df_adamodar.columns = df_adamodar.iloc[0]
         df_adamodar.drop(0, inplace=True)
 
+        for col in df_adamodar.columns.drop(["Country", "Moody's rating"]):
+            df_adamodar[f"{col} (%)"] = df_adamodar[col].str.replace("%", "").astype(float)
+            df_adamodar.drop(columns=col, inplace=True)
+
+        ordered_cols = df_adamodar.columns.drop("Moody's rating").tolist()
+        ordered_cols.append("Moody's rating")
+
+        df_adamodar = df_adamodar[ordered_cols]
+
         return df_adamodar
+
 
 
     # Plot historical Dashboard

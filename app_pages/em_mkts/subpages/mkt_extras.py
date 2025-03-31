@@ -51,8 +51,6 @@ class EmExtras:
     def get_vix_index(_self) -> pd.DataFrame:
         """Gets vix index"""
 
-        print(_self.ind_ids[0])
-
         try:
             data = _self.fred.get_series(_self.ind_ids[0],
                                                 observation_start=_self.start, 

@@ -18,7 +18,7 @@ if st.session_state.selected_tab not in ["Ouro", "Energia", "Grãos", "Índices"
     st.session_state.selected_tab = "Ouro"
 
 tabs = ["Ouro", "Energia", "Grãos", "Índices"]
-selected_tab = st.radio(" ", tabs, index=3, horizontal=True)
+selected_tab = st.radio(" ", tabs, index=0, horizontal=True)
 
 if selected_tab != st.session_state.selected_tab:
     st.session_state.selected_tab = selected_tab

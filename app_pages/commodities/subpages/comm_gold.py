@@ -60,7 +60,6 @@ class GoldComm:
         
         try:
             url = _self.config.vars.gold_prices if ouro == True else _self.config.vars.silver_prices
-            print(url)
             response = requests.get(url,
                             headers=_self.config.headers)
                 
