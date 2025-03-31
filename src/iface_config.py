@@ -153,10 +153,8 @@ class Config:
                 silver_prices=data.get("silver_prices"),
                 pl_ibov=data.get("pl_ibov"),
 
-                # FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
-                FRED_API_KEY="97d32927fcbb695624a531ded0e8bf4b",
-                # AV_API_KEY=secrets["general"]["AV_API_KEY"]
-                AV_API_KEY="XXX"
+                FRED_API_KEY=secrets["general"]["FRED_API_KEY"],
+                AV_API_KEY=secrets["general"]["AV_API_KEY"]
         )
         self.base_color = "#fba725"
         self.multiple_color = ["#dd4f00", "#983f4a", "#ffae42", "#ffffff", "#ffba6a"]
